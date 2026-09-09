@@ -1,0 +1,27 @@
+---
+title: "PCA from First Principles"
+---
+
+This project develops an understanding of principal component analysis
+through mathematical explanations, worked examples, and reproducible
+Python code.
+
+## Approach
+
+Each lecture will connect a concrete question to the mathematical
+objects, operations, and assumptions needed to answer it. Accompanying
+Python examples will make the reasoning executable and inspectable.
+
+## Lectures
+
+The first lecture is in preparation.
+
+## Project status
+
+The repository is in its initial setup stage. Lectures, Python
+implementations, and automated checks will be added as the project develops.
+
+## Source code
+
+The source files and development history are available in the
+[GitHub repository](https://github.com/hafizarslanamjad/pca-from-first-principles).
