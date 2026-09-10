@@ -1,0 +1,71 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    name: Python checks and Quarto build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+
+    env:
+      QUARTO_PYTHON: ${{ github.workspace }}/.venv/bin/python
+      MPLBACKEND: Agg
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v9
+        with:
+          version: "0.12.12"
+          enable-cache: true
+
+      - name: Install Python
+        run: uv python install 3.14.7
+
+      - name: Install locked dependencies
+        run: uv sync --locked --python 3.14.7 --extra lectures --extra dev
+
+      - name: Check dependency compatibility
+        run: uv pip check
+
+      - name: Check package imports
+        run: |
+          .venv/bin/python - <<'PY'
+          import matplotlib
+          import numpy
+          import pca_from_first_principles
+
+          print("Project and numerical dependencies imported successfully.")
+          PY
+
+      - name: Check Python code
+        run: .venv/bin/python -m ruff check .
+
+      - name: Check Python formatting
+        run: .venv/bin/python -m ruff format --check .
+
+      - name: Install Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+        with:
+          version: "1.10.18"
+
+      - name: Render website
+        run: quarto render
+
+      - name: Verify homepage exists
+        run: test -s _site/index.html
