@@ -1,0 +1,24 @@
+project:
+  type: website
+  output-dir: _site
+  render:
+    - index.qmd
+
+website:
+  title: "PCA from First Principles"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+    right:
+      - icon: github
+        text: Source
+        href: https://github.com/hafizarslanamjad/pca-from-first-principles
+
+format:
+  html:
+    theme: cosmo
+    toc: true
+    code-copy: true
+
+lang: en
