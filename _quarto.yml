@@ -5,6 +5,7 @@ project:
     - index.qmd
 
 website:
+  site-url: "https://hafizarslanamjad.github.io/pca-from-first-principles/"
   title: "PCA from First Principles"
   navbar:
     left:
