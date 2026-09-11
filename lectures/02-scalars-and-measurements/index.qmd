@@ -1,0 +1,103 @@
+---
+title: "From a Scalar to a List of Measurements"
+subtitle: "Lecture 2 · Stage 1, Part 2"
+description: "Scalars, ordered observations, feature schemas, and semantic types in Python."
+jupyter: python3
+execute:
+  cache: false
+  error: false
+---
+
+[Lecture 1](../01-mathematical-representation/index.qmd) distinguished an object from its representation. Selecting a few physical properties preserves some information and leaves other information unrecorded. We now examine the structure of the numerical representation itself: $5$, $[5]$, and $[5,2]$ can play different roles even though the number five appears in each. Eventually we will collect observations into a matrix, subtract a mean, calculate covariance, and perform PCA. Understanding what each observation represents prevents those operations from becoming symbol manipulation without meaning.
+
+## 1. Begin with one measured property
+
+Suppose our object is a manufactured metal part and our question concerns its mass. We measure $5\,\mathrm{kg}$. The numerical value $5$ is a **scalar**: in the real-valued setting of this lecture, it is a single real number. The physical quantity combines that value with a unit. Likewise, $20\,{}^\circ\mathrm{C}$ and $170\,\mathrm{cm}$ describe single measured quantities, but their measurement conventions differ. The number five alone does not tell us whether it counts objects or expresses kilograms, centimeters, or seconds. We must distinguish the numerical value from what it measures; a unit and a measurement convention supply part of that meaning. Temperature in Celsius also reminds us that a measurement's zero need not mean the absence of the measured phenomenon.
+
+## 2. What changes when we write `[5]`?
+
+Compare the scalar $5$ with the one-entry representation $[5]$. Here square brackets denote an ordered list, not an interval. Both involve the same scalar value, but their structures and roles differ. Suppose every component is described by a scheme containing just one feature, mass in kilograms. The scalar answers “What is the numerical mass in kilograms?” The list answers “What is this object's complete feature representation under this one-feature scheme?” Its first position is assigned to mass. We have moved from an amount to an organized container holding that amount in a designated position. A one-entry list is therefore not the scalar itself, even though we can extract the scalar from it.
+
+## 3. Add another measured property
+
+If mass alone is insufficient, we can add length. Fix the scheme as [mass in kg, length in cm]. Then $x=[5,20]$ describes mass $5\,\mathrm{kg}$ and length $20\,\mathrm{cm}$. We write $x_1=5$ and $x_2=20$ to select the entries, with the units supplied by the scheme. The numbers are ordered: reversing them to $[20,5]$ while retaining the scheme describes a different component, with mass $20\,\mathrm{kg}$ and length $5\,\mathrm{cm}$. If we instead reorder both the entries and the scheme together, the physical measurements can remain unchanged. Thus order carries meaning through its agreement with the scheme, not by itself.
+
+## 4. The representation scheme supplies the interpretation
+
+If someone hands us $[5,20]$, the intended properties are unknown. The entries might be mass and length, temperature and pressure, age and income, or counts of red and blue pixels. We must distinguish the **representation scheme**, which specifies feature names, ordering, and units, from a **represented observation**, which supplies particular values. The scheme need not have been written before the measurements were collected, but it must be established before interpreting their positions. For our example, the relationship is explicit:
+
+| Position | Scheme: property and unit | Observation: value |
+| --- | --- | --- |
+| 1 | Mass in kg | 5 |
+| 2 | Length in cm | 20 |
+
+The scheme answers “Which properties are represented, and how?” The observation answers “What values were recorded for this object?” Keeping these roles separate becomes especially useful when many observations share one scheme.
+
+## 5. Where the word “dimension” begins to acquire meaning
+
+A mass-only scheme has one numerical slot; adding length gives two; adding width gives three. Under [mass in kg, length in cm, width in cm], an observation is $x=[5,20,8]$, with entries $x_1=5$, $x_2=20$, and $x_3=8$. At this stage, calling the representation three-dimensional means that it has three feature positions. It does **not** imply that the measurements vary independently, either statistically or mathematically. If two features always duplicate one another, there are still two stored slots, although the observations have a redundancy. Later we will distinguish the number of stored features from the effective dimension of the data.
+
+The notation $x=(x_1,x_2,x_3)$ refers to an entire ordered representation, whereas $x_i$ selects one component. In this lecture, parentheses and square brackets both serve as mathematical notation for ordered entries; Python distinguishes tuples and lists as different containers. Neither notation alone establishes a geometric interpretation.
+
+## 6. Is `[5,20,8]` already a vector?
+
+A Python list such as `[5, 20, 8]` looks like what machine-learning texts call a feature vector. A NumPy array could also store these three values, but storage alone does not specify the mathematical operations we intend. We should distinguish an **ordered collection**, a **coordinate representation**, and an **abstract vector**. An ordered collection specifies entries and their order. Coordinates describe an object relative to a chosen reference structure. A vector belongs to a vector space, where addition and scalar multiplication obey specified rules.
+
+There is a precise connection: ordered triples of real numbers, equipped with the usual component-wise addition and scalar multiplication, form the vector space $\mathbb{R}^3$. We can therefore treat numerical measurement triples algebraically as vectors when that structure is intended. The additional question is whether those operations have a useful interpretation for the physical measurements. Moreover, a vector space alone does not determine length or angles; those require additional structure, such as a norm or inner product. Coordinates for vectors also depend on a basis, while coordinates for points involve a reference frame that includes an origin. These distinctions will be developed later. For now, we retain the measurement meaning without assuming every geometric operation is appropriate.
+
+## 7. Heterogeneous features and the meaning of distance
+
+Let $x=[5,20]$ and $y=[6,22]$ follow the mass–length scheme. Entry-by-entry subtraction gives $y-x=[1,2]$, interpreted as a mass difference of $1\,\mathrm{kg}$ and a length difference of $2\,\mathrm{cm}$. The second entry is not added to the first; each compares the same property in the same unit. But a numerical Euclidean calculation would produce
+
+$$
+\sqrt{1^2+2^2}=\sqrt{5}.
+$$
+
+That is a well-defined calculation on the encoded real numbers, but it does not automatically define a physical magnitude. Adding $(1\,\mathrm{kg})^2$ to $(2\,\mathrm{cm})^2$ does not yield a physical squared length or squared mass. The dependence on our encoding is easy to expose: express length in meters, and the same physical length difference becomes $0.02\,\mathrm{m}$. The corresponding raw numerical calculation becomes $\sqrt{1^2+0.02^2}$ instead of $\sqrt{5}$. Nothing physical changed, yet the numerical distance did.
+
+We may deliberately design a similarity measure through scaling, normalization, or feature weights, but these are modeling choices that require a purpose. A dimensionless calculation alone does not guarantee a useful measure of similarity. For now, the essential observation is that storing measurements together does not automatically give every geometric operation a meaningful interpretation.
+
+## 8. Our hierarchy is becoming clearer
+
+Our sequence begins with a manufactured component, selects mass, length, and width, establishes their units and ordering, and records an observation such as $[5,20,8]$. That observation currently means three selected properties arranged according to a scheme. We have not yet constructed the geometric feature space in which it might be viewed as a point. This is a deliberate boundary in the explanation, rather than a claim that such a geometric model is impossible.
+
+The next transition will ask how a measured property can become an axis and how measurements locate an observation relative to a reference. A coordinate value such as five then invites two questions: five relative to what zero, and five along which dimension? Those questions lead toward origins, axes, bases, points, and displacement vectors. The distinction between measurement records and geometric interpretations prepares us to answer them explicitly.
+
+## 9. Semantic audit of the observation
+
+For $x=[5,20,8]$, the audit makes the relationship between the physical component and its numerical description explicit.
+
+| Role | Interpretation |
+| --- | --- |
+| Object | One manufactured component. |
+| Reference | Measurement conventions in kg and cm, together with an agreed feature order. |
+| Representation | The ordered measurements $x=[5,20,8]$. |
+| Extraction | Mass, length, and width are measured. |
+| Retained | Those three measured values and their interpretation under the scheme. |
+| Unrecorded | Color, texture, detailed shape, and unmeasured internal properties. Some defects may affect these measurements, but the record does not describe all defects. |
+| Meaning | One object's numerical description under the three-feature scheme. |
+
+The table does not yet assert that $x$ is a point in a fully specified geometric feature space. That interpretation requires us to define the relevant geometric structure. The original object, the scheme, and the numerical observation remain different things.
+
+## 10. The conceptual chain so far
+
+We have moved from object versus representation to a scalar measurement of one property, then to an ordered representation of several properties. In the notation used here, $5$, $[5]$, and $[5,20]$ are different structures with different roles; the value five itself has not changed. A scalar is one numerical value, a one-feature observation contains one value in a specified role, and a two-feature observation supplies two ordered values under a scheme. Next we will construct the geometric interpretation: how length becomes an axis, what zero means, and how two properties can locate an observation in a feature space. That construction will clarify points, coordinate lists, and vectors before we use them in PCA.
+
+## Python companion: make the meanings visible
+
+Python supports explicit type annotations even though it remains dynamically typed. A variable annotated merely as `float` reveals its numerical representation but not its measurement role. Here we define distinct semantic types, including `MassKg`, `LengthCm`, and `WidthCm`, using the standard library's `NewType`. `MassKg(5.0)` marks a float as a mass measured in kilograms for static analysis; it neither measures the object nor converts units. The corresponding `MassObservation`, `MassLengthObservation`, and `ComponentObservation` named tuples describe whole observations with fixed, ordered fields. A named tuple is used because it exposes both positional access and meaningful field names. It is immutable and is not a Python list, but it implements the ordered-record idea developed above.
+
+For example, `mass: MassKg = MassKg(5.0)` declares one scalar measurement. `observation: MassObservation = MassObservation(mass=mass)` declares a complete one-feature observation. Its first value is available as `observation[0]` or `observation.mass`. Python indexes from zero, whereas our mathematical notation starts at $x_1$; both select the first entry here. The three-feature record fixes the order mass, length, width, while keyword arguments make the construction readable without memorizing that order.
+
+The companion also distinguishes an observation from a `MeasurementDifference`. Its function `difference_from(reference, target)` returns target minus reference, and its result fields have types such as `MassDifferenceKg`. This separates an absolute measured value from a change relative to a stated reference. Subtracting two `MassKg` values produces an ordinary float under Python's typing rules, so the function explicitly marks the result with its difference role. We do not add coordinate or basis-vector types yet because this lecture has not constructed those objects.
+
+A static checker such as mypy can flag `MassLengthObservation(mass=LengthCm(20.0), length=MassKg(5.0))` as a misuse of the declared field types. A plain alias such as `MassKg = float` would not provide that distinction. However, `NewType` is **not runtime validation**: Python returns the original value, and the annotations do not enforce units, physical plausibility, finite values, or correct arithmetic at execution time. In particular, they do not implement a unit algebra that forbids every mixed-unit sum. Named tuples enforce field count at construction but do not validate field types. Static checking, runtime validation, and measurement semantics are separate responsibilities. See the [Python typing documentation](https://docs.python.org/3/library/typing.html#newtype).
+
+[Read the companion source](https://github.com/hafizarslanamjad/pca-from-first-principles/blob/main/examples/02_scalars_and_measurements.py). From the repository root, run `python examples/02_scalars_and_measurements.py`. The following output is generated by executing that same script during Quarto rendering.
+
+```{python}
+#| echo: false
+import runpy
+
+runpy.run_path("examples/02_scalars_and_measurements.py", run_name="__main__");
+```

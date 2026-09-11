@@ -16,9 +16,11 @@ Python examples will make the reasoning executable and inspectable.
 
 1. [What Does It Mean to Represent Something Mathematically?](lectures/01-mathematical-representation/index.qmd) — Objects, measurements, labels, and the meaning of numerical relationships.
 
+2. [From a Scalar to a List of Measurements](lectures/02-scalars-and-measurements/index.qmd) — Scalar values, ordered observations, mixed units, and semantic Python types.
+
 ## Project status
 
-The first conceptual lecture includes an executable Python companion. Automated checks validate Python formatting, package imports, and website rendering, including the companion output. PCA algorithms and their mathematical tests will follow as the lectures develop.
+The first two conceptual lectures include executable Python companions. Automated checks validate Python formatting, package imports, and website rendering, including the companion output. PCA algorithms and their mathematical tests will follow as the lectures develop.
 
 ## Source code
 

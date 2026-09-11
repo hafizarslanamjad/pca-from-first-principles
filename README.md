@@ -10,9 +10,11 @@ Mathematical explanations and executable Python examples that build toward princ
 | --- | --- | --- |
 | 1. Mathematical representation | [Objects, properties, and meaningful numerical relationships](lectures/01-mathematical-representation/index.qmd) | [Labels versus measurements](examples/01_mathematical_representation.py) |
 
+| 2. Scalars and ordered measurements | [Values, feature schemas, and measurement roles](lectures/02-scalars-and-measurements/index.qmd) | [Semantically typed observations](examples/02_scalars_and_measurements.py) |
+
 ## Scope and status
 
-Lecture 1 establishes the distinction between physical objects and their numerical representations. Its companion demonstrates why identifier differences do not measure physical differences, while subtraction of corresponding measurements has a unit-specific interpretation. PCA algorithms, benchmarks, and mathematical tests are not implemented yet.
+Lecture 1 establishes the distinction between physical objects and their numerical representations. Its companion demonstrates why identifier differences do not measure physical differences, while subtraction of corresponding measurements has a unit-specific interpretation. Lecture 2 distinguishes scalar values from ordered observations and introduces explicit semantic Python types. PCA algorithms, benchmarks, and mathematical tests are not implemented yet.
 
 ## Reproduce the project
 
