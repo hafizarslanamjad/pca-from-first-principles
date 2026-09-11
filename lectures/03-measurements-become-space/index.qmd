@@ -1,0 +1,145 @@
+---
+title: "How Measurements Become a Space"
+subtitle: "Lecture 3 · Stage 1, Part 3"
+description: "Feature dimensions, points, reference-dependent coordinates, and directed displacement."
+jupyter: python3
+execute:
+  cache: false
+  error: false
+---
+
+In [Lecture 2](../02-scalars-and-measurements/index.qmd), an ordered observation such as $[5,20]$ meant mass and length under a declared measurement scheme. We had not yet constructed its geometric interpretation. This lecture asks how measured properties become dimensions of a mathematical space. We use a new scheme throughout: **length in centimeters first, mass in grams second**. The change in feature order and mass unit is explicit; the earlier scheme must not be silently carried into these examples.
+
+## 1. Start with one property: length
+
+Suppose three rods have lengths $10\,\mathrm{cm}$, $15\,\mathrm{cm}$, and $20\,\mathrm{cm}$. These scalar measurements answer the same question under the same convention, so we can locate them on a common numerical reference line. We place the representations of rods A, B, and C at 10, 15, and 20. The property length has become an axis: a change in location along that axis represents a change in measured length. The rods themselves have not moved to positions on a physical line; the diagram organizes their numerical descriptions.
+
+```{python}
+#| label: fig-length-axis
+#| fig-cap: "A shared length axis locates three observations; this is not their location in the room."
+#| fig-width: 7
+#| fig-height: 1.6
+#| echo: false
+import matplotlib.pyplot as plt
+from pca_from_first_principles.feature_space import LengthCm, MassG
+
+rod_lengths_cm: list[LengthCm] = [LengthCm(10.0), LengthCm(15.0), LengthCm(20.0)]
+rod_labels: list[str] = ["A", "B", "C"]
+fig, ax = plt.subplots(figsize=(7, 1.6), layout="constrained")
+ax.scatter(rod_lengths_cm, [0.0] * 3, color="#126782", s=45, zorder=3)
+for label, length in zip(rod_labels, rod_lengths_cm):
+    ax.annotate(label, (length, 0), xytext=(0, 10), textcoords="offset points", ha="center")
+ax.set(xlim=(0, 25), ylim=(-0.5, 0.7), xlabel="Length (cm)", yticks=[])
+ax.spines[["left", "right", "top"]].set_visible(False)
+ax.spines["bottom"].set_position(("data", 0))
+plt.show()
+```
+
+## 2. What exactly is an axis?
+
+An axis is more than a line drawn on paper. It supplies a reference for locating values of a selected quantity, including its zero, increasing direction, and scale. “Length” names the property; “15 centimeters” gives a particular amount of that property. This distinction prepares us for the later separation between a direction and an amount along that direction. We are not yet identifying a measured feature with an abstract basis vector; we are establishing what the reference line means.
+
+## 3. Dimension versus coordinate
+
+In this feature model, a dimension identifies a selected kind of variation, while a coordinate gives an observation's numerical location along that dimension relative to a reference. Five rods can have lengths 10, 15, 20, 13, and 18 centimeters while still occupying a **one-feature** representation. There are five observations and one feature dimension. To avoid changing the meaning of subscripts from Lecture 2, write the length values as $\ell^{(1)}=10,\ldots,\ell^{(5)}=18$: the superscript labels observations here, whereas $x_j$ will select feature $j$ of one observation. Counting observations and counting feature positions answer different questions.
+
+## 4. Add a second property
+
+Now record mass as well as length. The two entries answer different questions and together specify an observation under the new scheme.
+
+| Rod | Length (cm) | Mass (g) | Ordered representation |
+| --- | ---: | ---: | --- |
+| A | 10 | 40 | $(10,40)$ |
+| B | 15 | 60 | $(15,60)$ |
+| C | 20 | 80 | $(20,80)$ |
+
+Place length on the horizontal axis and mass on the vertical axis. Each pair selects one location in a two-feature coordinate model. Drawing perpendicular axes is a useful display convention; it does not prove that length and mass are statistically independent or establish a physically meaningful mixed-unit distance. In fact, these three observations lie on the line $m=4\ell$. There are still two recorded features even though this small dataset follows a one-dimensional pattern.
+
+```{python}
+#| label: fig-feature-plane
+#| fig-cap: "Three observations and the displacement from A to B. The display scales do not define a physical magnitude or angle."
+#| fig-width: 6
+#| fig-height: 3.2
+#| echo: false
+rod_masses_g: list[MassG] = [MassG(40.0), MassG(60.0), MassG(80.0)]
+fig, ax = plt.subplots(figsize=(6, 3.2), layout="constrained")
+ax.scatter(rod_lengths_cm, rod_masses_g, color="#126782", s=45, zorder=3)
+for label, length, mass in zip(rod_labels, rod_lengths_cm, rod_masses_g):
+    ax.annotate(label, (length, mass), xytext=(7, 3), textcoords="offset points")
+ax.annotate("", xy=(15, 60), xytext=(10, 40), arrowprops={"arrowstyle": "->", "color": "#bb3e03", "lw": 2})
+ax.set(xlim=(0, 25), ylim=(0, 100), xlabel="Length (cm)", ylabel="Mass (g)")
+ax.grid(alpha=0.2)
+plt.show()
+```
+
+## 5. What does “space” mean here?
+
+The feature model provides a domain of possible numerical descriptions, not just the observations we happened to collect. A convenient ambient model is $\mathbb{R}^2$; physically meaningful rod measurements occupy a more restricted region, and manufacturing constraints can restrict it further. The pair $(12,55)$ is a representable location, but whether a rod with those measurements is feasible depends on material and manufacturing constraints. The feature space and dataset are different: the former supplies the domain in which representations live, while the latter records particular observed representations. Three observations do not exhaust that domain. Conversely, seeing a pattern in three observations does not prove every possible rod obeys it.
+
+## 6. A mathematical point represents a physical object
+
+Rod B is a physical object. Measuring its length and mass produces $15\,\mathrm{cm}$ and $60\,\mathrm{g}$; under our coordinate model these measurements locate a point $P_B$. The point represents the rod with respect to selected features. It is not the rod, and the measurement procedure does not transform a physical object into a geometric one. Two physically different rods with identical recorded length and mass occupy the same feature point, so the representation does not necessarily preserve identity. We have added a geometric interpretation to the selected numerical description.
+
+## 7. Point versus coordinates
+
+It is convenient to write $P_B=(15,60)$, but this can hide the reference dependence of the numbers. More carefully, let $E$ name the frame and write $[P_B]_E=(15,60)$, meaning “the coordinates of point $P_B$ in frame $E$.” In an abstract geometric description, the point and its coordinate representation are distinct. In the concrete model $\mathbb{R}^2$, we often identify a point with a tuple after fixing a frame; that convention is useful provided the reference stays explicit.
+
+For a simple example, let $E$ have its origin at zero length and zero mass, and let $F$ shift the origin to the feature point described in $E$ by $(5,20)$. Keep the axes, units, and increasing directions unchanged. Then $[P_B]_E=(15,60)$ but $[P_B]_F=(10,40)$. The observation has not changed. Only the reference used to describe its location has changed. Frame $F$'s first coordinate means length relative to a 5-centimeter reference, not a new measurement saying that rod B is physically 10 centimeters long.
+
+## 8. Coordinates require references
+
+In frame $E$, $O=(0,0)$ represents zero length and zero mass. It need not represent an actual manufactured rod. The coordinates of B describe amounts measured from that origin along the chosen feature axes. A coordinate therefore requires a specified dimension, ordering or direction, zero, and unit or scale. Under the translated frame $F$, zero instead means the selected reference values. Negative coordinates in such a frame can describe a positive physical measurement below the chosen reference. Changing reference does not change the rod's physical length or mass.
+
+## 9. Compare two observations
+
+For $[P_A]_E=(10,40)$ and $[P_B]_E=(15,60)$, subtract corresponding coordinates to describe the directed change from A to B:
+
+$$
+[P_B]_E-[P_A]_E=(15-10,\;60-40)=(5,20).
+$$
+
+The result means $+5\,\mathrm{cm}$ in length and $+20\,\mathrm{g}$ in mass. It is not automatically a third observed rod. The original pair locates B relative to the frame origin; the difference describes how to move from A's representation to B's representation. In the figure, the arrow from A to B represents that displacement, whereas its endpoint represents a point. The calculation assumes both coordinate pairs use the same frame and units.
+
+## 10. Subtraction changes the semantic role
+
+In affine geometry, subtracting two points yields a displacement vector, and adding a displacement to a point yields a point. With a common origin, we can express the relation as $\overrightarrow{OB}-\overrightarrow{OA}=\overrightarrow{AB}$. Reversing the subtraction reverses the displacement: A to B is $(5,20)$, while B to A is $(-5,-20)$. Subtraction here is a directed comparison with an explicit reference.
+
+An origin shift cancels from this comparison. For our translated frame, $[P_A]_F=(5,20)$ and $[P_B]_F=(10,40)$, so their difference is again $(5,20)$. This invariance concerns a **shared translation of the origin with unchanged axes and units**. Changing units or basis generally changes the displacement's numerical components too, although the represented displacement can remain the same. Later, $x-\mu$ will express a displacement from the dataset center to an observation. We preview that role without calculating a mean yet.
+
+## 11. Point and displacement vector are different roles
+
+The tuples $(15,60)$ and $(5,20)$ have the same shape, but their roles differ: one can locate a point, while the other can describe a directed change. Shape alone does not identify the mathematical object. Our code therefore distinguishes `FeaturePoint`, `PointCoordinates`, and `Displacement`. A displacement need not carry a starting point as part of its stored value: the same change can be applied at different points. Its components do require an axis-and-unit convention. Our model fixes that convention globally and varies only the origin.
+
+This distinction does not forbid useful vector representations of points after an origin has been chosen. It prevents us from silently treating every operation on coordinate tuples as an operation with the same meaning. Nor does it introduce a mixed-unit Euclidean magnitude. As in Lecture 2, combining centimeters and grams into one numerical norm requires a justified scaling and metric choice.
+
+## 12. Semantic audit
+
+| Role | Point coordinates $[P_B]_E$ | Difference from A to B |
+| --- | --- | --- |
+| Object represented | The feature point representing rod B | A displacement between two feature points |
+| Reference | Frame E's origin, axes, and units | A as the comparison point; both inputs expressed in E |
+| Numerical representation | $(15,60)$ | $(5,20)$ |
+| Information retained | B's selected measurements under the frame | Signed changes in length and mass |
+| Information not recoverable alone | Unmeasured physical properties and unique rod identity | The two endpoints; many pairs share this difference |
+| Meaning | B's feature-space location | Increase length by 5 cm and mass by 20 g to reach B from A |
+
+The operation changes what the output means. Its two entries are not evidence that another rod was observed. Endpoint information can be recovered only if additional information is supplied: given A and the displacement from A to B, we can reconstruct B's feature point.
+
+## 13. Where we have arrived
+
+The conceptual sequence now connects selected physical properties to measurements, ordered numerical records, reference-dependent coordinates, and points in feature space. We have distinguished a feature dimension from a coordinate value, a point from its coordinates, and a point from a displacement. Subtraction made the role of the reference explicit: the coordinates of B relative to an origin minus the coordinates of A relative to that same origin describe the displacement from A to B. The next lecture will examine what earns the name vector by distinguishing a stored list, a coordinate tuple, a geometric displacement, and an abstract vector. Those concepts can be connected without being silently collapsed.
+
+## Python companion and verification
+
+The reusable implementation lives in `src/pca_from_first_principles/feature_space.py`. `FeaturePoint` stores the selected physical measurements in our fixed canonical scheme; it is a computational model of a point, not a coordinate-free object magically stored in memory. `CoordinateFrame` specifies the origin relative to that scheme. `coordinates_in` produces `PointCoordinates` tied to a frame, `difference_from(reference, target)` produces a `Displacement`, and `translated(point, change)` returns the reached point. Types such as `LengthCoordinateCm` and `LengthChangeCm` distinguish values with the same numerical storage but different meanings.
+
+The implementation deliberately supports translated origins only. It does not support arbitrary basis changes, unit conversion, rotations, or physical-feasibility validation. `NewType` annotations are checked statically, not enforced by Python at runtime. Dataclass annotations likewise do not validate all constructor inputs. The frame compatibility check inside `difference_from` is an explicit runtime check: it rejects subtraction across unequal frames. Equal frame definitions are compatible even when stored in different Python instances.
+
+Run `python examples/03_measurements_become_space.py` from the project root. The generated output below uses that same companion. Run `python -m mypy` to check the package, examples, and tests, and `python -m pytest` to check origin-shift invariance, endpoint reconstruction, reversed differences, and incompatible-frame rejection. Mypy now belongs to the project's `.venv` through its development dependencies; CI runs the corresponding commands in its freshly installed project environment.
+
+```{python}
+#| echo: false
+import runpy
+
+runpy.run_path("examples/03_measurements_become_space.py", run_name="__main__");
+```

@@ -20,6 +20,7 @@ lectures = [
 dev = [
     "pytest",
     "ruff",
+    "mypy",
 ]
 
 [project.urls]
@@ -33,3 +34,10 @@ line-length = 88
 
 [tool.ruff.lint]
 select = ["E4", "E7", "E9", "F", "I"]
+
+[tool.mypy]
+strict = true
+files = ["src", "examples", "tests"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

@@ -18,9 +18,11 @@ Python examples will make the reasoning executable and inspectable.
 
 2. [From a Scalar to a List of Measurements](lectures/02-scalars-and-measurements/index.qmd) — Scalar values, ordered observations, mixed units, and semantic Python types.
 
+3. [How Measurements Become a Space](lectures/03-measurements-become-space/index.qmd) — Dimensions, points, coordinates, reference frames, and displacement.
+
 ## Project status
 
-The first two conceptual lectures include executable Python companions. Automated checks validate Python formatting, package imports, and website rendering, including the companion output. PCA algorithms and their mathematical tests will follow as the lectures develop.
+The first three conceptual lectures include executable Python companions. Automated checks validate Python formatting, semantic types, package imports, feature-space relationships, and website rendering. PCA algorithms and their tests will follow as the lectures develop.
 
 ## Source code
 
