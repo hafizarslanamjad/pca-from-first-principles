@@ -14,12 +14,11 @@ Python examples will make the reasoning executable and inspectable.
 
 ## Lectures
 
-The first lecture is in preparation.
+1. [What Does It Mean to Represent Something Mathematically?](lectures/01-mathematical-representation/index.qmd) — Objects, measurements, labels, and the meaning of numerical relationships.
 
 ## Project status
 
-The repository is in its initial setup stage. Lectures, Python
-implementations, and automated checks will be added as the project develops.
+The first conceptual lecture includes an executable Python companion. Automated checks validate Python formatting, package imports, and website rendering, including the companion output. PCA algorithms and their mathematical tests will follow as the lectures develop.
 
 ## Source code
 
