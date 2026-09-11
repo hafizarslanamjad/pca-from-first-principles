@@ -9,3 +9,5 @@ Use NewType when distinct scalar roles should be checked statically, and named r
 State the reference and result meaning for operations. In particular, distinguish observations from signed differences and specify target minus reference. Preserve units through each component operation. Introduce mean, coordinate, and basis types with their relevant spaces, feature schema, or frames when those concepts arrive.
 
 Execute each lecture's companion from its source file during Quarto rendering, so printed output and standalone code agree. Add meaningful mathematical tests when reusable operations are introduced, and make validation claims only for checks actually run.
+
+Install mypy inside the project virtual environment through the dev extra. Run `python -m mypy` locally and the matching environment-specific command in CI. Keep its version in uv.lock; regenerate the lockfile whenever development dependencies change. Do not use a separate uv tool environment for project type checking.
