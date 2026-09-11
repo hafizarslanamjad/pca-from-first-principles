@@ -1,8 +1,10 @@
 project:
   type: website
   output-dir: _site
+  execute-dir: project
   render:
     - index.qmd
+    - lectures/**/*.qmd
 
 website:
   site-url: "https://hafizarslanamjad.github.io/pca-from-first-principles/"

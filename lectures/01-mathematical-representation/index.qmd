@@ -1,0 +1,404 @@
+---
+title: "What Does It Mean to Represent Something Mathematically?"
+subtitle: "Lecture 1 · Stage 1"
+description: "Objects, selected properties, measurement semantics, and meaningful numerical relationships."
+jupyter: python3
+execute:
+  cache: false
+  error: false
+---
+
+We will begin before coordinates, vectors, datasets, PCA, or embeddings. The first problem is more fundamental: **what is a representation, why does one exist, and what relationship does it have to the thing being represented?** This distinction will eventually become essential because PCA does not directly manipulate physical objects, meanings, images, or observations. It manipulates **numerical representations** of them. This journey begins with observable things and moves toward numerical representations, relationships, and latent structure.
+
+## 1.1 Begin with an object, not with a number
+
+Suppose there are three physical apples on a table.
+
+🍎 🍎 🍎
+
+There are several different things here that mathematics education often collapses into one another. First, there are the **actual apples**. They are physical objects. Second, there is a property of the situation that interests us: **how many apples are present**. Third, we might communicate that property using the symbol
+
+$$
+3.
+$$
+
+The symbol `3` is not an apple. It is not even the collection of apples. It is a **representation of a numerical property of that collection**.
+
+We therefore already have a small chain:
+
+$$
+\text{physical situation} \longrightarrow \text{property we care about} \longrightarrow \text{representation of that property}.
+$$
+
+This distinction may appear elementary, but it is one of the foundations of everything that follows.
+
+Consider a different question about exactly the same apples: *What are their masses?* Perhaps the measurements are
+
+$$
+[150,\;172,\;161]\text{ grams}.
+$$
+
+Now the same physical situation has produced a completely different mathematical representation.
+
+That tells us something important:
+
+> **An object does not possess one inevitable mathematical representation.**
+
+A representation is constructed according to **what we choose to observe or preserve about the object**.
+
+This is our first major principle.
+
+## 1.2 Representation is selective
+
+Imagine a person named Alice.
+
+Alice is an enormously complicated entity. The three measurements considered here cannot provide a complete description of her. Depending upon our purpose, however, we might represent some measured properties as
+
+$$
+[25,\;168,\;60],
+$$
+
+where we have decided that the coordinates mean
+
+$$
+[\text{age in years},\;\text{height in cm},\;\text{mass in kg}].
+$$
+
+The list by itself is merely three numbers. Its meaning comes from the **representation scheme** we established.
+
+The first number means age because we decided that position 1 represents age. The second means height because position 2 represents height. The third means mass because position 3 represents mass.
+
+This gives us a distinction that will remain important throughout the entire journey:
+
+$$
+\boxed{\text{object} \neq \text{representation of object}}
+$$
+
+Alice is not
+
+$$
+[25,168,60].
+$$
+
+Rather,
+
+$$
+[25,168,60]
+$$
+
+is a numerical representation that preserves **three selected properties of Alice while discarding almost everything else about her**.
+
+That last part matters enormously. Representation is not merely encoding. It is also **selection**.
+
+Every representation answers two questions simultaneously:
+
+$$
+\text{What information shall we preserve?}
+$$
+
+and
+
+$$
+\text{What information are we willing to ignore?}
+$$
+
+This distinction separates the thing being described from the information selected to describe it.
+
+## 1.3 Why represent anything?
+
+We can now ask the deeper question: why not simply work with the objects themselves?
+
+Because many operations require objects to be expressed in a form on which those operations are defined.
+
+Suppose we have three manufactured components and ask a computer:
+
+> Which two components are most similar?
+
+The computer cannot perform arithmetic directly on the abstract concept *component*. We first need some observable properties.
+
+Perhaps we measure:
+
+$$
+\text{length},\qquad \text{width},\qquad \text{mass}.
+$$
+
+Suppose length and width are measured in centimeters and mass in grams. These measurements require suitable instruments; mass is not generally available from a photograph alone. The order is always [length in cm, width in cm, mass in g]. Then component `A` might become
+
+$$
+A \longrightarrow [10,5,20],
+$$
+
+component `B`:
+
+$$
+B \longrightarrow [11,5,21],
+$$
+
+and component `C`:
+
+$$
+C \longrightarrow [30,17,60].
+$$
+
+We have performed a conceptual transition:
+
+$$
+\boxed{ \text{object} \rightarrow \text{observations} \rightarrow \text{measurements} \rightarrow \text{numbers} }
+$$
+
+Now arithmetic becomes possible.
+
+But notice what happened. We did **not** make the physical components mathematical. We constructed mathematical objects that stand in for selected observable properties of those components.
+
+That distinction will later protect us from saying things such as "PCA rotates the objects" when what PCA actually operates on is their numerical representation.
+
+## 1.4 Representation makes relationships computable
+
+There is an even deeper reason numerical representation matters.
+
+Suppose I simply assign identification numbers:
+
+$$
+A\rightarrow1,\qquad B\rightarrow2,\qquad C\rightarrow3.
+$$
+
+This technically represents the identity of each object. But consider what happens if we calculate
+
+$$
+3-1=2.
+$$
+
+Does that mean component `C` is "two units different" from component `A`?
+
+No.
+
+The numbers were merely **labels**. Their arithmetic relationships were never intended to represent relationships among the physical objects.
+
+Compare that with
+
+$$
+A=[10,5,20], \qquad B=[11,5,21].
+$$
+
+Here, let $A$ and $B$ denote the measurement lists for their respective components, rather than the physical components themselves. Subtraction is performed entry by entry. Now subtraction,
+
+$$
+B-A = [11,5,21]-[10,5,20] = [1,0,1],
+$$
+
+has an interpretation because the coordinates were measurements.
+
+It says:
+
+- `B` is 1 cm longer,
+- its width is unchanged,
+- its mass is 1 g larger.
+
+Each subtraction compares the same property in the same units. Combining these differences into a single distance would require additional choices about units, scaling, and what similarity should mean. We make no such distance calculation here.
+
+Here subtraction has acquired meaning because the representation was constructed so that **numerical differences correspond to measured differences in the original situation**.
+
+This is a crucial transition:
+
+$$
+\boxed{\text{Representation determines which mathematical relationships are meaningful.}}
+$$
+
+Numbers alone do not guarantee meaningful mathematics.
+
+## 1.5 Identity representation versus relational representation
+
+This gives us an important distinction that will eventually lead directly toward embeddings.
+
+Suppose our objects are words:
+
+$$
+\text{cat},\quad \text{dog},\quad \text{car}.
+$$
+
+We could encode them as
+
+$$
+\text{cat}\rightarrow1,\qquad \text{dog}\rightarrow2,\qquad \text{car}\rightarrow3.
+$$
+
+This representation preserves **identity**. Given `2`, our encoding table tells us that the word is `dog`.
+
+But the numerical distances are meaningless:
+
+$$
+|1-2|=1,\qquad |2-3|=1.
+$$
+
+We should not conclude from this that *cat* is as semantically close to *dog* as *dog* is to *car*. The representation never encoded semantic relationships.
+
+This gives us two very different purposes a representation might serve:
+
+$$
+\text{identity: ``Which object is this?''}
+$$
+
+versus
+
+$$
+\text{relationship: ``How is this object related to other objects?''}
+$$
+
+This distinction will eventually become central to embeddings. An embedding is interesting precisely because its geometry is intended to carry useful relational structure. For learned embeddings, the relationships captured depend on the training data and objective; useful semantic geometry is not guaranteed merely by assigning coordinates.
+
+But we are not ready for embeddings yet. For now, the important discovery is simply that **different representations preserve different kinds of information**.
+
+## 1.6 A representation has semantics
+
+Consider
+
+$$
+x=[2,5].
+$$
+
+What does `x` mean?
+
+Its numerical entries are specified, but their application-specific meaning is not.
+
+It could mean
+
+$$
+[\text{age},\text{height}],
+$$
+
+or
+
+$$
+[\text{temperature},\text{pressure}],
+$$
+
+or coordinates of a point on a map,
+
+$$
+[x\text{-position},y\text{-position}],
+$$
+
+or counts of two words,
+
+$$
+[\text{number of ``cat'' occurrences}, \text{number of ``dog'' occurrences}].
+$$
+
+The numbers themselves do not tell us which interpretation is intended.
+
+Therefore a numerical representation requires a **representation scheme**: a rule connecting components of the numerical object to aspects of the thing being represented.
+
+Schematically,
+
+$$
+\boxed{ \text{real/conceptual object} \xrightarrow{\text{representation rule}} \text{mathematical object} }
+$$
+
+The arrow is doing enormous conceptual work.
+
+It tells us what was measured, how it was encoded, what each component means, what units or reference system apply, and consequently which mathematical operations have meaningful interpretations.
+
+## 1.7 Our first semantic audit
+
+We can now audit the meaning of a representation explicitly.
+
+Suppose a manufactured object is represented as
+
+$$
+x=[10,5,20],
+$$
+
+meaning
+
+$$
+[\text{length},\text{width},\text{mass}].
+$$
+
+| Question | Answer |
+| ------------------ | ------------------------------------------------------------------------------------------- |
+| **Object**         | A manufactured physical object                                                              |
+| **Reference**      | The chosen measurement conventions and units                                                |
+| **Representation** | Three numerical measurements                                                                |
+| **Extraction**     | Length, width, and mass have been extracted from the object                                 |
+| **Retained**       | Those three measured properties                                                             |
+| **Lost**           | Color, texture, detailed shape, and unmeasured internal structure; some defects may affect the measured properties, but these measurements do not describe all defects |
+| **Meaning**        | A numerical description of the object with respect to three selected measurable properties  |
+
+Notice that **loss occurs before PCA ever appears**.
+
+The moment we decide
+
+$$
+\text{object}\rightarrow[\text{length,width,mass}],
+$$
+
+we have already discarded information.
+
+This will later help us distinguish two very different kinds of information loss:
+
+$$
+\text{object} \rightarrow \text{feature representation}
+$$
+
+may discard properties of the original object, while
+
+$$
+\text{high-dimensional representation} \rightarrow \text{lower-dimensional representation}
+$$
+
+may discard information already present in the feature representation.
+
+Those are not the same operation.
+
+## 1.8 The conceptual chain we have earned so far
+
+We should stop here rather than immediately moving into vectors.
+
+So far we have established only this:
+
+A question guides the choice of observable properties. An encoding rule then maps those properties to a mathematical representation.
+
+For the selective feature representations considered here, the design involves:
+
+$$
+\boxed{ \text{retain some information} + \text{discard some information} }
+$$
+
+A representation need not always lose information: a reversible encoding can preserve all information in its stated domain. Here, loss arises because only selected physical properties are recorded.
+
+Most importantly,
+
+$$
+\boxed{ \text{object}\neq\text{representation} }
+$$
+
+and
+
+$$
+\boxed{ \text{numerical representation} \not\Rightarrow \text{meaningful numerical relationships}. }
+$$
+
+The representation must be constructed so that the mathematical relationships we calculate correspond to relationships we actually care about.
+
+We have therefore **not yet earned the word "vector."** We have only reached numerical representations. The next conceptual problem is subtler: when we write something such as
+
+$$
+[10,5,20],
+$$
+
+what kind of mathematical object have we actually created? Is it merely a list of three scalars? When does such a list become a coordinate representation? When is it appropriate to think of it as a vector? And what additional structure must exist before subtraction, distance, direction, or geometry become meaningful?
+
+That is the next part of Stage 1. The optional Python companion below only makes the present distinction between identifiers and measurements executable; it assumes no vector geometry.
+
+## Python companion: labels and measurements
+
+The companion changes the numeric identifiers of three components while leaving the components unchanged. The resulting identifier differences change, demonstrating why those differences do not measure physical dissimilarity. It then subtracts named measurements property by property, preserving each unit. The names on the fields make the representation scheme explicit.
+
+[Read the Python source](https://github.com/hafizarslanamjad/pca-from-first-principles/blob/main/examples/01_mathematical_representation.py). From the repository root, run `python examples/01_mathematical_representation.py`. The output below is generated from that same script during rendering.
+
+```{python}
+#| echo: false
+import runpy
+
+runpy.run_path("examples/01_mathematical_representation.py", run_name="__main__");
+```
