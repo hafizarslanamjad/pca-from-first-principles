@@ -24,9 +24,11 @@ Python examples will make the reasoning executable and inspectable.
 
 5. [Direction and Its Standard Vector Representative](lectures/05-direction-and-standard-representatives/index.qmd) — Magnitude, orientation, shared directions, and why a standard representative is useful.
 
+6. [Normalization and the Reasoning Behind Algebraic Steps](lectures/06-normalization-and-algebraic-reasoning/index.qmd) — Reciprocal scaling, factor isolation, direction preservation, and reconstruction.
+
 ## Project status
 
-The first five conceptual lectures include executable Python companions. Automated checks validate Python formatting, semantic types, package imports, feature-space and spatial-vector relationships, and website rendering. PCA algorithms and their tests will follow as the lectures develop.
+The first six conceptual lectures include executable Python companions. Automated checks validate Python formatting, semantic types, package imports, feature-space and spatial-vector relationships, and website rendering. PCA algorithms and their tests will follow as the lectures develop.
 
 ## Source code
 
