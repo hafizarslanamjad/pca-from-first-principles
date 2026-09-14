@@ -12,6 +12,7 @@ Mathematical explanations and executable Python examples that build toward princ
 | 2. Scalars and ordered measurements | [Values, feature schemas, and measurement roles](lectures/02-scalars-and-measurements/index.qmd) | [Semantically typed observations](examples/02_scalars_and_measurements.py) |
 | 3. Measurements become space | [Feature points, coordinates, and displacement](lectures/03-measurements-become-space/index.qmd) | [Explicit coordinate frames](examples/03_measurements_become_space.py) |
 | 4. Vectors, components, and scaling | [Displacements, composition, and scaling](lectures/04-vectors-components-scaling/index.qmd) | [Typed spatial vectors](examples/04_vectors_components_scaling.py) |
+| 5. Direction and standard representatives | [Why one representative is useful](lectures/05-direction-and-standard-representatives/index.qmd) | [Typed orientation and amount](examples/05_direction_and_standard_representatives.py) |
 
 ## Scope and status
 
