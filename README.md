@@ -1,10 +1,12 @@
 # PCA from First Principles
 
-Mathematical explanations and executable Python examples that build toward principal component analysis.
+Mathematical explanations and executable, semantically typed Python examples that build toward principal component analysis. The lectures develop the meaning of mathematical objects and operations before introducing algorithms.
 
 [Read the lectures](https://hafizarslanamjad.github.io/pca-from-first-principles/) · [CI runs](https://github.com/hafizarslanamjad/pca-from-first-principles/actions/workflows/ci.yml)
 
 ## Lectures
+
+Lectures 1–6 establish Stage 1 foundations. Lecture 7 begins Stage 2: coordinates and reference systems.
 
 | Lecture | Explanation | Python companion |
 | --- | --- | --- |
@@ -14,14 +16,23 @@ Mathematical explanations and executable Python examples that build toward princ
 | 4. Vectors, components, and scaling | [Displacements, composition, and scaling](lectures/04-vectors-components-scaling/index.qmd) | [Typed spatial vectors](examples/04_vectors_components_scaling.py) |
 | 5. Direction and standard representatives | [Why one representative is useful](lectures/05-direction-and-standard-representatives/index.qmd) | [Typed orientation and amount](examples/05_direction_and_standard_representatives.py) |
 | 6. Normalization and algebraic reasoning | [Why division isolates a unit representative](lectures/06-normalization-and-algebraic-reasoning/index.qmd) | [Typed normalization and reconstruction](examples/06_normalization_and_algebraic_reasoning.py) |
+| 7. Coordinates and reference systems | [Origins, basis-relative coefficients, and one vector in two bases](lectures/07-coordinates-and-reference-systems/index.qmd) | [Typed coordinates and reconstruction](examples/07_coordinates_and_reference_systems.py) |
+
+The [reading-order and conceptual-gap document](docs/stage-1-gap-map.md) explains the prerequisites and where recurring learning questions are addressed. Coverage identifies available explanations; it does not establish demonstrated mastery.
 
 ## Scope and status
 
-Lecture 1 establishes the distinction between physical objects and their numerical representations. Its companion demonstrates why identifier differences do not measure physical differences, while subtraction of corresponding measurements has a unit-specific interpretation. Lecture 2 distinguishes scalar values from ordered observations and introduces explicit semantic Python types. Lecture 3 adds typed point, coordinate, and displacement operations with tests of origin-shift invariance and frame compatibility. Lecture 4 adds a separate spatial-vector model with compatible meter units, directed composition, uniform scaling, and relationship tests. Lecture 6 derives normalization through inverse scaling and explains how algebraic transformations expose a desired relationship. The next lecture returns to Stage 2. PCA algorithms and benchmarks are not implemented yet.
+Lecture 1 establishes the distinction between physical objects and their numerical representations. Its companion demonstrates why identifier differences do not measure physical differences, while subtraction of corresponding measurements has a unit-specific interpretation. Lecture 2 distinguishes scalar values from ordered observations and introduces explicit semantic Python types. Lecture 3 adds typed point, coordinate, and displacement operations with tests of origin-shift invariance and frame compatibility.
+
+Lecture 4 adds a separate spatial-vector model with compatible meter units, directed composition, uniform scaling, and relationship tests. Lecture 5 separates orientation from amount and motivates choosing a unit direction representative. Lecture 6 derives normalization through inverse scaling and explains how algebraic transformations expose a desired relationship. It also distinguishes numerical scale standardization from physical-unit cancellation.
+
+Lecture 7 begins Stage 2 by separating the roles of origins, basis vectors, and coordinate coefficients. It holds one vector fixed while changing its basis representation from `(3, 2)` to `(3, −1)`, explains the negative coefficient through reconstruction, and distinguishes active transformations from passive coordinate changes. Its companion reuses the existing spatial model and represents coefficients together with their basis.
+
+PCA algorithms and benchmarks are not implemented yet. The Lecture 7 PCA preview introduces the roles of reference directions and observation-specific coefficients; learning those directions and performing dimensionality reduction remain later topics.
 
 ## Reproduce the project
 
-The established environment uses Python 3.14.7, Quarto 1.10.18, and uv 0.12.12. Install Python and Quarto separately, then clone this repository. The commands below use Windows Command Prompt, starting inside the repository root:
+The recorded project environment uses Python 3.14.7, Quarto 1.10.18, and uv 0.12.12. These are project versions, not claims about the latest releases. Install Python and Quarto separately, then clone this repository. The commands below use Windows Command Prompt, starting inside the repository root:
 
 ```bat
 python -m venv .venv
@@ -29,16 +40,20 @@ python -m venv .venv
 python -m pip install uv==0.12.12
 python -m uv sync --locked --extra lectures --extra dev --inexact
 set "QUARTO_PYTHON=%CD%\.venv\Scripts\python.exe"
-python examples/01_mathematical_representation.py
+python examples/07_coordinates_and_reference_systems.py
 quarto render
 quarto preview
 ```
 
-On Linux or macOS, activate with `source .venv/bin/activate` and select Python with `export QUARTO_PYTHON="$PWD/.venv/bin/python"`; the remaining Python and Quarto commands are the same. Stop the preview with Ctrl+C.
+If `.venv` already exists, activate and synchronize it without recreating it. Stop the preview with Ctrl+C.
 
-The local `--inexact` option retains pip and uv installed inside the environment. CI installs uv separately and performs exact synchronization. Commit dependency changes through `pyproject.toml` and regenerate `uv.lock` deliberately; do not edit the lockfile by hand.
+On Linux or macOS, activate with `source .venv/bin/activate` and select Python with `export QUARTO_PYTHON="$PWD/.venv/bin/python"`; the remaining Python and Quarto commands are the same.
+
+The local `--inexact` option retains pip and uv installed inside the environment. The established CI workflow installs uv separately and performs exact synchronization. Declare dependency changes in `pyproject.toml` and regenerate `uv.lock` deliberately; do not edit the lockfile by hand.
 
 ## Verification and publication
+
+With the project environment activated and `QUARTO_PYTHON` configured, run:
 
 ```bat
 python -m mypy
@@ -48,25 +63,35 @@ python -m ruff format --check .
 quarto render
 ```
 
-Rendering executes the lecture's Python companion from the same script used at the command line. GitHub Actions checks dependency compatibility, imports, strict type checking, tests, code style, and rendering. Successful builds on `main` deploy to GitHub Pages. The feature-space tests verify reference changes, directed differences, endpoint reconstruction, and rejection of mismatched frames.
+Rendering executes the lecture companions through Quarto and Jupyter. Where a lecture invokes its companion using `runpy.run_path`, the returned namespace is assigned to `_` to suppress notebook expression display while retaining printed output. Script execution alone does not verify this rendering behavior.
+
+Tests cover mathematical relationships and relevant boundary conditions. These include feature-frame compatibility, directed differences, spatial reconstruction, normalization, and Lecture 7's origin shifts and basis-relative reconstruction. The oblique-basis example also checks why summing squared coefficients does not directly give the vector's squared Euclidean magnitude.
+
+The established GitHub Actions workflow checks dependency compatibility, imports, strict type checking, tests, code style, and rendering. Successful builds on `main` deploy to GitHub Pages. Consult the [workflow runs](https://github.com/hafizarslanamjad/pca-from-first-principles/actions/workflows/ci.yml) for actual execution results; the presence of a command or test in the repository does not establish that it has passed.
 
 ## Repository layout
 
 | Path | Purpose |
 | --- | --- |
-| `lectures/` | Quarto lecture sources |
-| `examples/` | Executable companions |
-| `src/pca_from_first_principles/` | Reusable typed feature-space operations |
-| `pyproject.toml` and `uv.lock` | Dependency declarations and resolved versions |
+| `lectures/` | Quarto lecture sources and supporting assets |
+| `examples/` | Executable lecture companions |
+| `src/pca_from_first_principles/` | Reusable typed measurement, spatial, normalization, and reference-system operations |
+| `tests/` | Mathematical relationship and boundary-condition tests |
+| `docs/` | Authoring conventions, reading order, and conceptual-gap guidance |
+| `index.qmd` | Website homepage and lecture navigation |
+| `_quarto.yml` | Website and rendering configuration |
+| `pyproject.toml` and `uv.lock` | Dependency declarations, tool settings, and resolved dependencies |
 | `.github/workflows/ci.yml` | Checks, rendering, and deployment |
 
-Work on a short-lived branch, preview changes, and open a pull request into `main`. Add new lectures to the homepage and this table. `_quarto.yml` includes lecture pages through its render pattern. Generated `_site/` content and `.venv/` remain outside version control.
+Work on a short-lived branch, preview changes, and open a pull request into `main`. Add new lectures to the homepage and this table, and update the reading-order document when appropriate. `_quarto.yml` includes lecture pages through its render pattern. Generated `_site/` content and `.venv/` remain outside version control.
 
 ## Type checking in the project environment
 
-Mypy is included in the `dev` extra and installed into `.venv`. Run `python -m mypy` locally; CI invokes `.venv/bin/python -m mypy` after installing the locked development dependencies. The strict configuration checks `src`, `examples`, and `tests`. Executable code inside `.qmd` is exercised by rendering but is not scanned by this mypy command.
+Mypy is included in the `dev` extra and installed into `.venv`. Run `python -m mypy` locally; the established CI workflow invokes `.venv/bin/python -m mypy` after installing the locked development dependencies. The strict configuration checks `src`, `examples`, and `tests`. Executable code inside `.qmd` is exercised by rendering but is not scanned by this mypy command.
 
-When applying a change to `pyproject.toml`, regenerate and synchronize dependencies before committing:
+Semantic types distinguish roles such as positions, displacement components, magnitudes, scale factors, direction representatives, and signed basis coefficients. These annotations support static checking; they do not establish physical units or numerical invariants at runtime. Runtime checks separately enforce selected requirements, such as compatible feature frames, finite coefficients, and unit magnitude for direction representatives.
+
+When changing dependency declarations or Python compatibility requirements, update the lockfile and synchronize the environment:
 
 ```bat
 python -m uv lock
@@ -75,4 +100,6 @@ python -m mypy --version
 python -m mypy
 ```
 
-Commit `uv.lock` with the configuration update. CI intentionally refuses an outdated lockfile. Type annotations do not validate physical units at runtime; the feature-space module separately enforces matching frame definitions for coordinate subtraction.
+Commit the resulting `uv.lock` changes with the dependency update. Locked synchronization intentionally rejects dependency declarations that are inconsistent with the lockfile.
+
+Changes confined to tool settings, such as correcting pytest's `testpaths` from `["test"]` to `["tests"]`, do not require regenerating the dependency lockfile. The Lecture 7 implementation introduces no new dependencies.
