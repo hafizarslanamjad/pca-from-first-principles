@@ -26,6 +26,8 @@ Python examples will make the reasoning executable and inspectable.
 
 6. [Normalization and the Reasoning Behind Algebraic Steps](lectures/06-normalization-and-algebraic-reasoning/index.qmd) — Reciprocal scaling, factor isolation, direction preservation, and reconstruction.
 
+7. [Coordinates and Reference Systems](lectures/07-coordinates-and-reference-systems/index.qmd) - Origins, basis vectors, signed decomposition coefficients, and representing one fixed vector in two bases.
+
 ## Project status
 
 The first six conceptual lectures include executable Python companions. Automated checks validate Python formatting, semantic types, package imports, feature-space and spatial-vector relationships, and website rendering. PCA algorithms and their tests will follow as the lectures develop.

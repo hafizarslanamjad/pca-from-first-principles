@@ -1,6 +1,6 @@
 # Stage 1: Reading Order and Conceptual Gaps
 
-Stage 1 develops the foundations needed before studying PCA. The reading order follows conceptual prerequisites rather than the chronological order of the original conversations. Questions raised during learning are incorporated where their explanations belong.
+Stage 1 develops the foundations needed before studying PCA. The reading order follows conceptual prerequisites rather than the chronological order of the original conversations. Questions raised during learning are incorporated where their explanations belong. This document also identifies how Lecture 7 carries these foundations into Stage 2.
 
 ## Lectures 1–3: Representation, Measurements, and Space
 
@@ -26,37 +26,71 @@ The scaling derivation also develops goal-directed algebraic reasoning: identify
 
 The bananas analogy connects normalization to factor isolation. The lecture distinguishes scale standardization from physical-unit cancellation and explains why retaining both magnitude and the unit representative permits reconstruction of the original vector.
 
+## Lecture 7: Coordinates and Reference Systems — Stage 2 Begins
+
+[Lecture 7 — Coordinates and Reference Systems](../lectures/07-coordinates-and-reference-systems/index.qmd) begins Stage 2 by asking what a coordinate is relative to. The road-and-tree example establishes the roles of origin, orientation, and unit: changing the origin changes the tree's coordinate without moving the tree.
+
+The lecture then separates the reference requirements of points and free vectors. A point's coordinates depend on an origin and a basis, while a free vector's coordinates depend on the basis. Translating the origin with the basis held fixed changes point coordinates but preserves the coordinate differences representing displacement.
+
+Coordinates are developed as signed reconstruction coefficients relative to an ordered basis. The worked example holds `v = 3e₁ + 2e₂` fixed and introduces `p₁ = e₁ + e₂` and `p₂ = e₂`. Substitution, distribution, grouping, and comparison in the original basis establish `v = 3p₁ − p₂`. The coordinate column changes from `(3, 2)` to `(3, −1)` while the represented vector stays the same.
+
+The negative coefficient is explained geometrically: three copies of `p₁` contribute one extra upward step, which one copy of `−p₂` removes. The example also establishes that basis vectors need not be unit vectors or perpendicular. Consequently, coefficients in this oblique basis cannot be inserted directly into the familiar sum-of-squares magnitude formula.
+
+The lecture concludes by distinguishing active transformations from passive changes of coordinates. Its PCA preview separates learned reference directions from observation-specific coefficients and distinguishes complete coordinate representations from later dimensionality reduction.
+
 ## Conceptual Gap Map
+
+The entries below identify where explanations are provided. They are a reading guide, not a record of demonstrated mastery.
 
 | Question raised during learning | Where it is addressed |
 | --- | --- |
-| How does a mathematical representation differ from the object represented? | Lectures 1–3; revisited for vectors in Lecture 4 |
-| Why is a list of numbers not enough to specify a vector's meaning? | Lecture 4 |
-| How do points, displacements, bases, and coordinates differ? | Lectures 3–4 |
+| How does a mathematical representation differ from the object represented? | Lectures 1–3; revisited for vectors in Lecture 4 and changing references in Lecture 7 |
+| Why is a list of numbers not enough to specify a vector's meaning? | Lecture 4; Lecture 7 makes the basis-dependent meaning of each entry explicit |
+| How do points, displacements, bases, and coordinates differ? | Lectures 3–4; their separate reference requirements are developed in Lecture 7 |
 | What does vector magnitude represent, and what information does it omit? | Lecture 5; revisited through extraction and reconstruction in Lecture 6 |
 | Why can numbers represent direction when signs seemed sufficient on a line? | Lecture 5 |
 | How can vectors of different magnitudes share one direction? | Lecture 5 |
 | Why choose one standard representative, and why give it magnitude one? | Lecture 5 |
 | Why does scaling a unit vector by five produce magnitude five? | Lecture 5; derived explicitly and generalized in Lecture 6 |
 | Why divide by magnitude, and what operation does that division represent? | Lecture 6 |
-| How does the bananas analogy explain factor isolation? | Lecture 6 |
-| Are normalized components fractions that must add to one? | Lectures 5–6: unit magnitude requires the sum of squared components to equal one in the stated Euclidean setting |
+| How does the bananas analogy explain factor isolation? | Lecture 6; Lecture 7 reconnects factor roles to reconstruction coefficients |
+| Are normalized components fractions that must add to one? | Lectures 5–6: unit magnitude requires the sum of squared components to equal one in the stated orthonormal Euclidean setting |
 | What happens to physical units during normalization? | Lecture 6, building on the measurement distinctions in earlier lectures |
-| How do we decide which algebraic transformation to perform next? | Lecture 6 |
+| How do we decide which algebraic transformation to perform next? | Lecture 6; applied to substitution, grouping, and coefficient isolation in Lecture 7 |
 | What information is lost through magnitude extraction or normalization? | Lecture 6 |
-| How can the original vector be reconstructed? | Lecture 6 |
+| How can the original vector be reconstructed from magnitude and direction? | Lecture 6 |
 | Can the zero vector be normalized? | Lectures 5–6: it has no unique direction and cannot be divided by its zero magnitude |
+| What is a position coordinate relative to? | Lecture 7: origin, reference orientation, and scale |
+| How can a coordinate change when the point has not moved? | Lecture 7: the road-and-tree origin shift |
+| Why does changing the origin preserve displacement between fixed points? | Lecture 7: the common coordinate shift cancels when differences are taken |
+| What do the entries of a vector's coordinate column mean? | Lecture 7: signed coefficients multiplying the ordered basis vectors |
+| Why can one vector have different coordinates in different bases? | Lecture 7: the explicit change from basis E to basis P |
+| Why can changing the basis introduce a negative coordinate? | Lecture 7: removing the extra upward contribution of three copies of p₁ |
+| Why is comparing coefficients valid in the worked derivation? | Lecture 7: independence of the basis vectors gives unique coefficients |
+| Must basis vectors be unit length and perpendicular? | Lecture 7: the oblique basis provides a counterexample |
+| Why does the usual sum of squared coordinates fail in the oblique basis? | Lecture 7: its coefficients are not components along perpendicular unit vectors |
+| How does changing an object differ from changing its representation? | Lecture 7: active transformations and passive changes of coordinates |
+| How do PCA reference directions differ from observation-specific coefficients? | Lecture 7 introduces their semantic roles; their construction and calculation remain for later lectures |
+| Does a complete change of basis discard information? | Lecture 7: all coefficients together with the basis permit reconstruction; retaining fewer directions is a separate operation |
 
 ## Assumptions to Carry Forward
 
-The spatial magnitude and normalization examples use perpendicular, equally scaled axes with compatible units. These examples do not justify treating length and mass as interchangeable quantities or adding their squares to obtain a physical distance. Choosing a metric or scaling heterogeneous features remains a modeling question to revisit when developing PCA.
+The Stage 1 spatial magnitude and normalization examples use perpendicular, equally scaled axes with compatible units. These examples do not justify treating length and mass as interchangeable quantities or adding their squares to obtain a physical distance. Choosing a metric or scaling heterogeneous features remains a modeling question to revisit when developing PCA.
 
-Notation distinguishes a geometric vector `v`, its coordinate representation `[v]_E` under basis `E`, its magnitude `||v||`, and its unit direction representative `u`. A direction representative is dimensionless in the physical displacement examples; the magnitude carries the physical unit.
+Notation distinguishes a geometric vector `v`, its coordinate representation `[v]_E` under the ordered basis `E`, its magnitude `‖v‖`, and its unit direction representative `u`. A unit direction representative is dimensionless in the physical displacement examples; the magnitude carries the physical unit.
 
-For a real scalar `a`, scaling changes magnitude by `|a|`. Positive scaling preserves direction, negative scaling reverses it, and zero scaling produces the zero vector. Magnitude and a unit representative together reconstruct a nonzero vector; either piece alone loses information.
+For a real scalar `a`, the magnitude relationship is `‖av‖ = |a| ‖v‖`. Positive scaling preserves direction, negative scaling reverses it, and zero scaling produces the zero vector. Magnitude and a unit representative together reconstruct a nonzero vector; either piece alone loses information.
 
-## Transition to Stage 2
+Lecture 7 uses `Q` for a geometric point and `P = (p₁, p₂)` for the alternative basis. Point coordinates require an origin as well as a basis. The abbreviated notation `[Q]_O` assumes that orientation and units remain fixed; the fuller notation `[Q]_(O,E)` makes both origin and basis explicit. A free vector's basis representation `[v]_E` does not require a separate origin.
 
-Lectures 4–6 complete the planned Stage 1 material on vectors, direction representatives, normalization, and the reasoning behind the associated algebra. The next lecture returns to Stage 2 of the original conversation.
+A basis vector has a scale as well as an orientation. Coordinates specify signed multiples of the actual basis vectors, so a coefficient's absolute value equals the magnitude of its individual contribution only when the corresponding reference vector has unit magnitude in the stated model. In Lecture 7, `p₁ = e₁ + e₂` has magnitude `√2`, and the alternative basis is oblique. It must not be treated as an orthonormal basis.
 
-Stage 2 should build on these distinctions while developing reference directions, coordinates, and subsequent operations. Each new derivation should state its goal, explain why its transformations serve that goal, and identify what information is preserved or discarded. Coverage of a topic does not require treating every learning difficulty as permanently resolved; earlier explanations can be revisited when a new application exposes another gap.
+The Lecture 7 derivation first uses a dimensionless numerical model, then explicitly restores meters for the Python companion. The existing `SpatialVector` stores displacement components in the fixed orthonormal spatial frame; the new coordinate representation records signed coefficients together with their basis. Static annotations express these roles, while runtime checks enforce selected numerical invariants rather than a general physical-units system.
+
+## Continuing Stage 2
+
+Lectures 4–6 cover the planned Stage 1 material on vectors, direction representatives, normalization, and the reasoning behind the associated algebra. Lecture 7 begins Stage 2 by developing origins, basis-relative coordinates, and a worked representation of one fixed vector in two bases.
+
+Subsequent lectures can build on this foundation to explain how coefficients are extracted, when projections provide those coefficients, and how reference directions are selected in PCA. These topics require their own derivations. In particular, the oblique-basis example does not establish the coordinate-extraction rules that apply to orthonormal bases.
+
+Each new derivation should state its goal, explain why its transformations serve that goal, and identify what information is preserved or discarded. Coverage of a topic does not establish permanent mastery; earlier explanations should be revisited when a new application exposes another gap.

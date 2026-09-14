@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="870" viewBox="0 0 900 870" role="img" aria-labelledby="title desc">
+  <title id="title">One object, different reference systems</title>
+  <desc id="desc">A tree has coordinate five meters from O and three meters from O prime. Below, the same vector is constructed as three e1 plus two e2 and as three p1 minus p2.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto-start-reverse">
+      <path d="M0,0 L8,4 L0,8 Z" fill="context-stroke"></path>
+    </marker>
+    <style>
+      text { font-family: Arial, sans-serif; fill: #172b4d; font-size: 19px; }
+      .heading { font-size: 23px; font-weight: bold; }
+      .note { font-size: 17px; }
+      .axis { stroke: #65758b; stroke-width: 2; fill: none; marker-end: url(#arrow); }
+      .vector { stroke: #175cd3; stroke-width: 4; fill: none; marker-end: url(#arrow); }
+      .part { stroke: #b45309; stroke-width: 4; fill: none; marker-end: url(#arrow); }
+      .guide { stroke: #b8c3d1; stroke-width: 1.5; stroke-dasharray: 5 5; fill: none; }
+    </style>
+  </defs>
+  <rect width="900" height="870" fill="#ffffff"></rect>
+
+  <text x="35" y="42" class="heading">1. Change the origin; keep the tree fixed</text>
+  <path d="M65,120 H800" class="axis"></path>
+  <circle cx="120" cy="120" r="6" fill="#172b4d"></circle>
+  <circle cx="340" cy="120" r="6" fill="#172b4d"></circle>
+  <circle cx="670" cy="120" r="7" fill="#175cd3"></circle>
+  <text x="109" y="99">O</text>
+  <text x="324" y="99">O′</text>
+  <text x="625" y="99">Q (tree)</text>
+  <text x="107" y="151">0</text>
+  <text x="322" y="151">2 m</text>
+  <text x="652" y="151">5 m</text>
+  <path d="M120,183 H670" stroke="#175cd3" stroke-width="2" marker-start="url(#arrow)" marker-end="url(#arrow)"></path>
+  <text x="286" y="209">From O: 5 m</text>
+  <path d="M340,238 H670" stroke="#b45309" stroke-width="2" marker-start="url(#arrow)" marker-end="url(#arrow)"></path>
+  <text x="425" y="266">From O′: 3 m</text>
+
+  <path d="M35,288 H865" stroke="#d7dfe8"></path>
+  <text x="35" y="329" class="heading">2. Original basis: v = 3e₁ + 2e₂</text>
+  <path d="M130,545 H520" class="axis"></path>
+  <path d="M130,545 V353" class="axis"></path>
+  <path d="M130,545 H400 V365" class="guide"></path>
+  <path d="M130,545 H400" class="part"></path>
+  <path d="M400,545 V365" class="part"></path>
+  <path d="M130,545 L400,365" class="vector"></path>
+  <text x="104" y="570">O</text>
+  <text x="482" y="573">e₁ →</text>
+  <text x="75" y="366">e₂ ↑</text>
+  <text x="242" y="572">3e₁</text>
+  <text x="415" y="467">2e₂</text>
+  <text x="232" y="438">v</text>
+  <circle cx="400" cy="365" r="5" fill="#175cd3"></circle>
+  <text x="550" y="415">[v] relative to E = (3, 2)</text>
+  <text x="550" y="450" class="note">Perpendicular unit reference vectors</text>
+  <text x="550" y="479" class="note">Numerical model: ‖v‖ = √13</text>
+
+  <path d="M35,598 H865" stroke="#d7dfe8"></path>
+  <text x="35" y="636" class="heading">3. New basis: v = 3p₁ − p₂</text>
+  <path d="M130,835 H500" class="axis"></path>
+  <path d="M130,835 V657" class="axis"></path>
+  <path d="M130,835 L310,655" class="part"></path>
+  <path d="M310,655 V715" class="part"></path>
+  <path d="M130,835 L310,715" class="vector"></path>
+  <circle cx="310" cy="715" r="5" fill="#175cd3"></circle>
+  <circle cx="310" cy="655" r="4" fill="#b45309"></circle>
+  <text x="107" y="860">O</text>
+  <text x="165" y="726">3p₁</text>
+  <text x="325" y="689">−p₂</text>
+  <text x="211" y="804">v</text>
+  <text x="360" y="654" class="note">Overshoot: (3, 3) in E</text>
+  <text x="360" y="730" class="note">Target: (3, 2) in E</text>
+  <text x="550" y="777">[v] relative to P = (3, −1)</text>
+  <text x="550" y="811" class="note">p₁ = e₁ + e₂; p₂ = e₂</text>
+  <text x="550" y="840" class="note">Same vector; different coefficients</text>
+</svg>
