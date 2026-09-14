@@ -22,9 +22,11 @@ Python examples will make the reasoning executable and inspectable.
 
 4. [What Exactly Is a Vector?](lectures/04-vectors-components-scaling/index.qmd) — Points, displacements, vector operations, and coordinate representations.
 
+5. [Direction and Its Standard Vector Representative](lectures/05-direction-and-standard-representatives/index.qmd) — Magnitude, orientation, shared directions, and why a standard representative is useful.
+
 ## Project status
 
-The first four conceptual lectures include executable Python companions. Automated checks validate Python formatting, semantic types, package imports, feature-space and spatial-vector relationships, and website rendering. PCA algorithms and their tests will follow as the lectures develop.
+The first five conceptual lectures include executable Python companions. Automated checks validate Python formatting, semantic types, package imports, feature-space and spatial-vector relationships, and website rendering. PCA algorithms and their tests will follow as the lectures develop.
 
 ## Source code
 
