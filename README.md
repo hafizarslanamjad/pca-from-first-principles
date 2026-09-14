@@ -11,10 +11,11 @@ Mathematical explanations and executable Python examples that build toward princ
 | 1. Mathematical representation | [Objects, properties, and meaningful numerical relationships](lectures/01-mathematical-representation/index.qmd) | [Labels versus measurements](examples/01_mathematical_representation.py) |
 | 2. Scalars and ordered measurements | [Values, feature schemas, and measurement roles](lectures/02-scalars-and-measurements/index.qmd) | [Semantically typed observations](examples/02_scalars_and_measurements.py) |
 | 3. Measurements become space | [Feature points, coordinates, and displacement](lectures/03-measurements-become-space/index.qmd) | [Explicit coordinate frames](examples/03_measurements_become_space.py) |
+| 4. Vectors, components, and scaling | [Displacements, composition, and scaling](lectures/04-vectors-components-scaling/index.qmd) | [Typed spatial vectors](examples/04_vectors_components_scaling.py) |
 
 ## Scope and status
 
-Lecture 1 establishes the distinction between physical objects and their numerical representations. Its companion demonstrates why identifier differences do not measure physical differences, while subtraction of corresponding measurements has a unit-specific interpretation. Lecture 2 distinguishes scalar values from ordered observations and introduces explicit semantic Python types. Lecture 3 adds typed point, coordinate, and displacement operations with tests of origin-shift invariance and frame compatibility. PCA algorithms and benchmarks are not implemented yet.
+Lecture 1 establishes the distinction between physical objects and their numerical representations. Its companion demonstrates why identifier differences do not measure physical differences, while subtraction of corresponding measurements has a unit-specific interpretation. Lecture 2 distinguishes scalar values from ordered observations and introduces explicit semantic Python types. Lecture 3 adds typed point, coordinate, and displacement operations with tests of origin-shift invariance and frame compatibility. Lecture 4 adds a separate spatial-vector model with compatible meter units, directed composition, uniform scaling, and relationship tests. Unit directions and normalization remain topics for the next lectures. PCA algorithms and benchmarks are not implemented yet.
 
 ## Reproduce the project
 

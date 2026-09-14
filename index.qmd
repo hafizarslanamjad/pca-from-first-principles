@@ -20,9 +20,11 @@ Python examples will make the reasoning executable and inspectable.
 
 3. [How Measurements Become a Space](lectures/03-measurements-become-space/index.qmd) — Dimensions, points, coordinates, reference frames, and displacement.
 
+4. [What Exactly Is a Vector?](lectures/04-vectors-components-scaling/index.qmd) — Points, displacements, vector operations, and coordinate representations.
+
 ## Project status
 
-The first three conceptual lectures include executable Python companions. Automated checks validate Python formatting, semantic types, package imports, feature-space relationships, and website rendering. PCA algorithms and their tests will follow as the lectures develop.
+The first four conceptual lectures include executable Python companions. Automated checks validate Python formatting, semantic types, package imports, feature-space and spatial-vector relationships, and website rendering. PCA algorithms and their tests will follow as the lectures develop.
 
 ## Source code
 
