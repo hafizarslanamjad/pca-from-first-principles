@@ -30,9 +30,11 @@ Python examples will make the reasoning executable and inspectable.
 
 8. [Lecture 8 — From Basis Decomposition to Matrix Multiplication](lectures/08-basis-decomposition-and-matrices/index.qmd)
 
+9. [Observations as Data Vectors](lectures/09-observations-as-data-vectors/index.qmd) — Stage 3 begins with measurement schemas, observation vectors, feature differences, and dataset rows and columns.
+
 ## Project status
 
-The first six conceptual lectures include executable Python companions. Automated checks validate Python formatting, semantic types, package imports, feature-space and spatial-vector relationships, and website rendering. PCA algorithms and their tests will follow as the lectures develop.
+The first 10 conceptual lectures include executable Python companions. Automated checks validate Python formatting, semantic types, package imports, feature-space and spatial-vector relationships, and website rendering. PCA algorithms and their tests will follow as the lectures develop.
 
 ## Source code
 
