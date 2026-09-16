@@ -1,0 +1,398 @@
+---
+title: "Dataset vs Feature Space"
+subtitle: "Stage 3 — Lecture 10"
+number-sections: false
+jupyter: python3
+format:
+  html:
+    css: lecture.css
+---
+
+# Stage 3 — Part 2: Dataset vs Feature Space, and Why More Observations Do Not Mean More Dimensions
+
+We already have the structure
+
+$$
+X= \begin{bmatrix} 10&4\\ 12&5\\ 9&3\\ 11&5 \end{bmatrix}.
+$$
+
+At this point, a very common cognitive mistake appears naturally:
+
+> “There are 4 rows and 2 columns. Does that mean the data is 4-dimensional, 2-dimensional, or somehow both?”
+
+The answer depends on **what object we are talking about**. That is the exact place where we need to separate roles.
+
+## 1. One observation has a certain number of descriptive slots
+
+Take one row:
+
+$$
+x_1= \begin{bmatrix} 10\\ 4 \end{bmatrix}.
+$$
+
+This one observation is described using two feature values: $\text{length},\quad \text{width}.$ So this observation needs two numerical coordinates to specify its location in the chosen feature representation. That is why the feature space is two-dimensional. Not because there are two columns visually. The deeper reason is:
+
+$$
+\boxed{ \text{two independently addressable feature quantities are needed to describe one observation}. }
+$$
+
+The columns merely store those two quantities. So: $x_1\in\mathbb R^2.$ Read this semantically as:
+
+> `x_1` is represented using two real-valued feature coordinates.
+
+## 2. Now add another observation
+
+Take:
+
+$$
+x_2= \begin{bmatrix} 12\\ 5 \end{bmatrix}.
+$$
+
+Does adding `x_2` create a third dimension? No. Why not? Because `x_2` is described using the same two kinds of quantities: $\text{length},\quad \text{width}.$ We did not invent a new feature. We merely observed another object under the same representation scheme. So both observations live in the same space: $x_1\in\mathbb R^2, \qquad x_2\in\mathbb R^2.$ Visually:
+
+```text
+width
+  ↑
+6 |
+5 |                      • x₂=(12,5)
+4 |                 • x₁=(10,4)
+3 |
+2 |
+1 |
+0 +--------------------------------→ length
+```
+
+Two observations are two **points** in one two-dimensional feature space. The number of points does not define the dimension of the space.
+
+## 3. This is the distinction we need
+
+The feature space answers:
+
+> What numerical degrees of freedom are available to describe one observation?
+
+The dataset answers:
+
+> Which observations have we actually collected?
+
+These are different questions. So:
+
+$$
+\boxed{ \text{feature space} \neq \text{dataset} }
+$$
+
+More explicitly:
+
+$$
+\boxed{ \text{feature space} = \text{set of possible feature representations} }
+$$
+
+while
+
+$$
+\boxed{ \text{dataset} = \text{finite collection of observed points in that space} }
+$$
+
+This is one of the most important distinctions before PCA.
+
+## 4. A map analogy, but with exact roles
+
+Imagine a city map. The map provides two positional dimensions: $\text{east-west},\quad \text{north-south}.$ Those define the coordinate space. Now suppose we mark 3 restaurants on the map. The map does not become 3-dimensional. Suppose we mark 100 restaurants. Still two-dimensional. Why? Because the number of marked locations changed. The coordinate system did not. That is the same distinction here. Our feature space: $(\text{length},\text{width})$ is analogous to the map's coordinate structure. Our observations are points placed into that structure. So:
+
+$$
+\boxed{ \text{more observations} \Rightarrow \text{more points} }
+$$
+
+not:
+
+$$
+\boxed{ \text{more observations} \Rightarrow \text{more dimensions} }
+$$
+
+## 5. Where does `n\times d` come from?
+
+Now suppose we use conventional notation: $X\in\mathbb R^{n\times d}.$ Do not read this yet as matrix dimensions only. Read the symbols by role: $n=\text{number of observations}$ $d=\text{number of features used to represent one observation}.$ So: $X\in\mathbb R^{n\times d}$ means:
+
+> we collected `n` observations, and every observation is represented by `d` numerical feature values.
+
+That is the semantics. The storage shape follows from that meaning. For our example: $n=4,\qquad d=2.$ Therefore: $X\in\mathbb R^{4\times2}.$ This does **not** mean each observation is four-dimensional. Each observation is still: $x_i\in\mathbb R^2.$ The `4` belongs to the **collection size**. The `2` belongs to the **representation size of each observation**. Programming analogy:
+
+```text
+X:
+    collection of 4 observations
+
+each observation:
+    structure containing 2 feature values
+```
+
+So:
+
+```text
+dataset size = 4
+observation representation size = 2
+```
+
+Those are different types of counts.
+
+## 6. Why matrix shape can mislead us
+
+The matrix:
+
+$$
+X= \begin{bmatrix} 10&4\\ 12&5\\ 9&3\\ 11&5 \end{bmatrix}
+$$
+
+has four rows. Purely syntactically, we can say: $\text{shape}(X)=(4,2).$ But syntax does not tell us ontology. The first axis means: $\text{which observation?}$ The second axis means: $\text{which feature?}$ So the indices in $X_{ij}$ have different semantic types: $i:\text{observation index}$ $j:\text{feature index}.$ Then: $X_{ij}$ means:
+
+> the value of feature `j` measured for observation `i`.
+
+This is extremely important for mathematical programming. The two indices are both integers computationally. But semantically: $i\neq j$ in role. They index different kinds of things. That is analogous to programming where two values may both be `int` but one is a `user_id` and one is a `product_id`. Same low-level type. Different semantic role.
+
+## 7. Why averaging along different axes asks different questions
+
+Now this distinction begins to pay off. Suppose:
+
+$$
+X= \begin{bmatrix} 10&4\\ 12&5\\ 9&3\\ 11&5 \end{bmatrix}.
+$$
+
+Take the first column:
+
+$$
+\begin{bmatrix} 10\\ 12\\ 9\\ 11 \end{bmatrix}.
+$$
+
+These are all values of the **same feature**: $\text{length}.$ So averaging them asks:
+
+> What is the average length across observations?
+
+That is semantically coherent:
+
+$$
+\bar{x}_{\text{length}} = \frac{10+12+9+11}{4} = 10.5.
+$$
+
+Now take the second column:
+
+$$
+\begin{bmatrix} 4\\ 5\\ 3\\ 5 \end{bmatrix}.
+$$
+
+Average:
+
+$$
+\bar{x}_{\text{width}} = \frac{4+5+3+5}{4} = 4.25.
+$$
+
+So the dataset center in feature coordinates will eventually become:
+
+$$
+\mu= \begin{bmatrix} 10.5\\ 4.25 \end{bmatrix}.
+$$
+
+We are not beginning Stage 4 yet. But notice what made this operation meaningful:
+
+> we aggregated across observations while preserving feature identity.
+
+That is the semantic meaning of a column-wise mean.
+
+## 8. Why averaging across a row is a different question
+
+Take observation 1:
+
+$$
+x_1= \begin{bmatrix} 10\\ 4 \end{bmatrix}.
+$$
+
+If we compute:
+
+$$
+\frac{10+4}{2}=7,
+$$
+
+what does `7` mean? If both quantities happen to be centimeters, the units do not immediately expose a contradiction. But semantically we have combined: $\text{length}$ and $\text{width}.$ The result is not automatically a meaningful physical property. What question would `7` answer? Without some explicit modeling reason, there may be none. So:
+
+$$
+\boxed{ \text{numerically legal} \not\Rightarrow \text{semantically meaningful} }
+$$
+
+This is one of the deepest recurring lessons in your learning framework. NumPy will happily calculate either direction. Mathematics does not ask only:
+
+> Can the machine perform this operation?
+
+It asks:
+
+> What relationship does this operation express?
+
+## 9. Now consider three features
+
+Suppose we add thickness: $[\text{length},\text{width},\text{thickness}].$ One observation becomes:
+
+$$
+x_1= \begin{bmatrix} 10\\ 4\\ 1 \end{bmatrix}.
+$$
+
+Now the feature space is: $\mathbb R^3.$ Why? Because one observation requires three feature coordinates. If we then collect 1,000 observations: $X\in\mathbb R^{1000\times3}.$ The feature space remains three-dimensional. We simply have 1,000 points in it. So:
+
+$$
+\boxed{ d = \text{dimension of the chosen feature representation} }
+$$
+
+while:
+
+$$
+\boxed{ n = \text{number of samples drawn or collected within that representation}. }
+$$
+
+This distinction will later protect us from misunderstanding PCA.
+
+## 10. A subtle point: feature dimension is chosen, not discovered yet
+
+Suppose we choose: $[\text{length},\text{width},\text{thickness}].$ Then formally our observations live in a three-feature representation. But perhaps in the manufactured objects: $\text{thickness}=0.1\times\text{length}$ for every component. Then thickness carries no independent variation beyond length. We may still write three numbers per observation:
+
+$$
+x_i= \begin{bmatrix} \text{length}\\ \text{width}\\ \text{thickness} \end{bmatrix}.
+$$
+
+So the **representation has three feature coordinates**. But the observed data may occupy only a lower-dimensional structure inside that three-dimensional feature space. This is the distinction we glimpsed at the end of Stage 2. Example: $X\in\mathbb R^{1000\times3}$ does not guarantee the dataset genuinely varies in three independent ways. That later becomes a central PCA question:
+
+> How many independently important directions of variation are actually present in these `d` measured coordinates?
+
+But we are not solving that yet. For now distinguish:
+
+$$
+\boxed{ \text{ambient feature dimension} }
+$$
+
+from:
+
+$$
+\boxed{ \text{structure actually occupied by the data}. }
+$$
+
+The first comes from our representation design. The second must be learned from the dataset. That separation is foundational for everything ahead.
+
+## 11. Why a dataset is not itself “the space”
+
+Suppose we only observe:
+
+$$
+x_1= \begin{bmatrix} 10\\ 4 \end{bmatrix}, \qquad x_2= \begin{bmatrix} 12\\ 5 \end{bmatrix}.
+$$
+
+Our dataset contains only two points. But the feature space includes possible observations we have never seen:
+
+$$
+\begin{bmatrix} 8\\ 2 \end{bmatrix}, \qquad \begin{bmatrix} 15\\ 6 \end{bmatrix}, \qquad \begin{bmatrix} 10.7\\ 4.9 \end{bmatrix},
+$$
+
+and infinitely many others. So:
+
+$$
+\boxed{ \text{dataset} \subset \text{feature space} }
+$$
+
+conceptually. The feature space defines what representations are possible. The dataset gives actual observed instances. This resembles programming:
+
+```text
+type/schema:
+    defines allowed structure
+
+instances:
+    actual values that exist
+```
+
+Feature space is closer to the allowed state space. Dataset is the collection of realized states.
+
+## 12. This prepares an important question: what structure do the observations collectively show?
+
+Once we have many points in a shared feature space, we can stop asking only:
+
+> What is observation `i`?
+
+and begin asking:
+
+> What do the observations collectively reveal?
+
+That is a major change of scope. Before: $x_i$ our object of attention was one observation. Now: $X$ our object of attention becomes the dataset as a whole. This changes the kinds of questions available. For one observation, we can ask:
+
+- what are its feature values?
+- where is it located?
+
+For the dataset, we can ask:
+
+- where are observations concentrated?
+- how much do they vary?
+- which features vary together?
+- are there recurring directions?
+- does the dataset occupy all of feature space or mostly a smaller structure?
+
+These are not properties of one `x_i`. They are **dataset-level properties**. This distinction will later separate:
+
+$$
+\boxed{ \text{observation-specific coordinate} }
+$$
+
+from:
+
+$$
+\boxed{ \text{dataset-wide learned structure}. }
+$$
+
+That distinction becomes critical in PCA and embeddings.
+
+## 13. Stage 3 semantic audit
+
+For $X\in\mathbb R^{n\times d},$ **Object:** a dataset consisting of `n` observations. **Each row:** one observation. **Each column:** one selected feature measured across observations. **Reference/representation scheme:** the ordered set of `d` feature definitions, including their units and meanings. **Feature space:** the space of possible `d`-feature representations. **Dataset:** the particular `n` observed points. **Why is the feature space** **`d`****-dimensional?** Because each observation requires `d` feature coordinates under the chosen representation. **Why does adding rows not increase dimension?** Because adding observations adds more instances under the same representation scheme; it does not add new feature directions. **What information does** **`X`** **retain?** The selected feature values for the collected observations. **What does it discard?** Properties not measured, and objects never observed.
+
+## 14. The key chain to retain
+
+The whole Stage 3 structure now looks like:
+
+$$
+\boxed{ \text{real object} \rightarrow \text{selected features} \rightarrow \text{feature values} \rightarrow \text{observation vector }x_i }
+$$
+
+Then:
+
+$$
+\boxed{ \text{many observation vectors} \rightarrow \text{dataset }X }
+$$
+
+And separately:
+
+$$
+\boxed{ \text{chosen feature scheme} \rightarrow \text{feature space} }
+$$
+
+So:
+
+$$
+\boxed{ x_i=\text{one point in feature space} }
+$$
+
+while:
+
+$$
+\boxed{ X=\text{collection of observed points in that space}. }
+$$
+
+This distinction is now sufficient to move into Stage 4. The next problem is no longer “what is an observation?” It becomes:
+
+> **Given many observations scattered through the same feature space, what should we use as a common reference point if we want to describe how each observation differs from the dataset as a whole?**
+
+That need will naturally produce the **mean as a reference point**, and from there **centering** will emerge as a reference change rather than as the mechanical instruction “subtract the mean.”
+
+## Python companion
+
+The following executable companion supplements the supplied lecture text. It reuses Lecture 9's records, distinguishes observation count from feature count, and reproduces the column means and the row-wise value from the examples. The three-feature example adds thickness under its own centimeter role. Static annotations distinguish roles; runtime checks enforce the explicitly coded numerical restrictions. No centering or PCA algorithm is introduced.
+
+```{python}
+#| echo: false
+from pathlib import Path
+import runpy
+
+_ = runpy.run_path(
+    str(Path("examples/10_dataset_and_feature_space.py")),
+    run_name="__main__",
+)
+```
