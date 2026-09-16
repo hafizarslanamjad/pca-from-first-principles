@@ -1,0 +1,510 @@
+---
+title: "Observations as Data Vectors"
+subtitle: "Stage 3 — Lecture 9"
+number-sections: false
+jupyter: python3
+---
+
+# Stage 3 — Observations as Data Vectors
+
+We now leave pure geometric coordinate systems temporarily and move toward the thing we ultimately care about: **data**. We need to construct why a real-world observation becomes something that mathematics can eventually treat as a **vector**.
+
+## 1. Start with an object, not numbers
+
+Suppose a factory manufactures metal components and suppose that there is one physical component exists in the world:
+
+```text
+Physical component A
+```
+
+The component itself has many properties:
+
+- mass,
+- length,
+- width,
+- temperature,
+- color,
+- surface roughness,
+- chemical composition,
+- manufacturing time,
+- microscopic defects,
+- and countless others.
+
+But our computer cannot receive:
+
+> “the complete physical reality of component A.”
+
+Therefore, we have to decide what aspects of the object are relevant to our problem.
+
+Suppose our task is simple quality monitoring. To perform quality monitoring, suppose that we choose to measure only:
+
+$$
+\text{length}
+$$
+
+and
+
+$$
+\text{width}.
+$$
+
+Already something important has happened. We have not changed the physical object. We have chosen a **representation policy**. It is the real world that contains the object and we can decide which observable properties will stand in for our real world object mathematically. So:
+
+$$
+\boxed{ \text{physical object} \rightarrow \text{selected measurable properties} }
+$$
+
+This is the first step toward data.
+
+## 2. The measurement scheme creates roles before it creates numbers
+
+Suppose our measurement scheme is:
+
+$$
+[\text{length in cm},\ \text{width in cm}]
+$$
+
+This is not yet an observation. It is a **schema**. In programming terms, it is closer to a type definition than to an instance. You could imagine:
+
+```python
+ComponentMeasurement:
+    position 1 -> length_cm
+    position 2 -> width_cm
+```
+
+The scheme determines what each numerical position is allowed to mean. Now, let us say that when we measured our component `A` we found out its
+
+$$
+\text{length}=10\text{ cm}, \qquad \text{width}=4\text{ cm}.
+$$
+
+We can represent these measurements as a column vector as follows:
+
+$$
+x_A= \begin{bmatrix} 10\\ 4 \end{bmatrix}.
+$$
+
+means:
+
+> Component `A`, under our chosen measurement scheme, has length `10` cm and width `4` cm.
+
+The physical component is not the column of numbers. Rather:
+
+$$
+\boxed{ A \neq x_A. }
+$$
+
+The relationship we constructed using our observation is instead:
+
+$$
+\boxed{ A \xrightarrow{\text{measurement scheme}} x_A. }
+$$
+
+That distinction must remain stable throughout machine learning.
+
+## 3. Why package the measurements together?
+
+We could keep writing $\text{length}(A)=10,$ and $\text{width}(A)=4.$ So, why do we need to combine these measurements into $\begin{bmatrix} 10\\ 4 \end{bmatrix}?$
+
+The reason is that we want one mathematical object to stand for the **selected measurable state of one observation**. The representation $x_A= \begin{bmatrix} 10\\ 4 \end{bmatrix}$ lets us refer to the observation's measured properties collectively. That becomes increasingly important when we have $10,100,10{,}000$ observations and perhaps hundreds of features. Instead of treating each measurement independently, we can say:
+
+> Here is one observation represented by its feature values.
+
+This is the constructive need behind a **data vector**.
+
+## 4. What is a feature?
+
+Now, we should define the **feature** carefully because machine learning uses the word constantly. A **feature** is not merely “a column in a dataset.” In our example $\text{length}$ is a measurable property we have deliberately selected to represent something about the component. So a useful first definition is:
+
+$$
+\boxed{ \text{feature} = \text{a selected measurable attribute used as part of an observation's representation}. }
+$$
+
+Thus $x_A= \begin{bmatrix} 10\\ 4 \end{bmatrix}$ contains two feature values. The **features** are $\text{length}$ and $\text{width}.$ The **feature values for observation** **`A`** are $10,$ and $4.$ Do not collapse those two concepts.The feature is the role/property. The feature value is the measurement obtained for one observation. Programming analogy:
+
+```text
+field name      -> length_cm
+field value     -> 10
+```
+
+Similarly:
+
+```text
+feature         -> length
+feature value   -> 10 cm
+```
+
+## 5. Why can this be viewed geometrically?
+
+Our representation scheme has two independently addressable numerical components. We can therefore establish two feature directions. Call them temporarily:
+
+$$
+e_1=\text{length direction}, \qquad e_2=\text{width direction}.
+$$
+
+Then $x_A= 10e_1+4e_2.$ This has the same structural form we learned in Stage 2 where we saw that $v=z_1p_1+z_2p_2.$ But the semantics have changed. Previously `e_1,e_2` represented spatial directions/basis vectors such as horizontal and vertical displacement. Here they represent **feature dimensions**. We are borrowing the coordinate machinery of geometry to represent measurements. So:
+
+$$
+10e_1
+$$
+
+means:
+
+> value `10` along the length feature dimension,
+
+and
+
+$$
+4e_2
+$$
+
+means:
+
+> value `4` along the width feature dimension.
+
+Together $x_A=10e_1+4e_2.$ The observation can therefore be placed in a two-dimensional **feature space**.
+
+## 6. Feature space is not physical space
+
+This is a major semantic transition. Suppose:
+
+$$
+x_A= \begin{bmatrix} 10\\ 4 \end{bmatrix}.
+$$
+
+We may draw:
+
+```text
+width
+  ↑
+5 |
+4 |                • A = (10,4)
+3 |
+2 |
+1 |
+0 +--------------------------------→ length
+   0   2   4   6   8   10
+```
+
+The point at `(10,4)` is not the physical metal component. It is the location of the **vector representation of that component** in the feature space we constructed. So there are now several ontological layers:
+
+$$
+\boxed{ \text{physical component} \rightarrow \text{measurements} \rightarrow \text{coordinate representation} \rightarrow \text{point in feature space}. }
+$$
+
+The coordinates $(10,4)$ of our vector is the provide the numerical representation. The corresponding point is the **geometric object** located at those coordinates in our feature space.
+
+## 7. What is the reference system now?
+
+Previously a geometric coordinate system required:
+
+- an origin,
+- reference directions,
+- scale.
+
+The same issue exists here. For length: $0\text{ cm}$ provides the numerical zero of that measurement scale. For width: $0\text{ cm}$ provides its zero. The two feature axes give the reference dimensions. The unit is centimeters. So:
+
+$$
+x_A= \begin{bmatrix} 10\\ 4 \end{bmatrix}
+$$
+
+is meaningful only because we know:
+
+$$
+\boxed{ \begin{array}{l} \text{position 1 means length}\\ \text{position 2 means width}\\ \text{values are measured in cm}\\ \text{zero and scale are defined by those measurement systems}. \end{array} }
+$$
+
+Without this reference information $[10,4]$ is merely an ordered pair of numbers.
+$$
+\boxed{ \text{numerical structure alone does not supply semantic meaning}. }
+$$
+
+## 8. Add a second observation
+
+Now manufacture another component `B`:
+
+$$
+\text{length}=12\text{ cm}, \qquad \text{width}=5\text{ cm}.
+$$
+
+Then:
+
+$$
+x_B= \begin{bmatrix} 12\\ 5 \end{bmatrix}.
+$$
+
+Now our feature space contains two represented observations:
+
+```text
+width
+  ↑
+6 |
+5 |                       • B=(12,5)
+4 |                  • A=(10,4)
+3 |
+2 |
+1 |
+0 +--------------------------------→ length
+    0   2   4   6   8   10   12
+```
+
+Notice what is common between them. Both `x_A` and `x_B` use the **same representation scheme**. That means position 1 means the same thing for both $\text{length}.$ Position 2 also means the same thing $\text{width}.$ This shared reference is what later makes comparison meaningful. For example:
+
+$$
+x_B-x_A = \begin{bmatrix} 12\\ 5 \end{bmatrix} - \begin{bmatrix} 10\\ 4 \end{bmatrix} = \begin{bmatrix} 2\\ 1 \end{bmatrix}.
+$$
+
+What happened semantically? Before subtraction $x_A,\ x_B$ were **positions of observations in feature space**. After subtraction $x_B-x_A$ is no longer a position. It is a **difference/displacement between their feature representations**. Its components mean $2\text{ cm more length}$ and $1\text{ cm more width}.$ So the operation changed the object's semantic role:
+
+$$
+\boxed{ \text{observation position} \rightarrow \text{difference between observations}. }
+$$
+
+## 9. Why subtraction was legitimate here
+
+Our framework requires us not merely to calculate. Why can we subtract these? Because corresponding components share:
+
+1. the same feature identity;
+2. the same units;
+3. the same measurement reference.
+
+So $12\text{ cm}-10\text{ cm}=2\text{ cm}$ compares length with length. And $5\text{ cm}-4\text{ cm}=1\text{ cm}$ compares width with width. We did not subtract $12\text{ cm length}-4\text{ cm width}.$ That would be semantically wrong. Vector subtraction here means:
+
+> compare corresponding features under the shared representation scheme.
+
+This is an important principle for mathematical programming later: array operations are semantically meaningful only when array positions have compatible roles.
+
+## 10. Now introduce several observations
+
+Suppose we measure four components:
+
+$$
+x_1= \begin{bmatrix} 10\\ 4 \end{bmatrix}, \qquad x_2= \begin{bmatrix} 12\\ 5 \end{bmatrix}, \qquad x_3= \begin{bmatrix} 9\\ 3 \end{bmatrix}, \qquad x_4= \begin{bmatrix} 11\\ 5 \end{bmatrix}.
+$$
+
+Now something new has appeared. Previously we had one observation represented by one vector. Now we have:
+
+$$
+\boxed{\text{a collection of observations}.}
+$$
+
+This collection is a **dataset**. The dataset and one data vector are not the same type of object.
+
+Programming analogy:
+
+```text
+one ComponentMeasurement
+```
+
+versus:
+
+```text
+list[ComponentMeasurement]
+```
+
+Mathematically $x_i$ means one observation whereas something like $X$ will eventually mean the collection of all observations. That distinction must remain stable.
+
+## 11. Why a matrix naturally appears
+
+We have four observations, each containing the same two features. Instead of writing four vectors separately, we can organize them together:
+
+$$
+X= \begin{bmatrix} 10&4\\ 12&5\\ 9&3\\ 11&5 \end{bmatrix}.
+$$
+
+Now we need to be very careful because matrix notation alone does not tell us what the rows and columns mean. In this convention:
+
+$$
+\boxed{\text{one row}=\text{one observation}}
+$$
+
+and:
+
+$$
+\boxed{\text{one column}=\text{one feature across observations}.}
+$$
+
+So:
+
+$$
+X= \begin{array}{c} \\[-5pt] \text{obs 1}\\ \text{obs 2}\\ \text{obs 3}\\ \text{obs 4} \end{array} \left[ \begin{array}{cc} \text{length}&\text{width}\\ 10&4\\ 12&5\\ 9&3\\ 11&5 \end{array} \right].
+$$
+
+Ignoring the illustrative labels inside the matrix, the semantic structure is:
+
+```text
+            FEATURES
+          length  width
+            ↓      ↓
+obs 1  →   10      4
+obs 2  →   12      5
+obs 3  →    9      3
+obs 4  →   11      5
+```
+
+This arrangement did not arise because “machine learning uses matrices.” It arose because we have a repeated rectangular structure:
+
+$$
+\boxed{ \text{many observations} \times \text{same set of features}. }
+$$
+
+A matrix is a natural representation for that structure.
+
+## 12. Row and column now have radically different meanings
+
+This is worth stopping on. Take the first row $[10,4].$ It means:
+
+> all selected feature values for observation 1.
+
+Now take the first column:
+
+$$
+\begin{bmatrix} 10\\ 12\\ 9\\ 11 \end{bmatrix}.
+$$
+
+It means:
+
+> the length measurement across all observations.
+
+These are completely different mathematical questions. A **row** moves across features while keeping the observation fixed. A **column** moves across observations while keeping the feature fixed. That distinction can help you control what averaging, variance, covariance, and PCA mean in mathematical problems mean. For example, if we average the first column, we ask:
+
+> What is the average length across components?
+
+If we somehow averaged a row, we would be combining length and width of one object—an entirely different question and possibly not meaningful depending on the features. So axis choice in code is not merely syntax. It corresponds to a semantic question. This will matter when we encounter:
+
+```python
+X.mean(axis=0)
+```
+
+later. We should eventually be able to read that not as “NumPy axis zero,” but as:
+
+> hold feature identity fixed, aggregate over observations.
+
+## 13. One observation vector versus one feature vector
+
+We now have two different vector-like objects inside the same matrix. For observation `i`:
+
+$$
+x_i= \begin{bmatrix} x_{i1}\\ x_{i2} \end{bmatrix}
+$$
+
+contains multiple features for one observation. But the length column:
+
+$$
+\begin{bmatrix} 10\\ 12\\ 9\\ 11 \end{bmatrix}
+$$
+
+contains one feature across multiple observations. Both are lists of numbers. But their ontology differs. This is precisely the kind of distinction that raw array notation hides. We can think:
+
+```text
+Observation vector:
+    scope = one object
+    entries = different features
+
+Feature column:
+    scope = one feature
+    entries = different observations
+```
+
+## 14. Why `x_i` is called a data vector
+
+Now we can justify the terminology rather than merely announcing it. Each observation is represented using the same ordered feature dimensions:
+
+$$
+x_i= \begin{bmatrix} x_{i1}\\ x_{i2}\\ \vdots\\ x_{id} \end{bmatrix}.
+$$
+
+The entries act as coordinates relative to the chosen feature dimensions. Therefore the numerical representation of one observation can participate in vector-space operations when those operations are semantically justified. This is why we call it a **data vector** or **feature vector**. But we should retain the hierarchy:
+
+$$
+\boxed{ \text{physical observation} \neq \text{measurement values} \neq \text{feature vector representation}. }
+$$
+
+The vector is our chosen mathematical representation of the observation.
+
+## 15. What information did we retain and discard?
+
+Take component `A`. The physical object contains enormous information. Our representation:
+
+$$
+x_A= \begin{bmatrix} 10\\ 4 \end{bmatrix}
+$$
+
+retains $\text{length and width}.$ It discards $\text{color, material composition, temperature, surface defects, manufacturing history, etc.}$ Therefore the feature vector is already a form of **information selection**. This matters deeply for machine learning. A model cannot discover information that the representation never exposes unless that information leaves some detectable consequence in the selected measurements. So representation is not neutral. It determines what relationships are available for later mathematics. That principle will eventually connect directly to embeddings:
+
+$$
+\boxed{ \text{representation determines which relationships can become geometrically visible}. }
+$$
+
+## 16. Stage 3 semantic audit so far
+
+For
+
+$$
+x_i= \begin{bmatrix} 10\\ 4 \end{bmatrix},
+$$
+
+**Object:** one physical component.
+
+**Reference:** selected feature schema—length and width—with defined units and ordering.
+
+**Representation:** numerical feature vector `x_i`.
+
+**What was extracted from reality?** Two measurements.
+
+**What was retained?** Length and width.
+
+**What was discarded?** Other properties of the physical object.
+
+**What does** **`x_i`** **mean?** The selected numerical description of observation `i` under our chosen feature scheme.
+
+For
+
+$$
+X= \begin{bmatrix} 10&4\\ 12&5\\ 9&3\\ 11&5 \end{bmatrix},
+$$
+
+the object has changed. `X` does not represent one component. It represents the **dataset**. Its structure means:
+
+$$
+\boxed{ X_{ij} = \text{value of feature }j \text{ for observation }i. }
+$$
+
+This notation will be very important. The first index $i$ answers:
+
+> which observation?
+
+The second $j$ answers:
+
+> which feature?
+
+So $x_{32}=3$ means:
+
+> feature 2—width—for observation 3 is `3` cm.
+
+That is the semantic type information hidden inside the indices.
+
+## 17. Where Stage 3 should continue
+
+The next part of Stage 3 needs to make one distinction exceptionally solid:
+
+$$
+\boxed{ \text{dataset as a collection of observations} \quad\text{versus}\quad \text{feature space in which those observations live}. }
+$$
+
+Those are easy to collapse mentally because both may be represented using the same numbers. We also need to examine carefully what `n` observations and `d` features mean in $X\in\mathbb R^{n\times d},$ why the dataset has `n` rows without becoming “`n`-dimensional,” why the feature space has dimension `d`, and why adding more observations does **not** add new dimensions. That is the natural next problem before Stage 4 introduces the mean as a new reference point.
+
+## Python companion
+
+The following companion is supplementary to the supplied lecture text.
+
+```{python}
+#| echo: false
+from pathlib import Path
+import runpy
+
+_ = runpy.run_path(
+    str(Path("examples/09_observations_as_data_vectors.py")),
+    run_name="__main__",
+)
+```

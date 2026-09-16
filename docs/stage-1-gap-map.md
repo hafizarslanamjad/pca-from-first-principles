@@ -44,6 +44,12 @@ The lecture concludes by distinguishing active transformations from passive chan
 
 The lecture first interprets multiplication as a weighted combination of columns, then derives row-by-column arithmetic by collecting contributions to each output coordinate. It reverses the question to extract coordinates and constructs the example's inverse from the equations already derived. The orthonormal inverse–transpose relationship is introduced as a later connection requiring dot-product and projection reasoning, rather than treated as established understanding.
 
+## Lecture 9: Observations as Data Vectors — Stage 3 Begins
+
+[Lecture 9 — Observations as Data Vectors](../lectures/09-observations-as-data-vectors/index.qmd) begins with physical components and an ordered length–width measurement schema. It constructs observation vectors, gives feature axes explicit numerical meanings, and distinguishes those axes from spatial directions. Matching-feature subtraction produces a signed difference rather than another absolute observation.
+
+The four supplied observations become rows of a dataset matrix through explicit transposition of their column representations. Rows hold observations fixed; columns hold features fixed. The lecture preserves the distinction between selected information and the full physical object, and ends before centering. The next topic is the distinction between the dataset and its ambient feature space.
+
 ## Conceptual Gap Map
 
 The entries below identify where explanations are provided. They are a reading guide, not a record of demonstrated mastery.
@@ -84,6 +90,12 @@ The entries below identify where explanations are provided. They are a reading g
 | How does a geometric basis differ from its numerical matrix? | Lecture 8: P names the basis; A stores its coordinate columns relative to E |
 | How does coordinate extraction reverse reconstruction? | Lecture 8: derive the inverse map from the coordinate equations |
 | When can transpose replace inverse? | Lecture 8 states the square orthonormal case and gives an oblique counterexample; geometric justification remains for later dot-product work |
+| How does a physical object become a data vector? | Lecture 9: select features, define the schema, then collect values |
+| How do feature axes differ from physical directions? | Lecture 9: numerical length–width feature coordinates |
+| What does subtracting two observation representations mean? | Lecture 9: target minus reference in matching features |
+| Why do column-form observations become dataset rows? | Lecture 9: explicit transposition under an observations-by-features convention |
+| How do an observation vector and a feature column differ? | Lecture 9: fix one observation versus one feature |
+| What information is discarded before learning begins? | Lecture 9: measurement selection versus value-preserving matrix organization |
 
 ## Assumptions to Carry Forward
 
@@ -99,9 +111,13 @@ A basis vector has a scale as well as an orientation. Coordinates specify signed
 
 The Lecture 7 derivation first uses a dimensionless numerical model, then explicitly restores meters for the Python companion. The existing `SpatialVector` stores displacement components in the fixed orthonormal spatial frame; the new coordinate representation records signed coefficients together with their basis. Static annotations express these roles, while runtime checks enforce selected numerical invariants rather than a general physical-units system.
 
-## Continuing Stage 2
+## Continuing Stage 3
 
-Lectures 4–6 cover the planned Stage 1 material on vectors, direction representatives, normalization, and the reasoning behind the associated algebra. Lecture 7 begins Stage 2 with origins, basis-relative coordinates, and a worked change of basis. Lecture 8 expresses that reconstruction through matrix multiplication and derives the reverse coordinate map for the same example.
+Lectures 4–6 cover the planned Stage 1 material on vectors, direction representatives, normalization, and the reasoning behind the associated algebra.
+
+Lecture 7 begins Stage 2 with origins, basis-relative coordinates, and a worked change of basis. Lecture 8 expresses that reconstruction through matrix multiplication and derives the reverse coordinate map for the same example.
+
+Lecture 9 now begins Stage 3 with observations and dataset layout. Dataset size versus feature-space dimension remains the next question, before mean-based centering. Coverage does not establish demonstrated mastery.
 
 Subsequent lectures can develop why dot products and projections extract coefficients in orthonormal bases and how reference directions are selected in PCA. Lecture 8 introduces the relevant inverse–transpose identity, but its geometric justification still requires its own development.
 
