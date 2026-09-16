@@ -19,6 +19,7 @@ Lectures 1–6 establish Stage 1 foundations. Lectures 7–8 develop Stage 2: co
 | 7. Coordinates and reference systems | [Origins, basis-relative coefficients, and one vector in two bases](lectures/07-coordinates-and-reference-systems/index.qmd) | [Typed coordinates and reconstruction](examples/07_coordinates_and_reference_systems.py) |
 | 8. Basis decomposition and matrix multiplication | [Scaled columns, coordinate reconstruction, and inverse questions](lectures/08-basis-decomposition-and-matrices/index.qmd) | [Typed coordinate matrices](examples/08_basis_decomposition_and_matrices.py) |
 | 9. Observations as data vectors | [Measurement schemas, feature space, and dataset structure](lectures/09-observations-as-data-vectors/index.qmd) | [Typed observations and dataset layout](examples/09_observations_as_data_vectors.py) |
+| 10. Dataset vs feature space | [Why more observations do not add feature dimensions](lectures/10-dataset-and-feature-space/index.qmd) | [Typed counts and feature-wise means](examples/10_dataset_and_feature_space.py) |
 
 The [reading-order and conceptual-gap document](docs/stage-1-gap-map.md) explains the prerequisites and where recurring learning questions are addressed. Coverage identifies available explanations; it does not establish demonstrated mastery.
 
@@ -33,6 +34,8 @@ Lecture 7 begins Stage 2 by separating the roles of origins, basis vectors, and 
 Lecture 8 develops matrix–vector multiplication from a weighted combination of basis-coordinate columns. It derives row-by-column arithmetic, constructs the worked example's inverse from its coordinate equations, and distinguishes a geometric basis from its numerical matrix representation. The companion labels the input and output bases of each coordinate map and checks consistency with Lecture 7.
 
 Lecture 9 constructs length–width observation records before arranging them into a dataset matrix. It distinguishes physical components from feature-space representations, observation positions from signed differences, and observation rows from feature columns. The companion reuses the existing length types and exports an explicitly ordered numerical matrix.
+
+Lecture 10 distinguishes dataset size from feature-space dimension and reproduces the feature-wise means while keeping observation and feature roles explicit. Its source text and notation are preserved with compact paragraph formatting.
 
 PCA algorithms and benchmarks are not implemented yet. The Lecture 7 PCA preview introduces the roles of reference directions and observation-specific coefficients; learning those directions and performing dimensionality reduction remain later topics.
 

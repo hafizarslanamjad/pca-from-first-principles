@@ -50,6 +50,10 @@ The lecture first interprets multiplication as a weighted combination of columns
 
 The four supplied observations become rows of a dataset matrix through explicit transposition of their column representations. Rows hold observations fixed; columns hold features fixed. The lecture preserves the distinction between selected information and the full physical object, and ends before centering. The next topic is the distinction between the dataset and its ambient feature space.
 
+## Lecture 10: Dataset vs Feature Space
+
+[Lecture 10 — Dataset vs Feature Space](../lectures/10-dataset-and-feature-space/index.qmd) distinguishes n observations from d feature coordinates, compares aggregation across observations with aggregation across features, and introduces the distinction between ambient representation size and the structure occupied by the data. It preserves the supplied examples and notation. The next question is the mean as a common reference and centering as a reference change.
+
 ## Conceptual Gap Map
 
 The entries below identify where explanations are provided. They are a reading guide, not a record of demonstrated mastery.
@@ -97,6 +101,10 @@ The entries below identify where explanations are provided. They are a reading g
 | How do an observation vector and a feature column differ? | Lecture 9: fix one observation versus one feature |
 | What information is discarded before learning begins? | Lecture 9: measurement selection versus value-preserving matrix organization |
 
+| Why do more observations not add feature dimensions? | Lecture 10: n counts observations; d counts descriptive slots |
+| How do averaging axes change the question? | Lecture 10: preserve feature identity or combine features within one observation |
+| Does d stored features imply d independent variations? | Lecture 10: thickness tied to length retains a third slot but constrains the data |
+
 ## Assumptions to Carry Forward
 
 The Stage 1 spatial magnitude and normalization examples use perpendicular, equally scaled axes with compatible units. These examples do not justify treating length and mass as interchangeable quantities or adding their squares to obtain a physical distance. Choosing a metric or scaling heterogeneous features remains a modeling question to revisit when developing PCA.
@@ -122,3 +130,5 @@ Lecture 9 now begins Stage 3 with observations and dataset layout. Dataset size 
 Subsequent lectures can develop why dot products and projections extract coefficients in orthonormal bases and how reference directions are selected in PCA. Lecture 8 introduces the relevant inverse–transpose identity, but its geometric justification still requires its own development.
 
 Each new derivation should state its goal, explain why its transformations serve that goal, and identify what information is preserved or discarded. Coverage of a topic does not establish permanent mastery; earlier explanations should be revisited when a new application exposes another gap.
+
+Lecture 10 covers the dataset-size versus feature-dimension question anticipated in Lecture 9. The transition now leads to Stage 4: the mean as a reference point. Coverage remains distinct from demonstrated mastery.
