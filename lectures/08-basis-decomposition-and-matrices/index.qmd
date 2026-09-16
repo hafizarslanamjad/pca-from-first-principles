@@ -1,0 +1,561 @@
+---
+title: "From Basis Decomposition to Matrix Multiplication"
+subtitle: "Stage 2 — Lecture 8"
+number-sections: false
+jupyter: python3
+---
+
+## 1. Establish the fixed basis first
+
+Before introducing a matrix, we need to establish the geometric objects and the reference system used to describe them. Work in a two-dimensional Euclidean plane and choose two perpendicular unit vectors: $e_1$ points horizontally to the right, and $e_2$ points vertically upward. Together, in that order, they form the fixed basis $E=(e_1,e_2).$ A basis provides reference vectors from which other vectors can be constructed by scaling and addition. The basis vectors $e_1$ and $e_2$ of forming basis $E$ are therefore,
+
+$$
+e_1=
+\begin{bmatrix}
+1\\
+0
+\end{bmatrix},
+\qquad
+e_2=
+\begin{bmatrix}
+0\\
+1
+\end{bmatrix}.
+$$
+
+Now choose the particular vector $v=3e_1+2e_2.$ It is the displacement constructed from three rightward reference steps and two upward reference steps. Its final representation in our fixed basis is
+
+$$
+[v]_E=
+\begin{bmatrix}
+3\\
+2
+\end{bmatrix}.
+$$
+
+We will keep this vector fixed while developing another way to describe its construction.
+
+## 2. Build the new reference vectors from the fixed basis
+
+Instead of using the horizontal and vertical reference vectors directly, we can also chose to construct new basis vectors using $E=(e_1,e_2).$ For example $p_1=e_1+e_2.$ $p_1$ therefore contributes one rightward step and one upward step. It points diagonally upward and rightward. Expressed in the fixed basis,
+
+$$
+[p_1]_E
+=
+[e_1]_E+[e_2]_E
+=
+\begin{bmatrix}
+1\\
+0
+\end{bmatrix}
++
+\begin{bmatrix}
+0\\
+1
+\end{bmatrix}
+=
+\begin{bmatrix}
+1\\
+1
+\end{bmatrix}.
+$$
+
+Similarly we can choose to create a second new basis vector $p_2$ as equal to $e_2$:
+
+$$
+p_2=e_2,
+\qquad
+[p_2]_E=
+\begin{bmatrix}
+0\\
+1
+\end{bmatrix}.
+$$
+
+We can choose to name our new basis vectors to be $P=(p_1,p_2).$ The vectors $p_1$ and $p_2$ are not parallel, so they form a basis of the plane. Every vector in this plane can be expressed uniquely as a combination of them. They are not, however, perpendicular unit vectors. Because,
+
+$$
+\|p_1\|=\sqrt{1^2+1^2}=\sqrt2,
+\qquad
+\|p_2\|=1.
+$$
+
+This relationship will become the content of our matrix. Now we will develop the relationship where $v=3e_1+2e_2.$ is equal to $v=Az$ 
+
+## 3. Find the coefficients that reconstruct the same vector
+
+Let us start with our vector $v=3e_1+2e_2.$ But now we choose that we want to construct $v$ using the basis $P$ instead of basis $E$. Therefore the next question would be how many copies of $p_1$ and $p_2$ construct $v$. Since we do not know how many copies therefore we introduce unknown signed coefficients $z_1$ and $z_2$:
+
+$$
+v=z_1p_1+z_2p_2.
+$$
+
+Substitute the definitions of the new reference vectors:
+
+$$
+v=z_1(e_1+e_2)+z_2e_2.
+$$
+
+Distribution exposes the contribution made along each original reference vector, and grouping collects the total upward contribution:
+
+$$
+v=z_1e_1+z_1e_2+z_2e_2
+  =z_1e_1+(z_1+z_2)e_2.
+$$
+
+In order to find the values for $z_1$ and $z_2$ we can compare our new expression $v=z_1p_1+z_2p_2 $with the old one $v=3e_1+2e_2.$
+
+$$
+3e_1+2e_2 = z_1e_1+(z_1+z_2)e_2
+$$
+
+This will give us $z_1=3,$ and $z_1+z_2=2.$ Substituting the first result into the second and subtracting three isolates the remaining coefficient:
+
+$$
+3+z_2=2,
+\qquad
+z_2=-1.
+$$
+
+Consequently,
+
+$$
+v=3p_1-p_2,
+\qquad
+[v]_P=
+\begin{bmatrix}
+3\\
+-1
+\end{bmatrix}.
+$$
+
+The geometry explains the negative sign. Three copies of $p_1$ contribute three rightward steps and three upward steps. Our target needs only two upward steps, so subtracting one copy of $p_2$ removes the excess. This reconstructs the same vector, rather than changing it.
+
+## 4. Analyze the relationship, before introducing a matrix
+
+Our next question is how matrix multiplication in $v=Az$ packages the reconstruction relationship $v=z_1p_1+z_2p_2.$ To perform this construction numerically, represent all contributions in the same fixed basis $E$:
+
+$$
+[v]_E=z_1[p_1]_E+z_2[p_2]_E.
+$$
+
+Why does this preserve the construction? Scaling a vector scales each of its basis coefficients, and adding vectors adds their corresponding coefficients. Taking coordinates in one fixed basis therefore preserves vector addition and scalar multiplication. For example, using our numbers,
+
+$$
+[v]_E
+=
+3
+\begin{bmatrix}
+1\\
+1
+\end{bmatrix}
++
+(-1)
+\begin{bmatrix}
+0\\
+1
+\end{bmatrix}.
+$$
+
+Scale each column:
+
+$$
+3
+\begin{bmatrix}
+1\\
+1
+\end{bmatrix}
+=
+\begin{bmatrix}
+3\\
+3
+\end{bmatrix},
+\qquad
+(-1)
+\begin{bmatrix}
+0\\
+1
+\end{bmatrix}
+=
+\begin{bmatrix}
+0\\
+-1
+\end{bmatrix}.
+$$
+
+Then add the contributions:
+
+$$
+[v]_E=
+\begin{bmatrix}
+3\\
+3
+\end{bmatrix}
++
+\begin{bmatrix}
+0\\
+-1
+\end{bmatrix}
+=
+\begin{bmatrix}
+3\\
+2
+\end{bmatrix}.
+$$
+
+This scale-and-add operation is the relationship that matrix–vector multiplication will express compactly.
+
+
+Now Place the basis vectors side by side:
+
+$$
+A=
+\begin{bmatrix}
+[p_1]_E & [p_2]_E
+\end{bmatrix}
+=
+\begin{bmatrix}
+1&0\\
+1&1
+\end{bmatrix}.
+$$
+
+We introduce $A$ for this numerical matrix where $A$ records those vectors' coordinates relative to $E$. The first column of $A$ contains the $E$-coordinates of $p_1$. The second contains the $E$-coordinates of $p_2$. Notice that the rows of $A$ organize a different aspect of the same information. The first row collects the $e_1$-coefficients of both reference vectors, and the second collects their $e_2$-coefficients.
+
+| Entry | Meaning |
+|:--|:--|
+| $A_{11}=1$ | Coefficient of $e_1$ in $p_1$ |
+| $A_{21}=1$ | Coefficient of $e_2$ in $p_1$ |
+| $A_{12}=0$ | Coefficient of $e_1$ in $p_2$ |
+| $A_{22}=1$ | Coefficient of $e_2$ in $p_2$ |
+
+## 6. Package the coefficients in the same order
+
+Now place the coefficients in a column:
+
+$$
+z:=[v]_P=
+\begin{bmatrix}
+z_1\\
+z_2
+\end{bmatrix}.
+$$
+
+The symbol $z$ is an abbreviation for the coordinate representation of $v$ in $P$. For our example,
+
+$$
+z=
+\begin{bmatrix}
+3\\
+-1
+\end{bmatrix}.
+$$
+
+The first entry multiplies the first reference column, and the second entry multiplies the second reference column. This alignment is part of the representation. If we reorder the reference vectors, we must reorder the coefficients accordingly to preserve the construction.
+
+Now, for the matrix whose columns are $[p_1]_E$ and $[p_2]_E$, matrix–vector multiplication expresses
+
+$$
+Az=z_1[p_1]_E+z_2[p_2]_E.
+$$
+
+Its meaning is: scale each column by the corresponding input coefficient, then add the resulting columns. Therefore,
+
+$$
+\boxed{[v]_E=Az},
+\qquad
+z=[v]_P.
+$$
+
+The compact notation preserves the reconstruction relationship, but its interpretation still requires knowing the input basis, output basis, and column meanings. Let us see a concrete example.
+
+$$
+A=
+\begin{bmatrix}
+1&0\\
+1&1
+\end{bmatrix},
+\qquad
+z=
+\begin{bmatrix}
+3\\
+-1
+\end{bmatrix}.
+$$
+
+Read their product by columns:
+
+$$
+Az
+=
+\begin{bmatrix}
+1&0\\
+1&1
+\end{bmatrix}
+\begin{bmatrix}
+3\\
+-1
+\end{bmatrix}
+=
+3
+\begin{bmatrix}
+1\\
+1
+\end{bmatrix}
++
+(-1)
+\begin{bmatrix}
+0\\
+1
+\end{bmatrix}.
+$$
+
+Consequently,
+
+$$
+Az=
+\begin{bmatrix}
+3\\
+3
+\end{bmatrix}
++
+\begin{bmatrix}
+0\\
+-1
+\end{bmatrix}
+=
+\begin{bmatrix}
+3\\
+2
+\end{bmatrix}
+=
+[v]_E.
+$$
+
+The matrix product performs the same scaling and addition we understood before introducing the matrix. Its usefulness is that it packages an entire ordered collection of such contributions into one operation. With $n$ basis vectors, the same relationship becomes
+
+$$
+[v]_E
+=
+z_1[p_1]_E+\cdots+z_n[p_n]_E.
+$$
+
+Collecting the columns into $A$ and the coefficients into $z$ gives
+
+$$
+[v]_E=Az.
+$$
+
+More generally, suppose each column has $m$ entries and there are $n$ columns. The matrix has shape $m\times n$. It accepts $n$ coefficients, one for each column, and returns $m$ entries, one for each output coordinate:
+
+$$
+(m\times n)(n\times1)=(m\times1).
+$$
+
+## 11. Derive the row-by-column rule
+
+Suppose the basis vectors are more generally
+
+$$
+[p_1]_E=
+\begin{bmatrix}
+a\\
+b
+\end{bmatrix},
+\qquad
+[p_2]_E=
+\begin{bmatrix}
+c\\
+d
+\end{bmatrix}.
+$$
+
+The symbols $a,b,c,d$ are scalar components in the fixed basis $E$. Placing the columns side by side gives
+
+$$
+A=
+\begin{bmatrix}
+a&c\\
+b&d
+\end{bmatrix}.
+$$
+
+Our goal is to expose how each output coordinate is calculated. Begin with the column-combination relationship:
+
+$$
+Az=z_1[p_1]_E+z_2[p_2]_E.
+$$
+
+Substitution makes the components visible:
+
+$$
+Az
+=
+z_1
+\begin{bmatrix}
+a\\
+b
+\end{bmatrix}
++
+z_2
+\begin{bmatrix}
+c\\
+d
+\end{bmatrix}.
+$$
+
+Scalar multiplication exposes each contribution:
+
+$$
+Az
+=
+\begin{bmatrix}
+az_1\\
+bz_1
+\end{bmatrix}
++
+\begin{bmatrix}
+cz_2\\
+dz_2
+\end{bmatrix}.
+$$
+
+Adding corresponding components collects the total for each output position:
+
+$$
+\boxed{
+Az=
+\begin{bmatrix}
+az_1+cz_2\\
+bz_1+dz_2
+\end{bmatrix}.
+}
+$$
+
+## 12. Reverse the question
+
+So far, we knew the reference matrix $A$ and the coefficient column $z$, and constructed
+
+$$
+[v]_E=Az.
+$$
+
+Our earlier change-of-basis problem asked the reverse question. We knew $[v]_E$ and the basis vectors, and wanted the coefficients in $P$.
+
+| Known information | Desired result | Question |
+|:--|:--|:--|
+| $A$ and $z$ | $[v]_E$ | What do these coefficients construct? |
+| $A$ and $[v]_E$ | $z$ | Which coefficients reconstruct this vector? |
+
+The relationship does not change. What changes is which quantity is unknown.
+
+From a scalar equation $a=bc$, with $b\ne0$, we isolate $c$ by multiplying by the reciprocal $1/b$. It is natural to seek an analogous reversal of $[v]_E=Az$. However, $A$ is a matrix, so writing $[v]_E/A$ does not specify an ordinary scalar division. Therefore we need to use the concept of inverse matrix instead of dividing $[v]_E$ by $A$ . Notice that when a square matrix has an inverse $A^{-1}$, that inverse satisfies
+
+$$
+A^{-1}A=AA^{-1}=I.
+$$
+
+The symbol $I$ denotes the identity matrix. In two dimensions,
+
+$$
+I=
+\begin{bmatrix}
+1&0\\
+0&1
+\end{bmatrix},
+\qquad
+Iz=z.
+$$
+
+Our goal is to isolate $z$. Since $A$ acts on its left, apply $A^{-1}$ on the left of both sides:
+
+$$
+A^{-1}[v]_E=A^{-1}(Az).
+$$
+
+Associativity allows us to group the two matrices, exposing the identity:
+
+$$
+A^{-1}[v]_E=(A^{-1}A)z=Iz=z.
+$$
+
+Hence,
+
+$$
+\boxed{z=A^{-1}[v]_E}.
+$$
+
+The side of multiplication matters because matrix multiplication does not generally commute. We choose left multiplication because it places the inverse beside $A$ in the required order.
+
+## 16. A matrix has a role beyond storing numbers
+
+At the programming level, our matrix could be stored as
+
+```python
+rows = ((1.0, 0.0), (1.0, 1.0))
+```
+
+The storage layout alone does not tell us its role. Here, the first column represents $p_1$ in $E$, the second represents $p_2$ in $E$, the input contains $P$-coefficients, and the output contains $E$-coefficients. The same numerical matrix could appear in another problem as an active transformation of vectors described in one fixed basis. Its entries alone do not distinguish that use from our passive conversion between representations. This is why future expressions such as `X @ U` and `U.T @ x` require an explanation of array layout. Observations stored as rows require a different arrangement from observations stored as columns. Before interpreting the product, identify what each axis indexes, what the entries mean, and which representation the result uses.
+
+## 17. What the complete relationship retains
+
+The full relationship is
+
+$$
+[v]_E=A[v]_P.
+$$
+
+The geometric object is the fixed vector $v$. The input uses basis $P$, the output uses basis $E$, and the columns of $A$ describe the $P$-basis vectors in $E$.
+
+The operation scales and adds columns. Because those columns form a complete basis, the change is reversible and discards no geometric information in exact arithmetic. Finite-precision computation can introduce rounding, so algebraic invertibility does not imply exact floating-point recovery for every possible input.
+
+“Encode” and “decode” can be useful analogies. Multiplication by $A$ reconstructs the $E$-description from the $P$-coefficients, while multiplication by $A^{-1}$ recovers those coefficients. Both results remain numerical representations interpreted through their declared bases.
+
+## 18. Python companion: make the input and output bases explicit
+
+The companion reuses Lecture 7's `BasisCoordinates2D`, `SignedBasisAmountM`, and `ReferenceBasis`. It introduces a `CoordinateMap2D` containing four dimensionless matrix entries and explicit input and output basis labels.
+
+The implementation evaluates multiplication using the row formulas derived above. The example also calculates the two scaled columns separately, connecting the numerical procedure to the reconstruction meaning.
+
+Physical units return through the existing coordinate type. The example input is
+
+$$
+[v]_P=
+\begin{bmatrix}
+3\\
+-1
+\end{bmatrix}\mathrm{m}.
+$$
+
+The reference vectors and matrix entries are dimensionless, while their coefficients carry meters. Therefore,
+
+$$
+[v]_E
+=
+A[v]_P
+=
+\begin{bmatrix}
+3\\
+2
+\end{bmatrix}\mathrm{m}.
+$$
+
+The code includes the forward and reverse matrices derived here. It does not implement a general inverse algorithm. The matrix class permits linear maps that are not invertible; its basis labels specify how inputs and outputs are interpreted rather than asserting invertibility.
+
+Semantic annotations help distinguish scale factors from meter-valued coefficients. Runtime checks reject nonfinite entries, mismatched input bases, and nonfinite outputs. These checks do not provide a general physical-units system or guarantee that an arbitrary matrix expresses the intended mathematical relationship.
+
+## Python companion
+
+```{python}
+#| echo: false
+
+from pathlib import Path
+import runpy
+
+_ = runpy.run_path(
+    str(Path("examples/08_basis_decomposition_and_matrices.py")),
+    run_name="__main__",
+)
+```
+
+The returned namespace is assigned to `_` so that Jupyter preserves the companion's printed output without displaying its namespace dictionary. The tests compare column and row interpretations, verify the supplied forward and reverse maps, check consistency with Lecture 7, and demonstrate why transposition does not extract the correct coefficients for this oblique basis.

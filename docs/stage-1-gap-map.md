@@ -38,6 +38,12 @@ The negative coefficient is explained geometrically: three copies of `p₁` cont
 
 The lecture concludes by distinguishing active transformations from passive changes of coordinates. Its PCA preview separates learned reference directions from observation-specific coefficients and distinguishes complete coordinate representations from later dimensionality reduction.
 
+## Lecture 8: From Basis Decomposition to Matrix Multiplication
+
+[Lecture 8 — From Basis Decomposition to Matrix Multiplication](../lectures/08-basis-decomposition-and-matrices/index.qmd) packages Lecture 7's reconstruction relationship as a matrix–vector product. It distinguishes the geometric basis P from the matrix A whose columns contain that basis's coordinates in E, giving `[v]_E = A[v]_P`.
+
+The lecture first interprets multiplication as a weighted combination of columns, then derives row-by-column arithmetic by collecting contributions to each output coordinate. It reverses the question to extract coordinates and constructs the example's inverse from the equations already derived. The orthonormal inverse–transpose relationship is introduced as a later connection requiring dot-product and projection reasoning, rather than treated as established understanding.
+
 ## Conceptual Gap Map
 
 The entries below identify where explanations are provided. They are a reading guide, not a record of demonstrated mastery.
@@ -72,6 +78,12 @@ The entries below identify where explanations are provided. They are a reading g
 | How does changing an object differ from changing its representation? | Lecture 7: active transformations and passive changes of coordinates |
 | How do PCA reference directions differ from observation-specific coefficients? | Lecture 7 introduces their semantic roles; their construction and calculation remain for later lectures |
 | Does a complete change of basis discard information? | Lecture 7: all coefficients together with the basis permit reconstruction; retaining fewer directions is a separate operation |
+| How does basis decomposition become matrix–vector multiplication? | Lecture 8: package reference-coordinate columns and their matching coefficients |
+| Why are reference representations placed in columns? | Lecture 8: the column-vector convention aligns each coefficient with a complete reference column |
+| Where does row-by-column arithmetic come from? | Lecture 8: collect the scaled columns' contributions to each output coordinate |
+| How does a geometric basis differ from its numerical matrix? | Lecture 8: P names the basis; A stores its coordinate columns relative to E |
+| How does coordinate extraction reverse reconstruction? | Lecture 8: derive the inverse map from the coordinate equations |
+| When can transpose replace inverse? | Lecture 8 states the square orthonormal case and gives an oblique counterexample; geometric justification remains for later dot-product work |
 
 ## Assumptions to Carry Forward
 
@@ -89,8 +101,8 @@ The Lecture 7 derivation first uses a dimensionless numerical model, then explic
 
 ## Continuing Stage 2
 
-Lectures 4–6 cover the planned Stage 1 material on vectors, direction representatives, normalization, and the reasoning behind the associated algebra. Lecture 7 begins Stage 2 by developing origins, basis-relative coordinates, and a worked representation of one fixed vector in two bases.
+Lectures 4–6 cover the planned Stage 1 material on vectors, direction representatives, normalization, and the reasoning behind the associated algebra. Lecture 7 begins Stage 2 with origins, basis-relative coordinates, and a worked change of basis. Lecture 8 expresses that reconstruction through matrix multiplication and derives the reverse coordinate map for the same example.
 
-Subsequent lectures can build on this foundation to explain how coefficients are extracted, when projections provide those coefficients, and how reference directions are selected in PCA. These topics require their own derivations. In particular, the oblique-basis example does not establish the coordinate-extraction rules that apply to orthonormal bases.
+Subsequent lectures can develop why dot products and projections extract coefficients in orthonormal bases and how reference directions are selected in PCA. Lecture 8 introduces the relevant inverse–transpose identity, but its geometric justification still requires its own development.
 
 Each new derivation should state its goal, explain why its transformations serve that goal, and identify what information is preserved or discarded. Coverage of a topic does not establish permanent mastery; earlier explanations should be revisited when a new application exposes another gap.
