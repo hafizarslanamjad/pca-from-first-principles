@@ -26,7 +26,9 @@ Python examples will make the reasoning executable and inspectable.
 
 6. [Normalization and the Reasoning Behind Algebraic Steps](lectures/06-normalization-and-algebraic-reasoning/index.qmd) — Reciprocal scaling, factor isolation, direction preservation, and reconstruction.
 
-7. [Coordinates and Reference Systems](lectures/07-coordinates-and-reference-systems/index.qmd) - Origins, basis vectors, signed decomposition coefficients, and representing one fixed vector in two bases.
+7. [Coordinates and Reference Systems](lectures/07-coordinates-and-reference-systems/index.qmd) - Origins, basis vectors, signed decomposition coefficients, and representing one fixed vector in two bases. 
+
+8. [Lecture 8 — From Basis Decomposition to Matrix Multiplication](lectures/08-basis-decomposition-and-matrices/index.qmd)
 
 ## Project status
 

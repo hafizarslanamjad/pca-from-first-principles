@@ -6,7 +6,7 @@ Mathematical explanations and executable, semantically typed Python examples tha
 
 ## Lectures
 
-Lectures 1–6 establish Stage 1 foundations. Lecture 7 begins Stage 2: coordinates and reference systems.
+Lectures 1–6 establish Stage 1 foundations. Lectures 7–8 develop Stage 2: coordinates, reference systems, and matrix representations of reconstruction.
 
 | Lecture | Explanation | Python companion |
 | --- | --- | --- |
@@ -17,6 +17,7 @@ Lectures 1–6 establish Stage 1 foundations. Lecture 7 begins Stage 2: coordina
 | 5. Direction and standard representatives | [Why one representative is useful](lectures/05-direction-and-standard-representatives/index.qmd) | [Typed orientation and amount](examples/05_direction_and_standard_representatives.py) |
 | 6. Normalization and algebraic reasoning | [Why division isolates a unit representative](lectures/06-normalization-and-algebraic-reasoning/index.qmd) | [Typed normalization and reconstruction](examples/06_normalization_and_algebraic_reasoning.py) |
 | 7. Coordinates and reference systems | [Origins, basis-relative coefficients, and one vector in two bases](lectures/07-coordinates-and-reference-systems/index.qmd) | [Typed coordinates and reconstruction](examples/07_coordinates_and_reference_systems.py) |
+| 8. Basis decomposition and matrix multiplication | [Scaled columns, coordinate reconstruction, and inverse questions](lectures/08-basis-decomposition-and-matrices/index.qmd) | [Typed coordinate matrices](examples/08_basis_decomposition_and_matrices.py) |
 
 The [reading-order and conceptual-gap document](docs/stage-1-gap-map.md) explains the prerequisites and where recurring learning questions are addressed. Coverage identifies available explanations; it does not establish demonstrated mastery.
 
@@ -27,6 +28,8 @@ Lecture 1 establishes the distinction between physical objects and their numeric
 Lecture 4 adds a separate spatial-vector model with compatible meter units, directed composition, uniform scaling, and relationship tests. Lecture 5 separates orientation from amount and motivates choosing a unit direction representative. Lecture 6 derives normalization through inverse scaling and explains how algebraic transformations expose a desired relationship. It also distinguishes numerical scale standardization from physical-unit cancellation.
 
 Lecture 7 begins Stage 2 by separating the roles of origins, basis vectors, and coordinate coefficients. It holds one vector fixed while changing its basis representation from `(3, 2)` to `(3, −1)`, explains the negative coefficient through reconstruction, and distinguishes active transformations from passive coordinate changes. Its companion reuses the existing spatial model and represents coefficients together with their basis.
+
+Lecture 8 develops matrix–vector multiplication from a weighted combination of basis-coordinate columns. It derives row-by-column arithmetic, constructs the worked example's inverse from its coordinate equations, and distinguishes a geometric basis from its numerical matrix representation. The companion labels the input and output bases of each coordinate map and checks consistency with Lecture 7.
 
 PCA algorithms and benchmarks are not implemented yet. The Lecture 7 PCA preview introduces the roles of reference directions and observation-specific coefficients; learning those directions and performing dimensionality reduction remain later topics.
 
