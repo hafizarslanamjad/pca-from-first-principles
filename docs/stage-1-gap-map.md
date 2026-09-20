@@ -58,6 +58,10 @@ The four supplied observations become rows of a dataset matrix through explicit 
 
 [Lecture 11 — Why Do We Need a New Reference Point?](../lectures/11-mean-as-reference/index.qmd) motivates a reference derived from the collection, develops the mean through equal sharing and balance, and interprets subtraction as directed deviation from that reference. Retaining the reference permits reconstruction. The next step examines centering as a full reference transformation before variance.
 
+## Lecture 12: What Centering Changes and What It Preserves
+
+[Lecture 12 — What Centering Changes and What It Preserves](../lectures/12-centering-reference-change/index.qmd) distinguishes measured observations from mean-relative descriptions, shows that common shifts preserve pairwise displacements, and explains what is lost if the mean is discarded. It connects the row-by-row relationship to NumPy broadcasting and ends with the inability of signed averages to distinguish spread. The next stage develops a measure of variation.
+
 ## Conceptual Gap Map
 
 The entries below identify where explanations are provided. They are a reading guide, not a record of demonstrated mastery.
@@ -114,6 +118,11 @@ The entries below identify where explanations are provided. They are a reading g
 | What does a centered value represent? | Lecture 11: signed deviation rather than absolute measurement |
 | How is the original observation reconstructed after centering? | Lecture 11: retain the mean and add it to the deviation |
 
+| What does centering preserve? | Lecture 12: pairwise displacements under a common reference shift |
+| What is lost if the mean is discarded? | Lecture 12: the original absolute location |
+| What does X minus mean mean row by row? | Lecture 12: apply the same feature-wise reference change to every observation |
+| Why does mean signed deviation fail to measure spread? | Lecture 12: different spreads all balance to zero |
+
 ## Assumptions to Carry Forward
 
 The Stage 1 spatial magnitude and normalization examples use perpendicular, equally scaled axes with compatible units. These examples do not justify treating length and mass as interchangeable quantities or adding their squares to obtain a physical distance. Choosing a metric or scaling heterogeneous features remains a modeling question to revisit when developing PCA.
@@ -144,3 +153,6 @@ Lecture 10 covers the dataset-size versus feature-dimension question anticipated
 
 
 Lecture 11 begins Stage 4. The next lecture can investigate the relationships preserved by centering and its row-by-row matrix interpretation before moving to variance. Coverage is not a claim of demonstrated mastery.
+
+
+Lecture 12 covers the reference-transformation questions anticipated in Lecture 11. The next stage addresses variation without cancellation of opposite signed deviations. Coverage remains distinct from demonstrated mastery.
