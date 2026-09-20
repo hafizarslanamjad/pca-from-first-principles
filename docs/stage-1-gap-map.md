@@ -54,6 +54,10 @@ The four supplied observations become rows of a dataset matrix through explicit 
 
 [Lecture 10 — Dataset vs Feature Space](../lectures/10-dataset-and-feature-space/index.qmd) distinguishes n observations from d feature coordinates, compares aggregation across observations with aggregation across features, and introduces the distinction between ambient representation size and the structure occupied by the data. It preserves the supplied examples and notation. The next question is the mean as a common reference and centering as a reference change.
 
+## Lecture 11: Why Do We Need a New Reference Point? — Stage 4 Begins
+
+[Lecture 11 — Why Do We Need a New Reference Point?](../lectures/11-mean-as-reference/index.qmd) motivates a reference derived from the collection, develops the mean through equal sharing and balance, and interprets subtraction as directed deviation from that reference. Retaining the reference permits reconstruction. The next step examines centering as a full reference transformation before variance.
+
 ## Conceptual Gap Map
 
 The entries below identify where explanations are provided. They are a reading guide, not a record of demonstrated mastery.
@@ -105,6 +109,11 @@ The entries below identify where explanations are provided. They are a reading g
 | How do averaging axes change the question? | Lecture 10: preserve feature identity or combine features within one observation |
 | Does d stored features imply d independent variations? | Lecture 10: thickness tied to length retains a third slot but constrains the data |
 
+| Why choose a dataset-derived reference? | Lecture 11: collective location versus an arbitrarily privileged observation |
+| Why is the mean a balance point? | Lecture 11: signed deviations sum to zero in exact arithmetic |
+| What does a centered value represent? | Lecture 11: signed deviation rather than absolute measurement |
+| How is the original observation reconstructed after centering? | Lecture 11: retain the mean and add it to the deviation |
+
 ## Assumptions to Carry Forward
 
 The Stage 1 spatial magnitude and normalization examples use perpendicular, equally scaled axes with compatible units. These examples do not justify treating length and mass as interchangeable quantities or adding their squares to obtain a physical distance. Choosing a metric or scaling heterogeneous features remains a modeling question to revisit when developing PCA.
@@ -132,3 +141,6 @@ Subsequent lectures can develop why dot products and projections extract coeffic
 Each new derivation should state its goal, explain why its transformations serve that goal, and identify what information is preserved or discarded. Coverage of a topic does not establish permanent mastery; earlier explanations should be revisited when a new application exposes another gap.
 
 Lecture 10 covers the dataset-size versus feature-dimension question anticipated in Lecture 9. The transition now leads to Stage 4: the mean as a reference point. Coverage remains distinct from demonstrated mastery.
+
+
+Lecture 11 begins Stage 4. The next lecture can investigate the relationships preserved by centering and its row-by-row matrix interpretation before moving to variance. Coverage is not a claim of demonstrated mastery.

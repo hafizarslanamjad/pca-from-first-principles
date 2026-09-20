@@ -20,6 +20,7 @@ Lectures 1–6 establish Stage 1 foundations. Lectures 7–8 develop Stage 2: co
 | 8. Basis decomposition and matrix multiplication | [Scaled columns, coordinate reconstruction, and inverse questions](lectures/08-basis-decomposition-and-matrices/index.qmd) | [Typed coordinate matrices](examples/08_basis_decomposition_and_matrices.py) |
 | 9. Observations as data vectors | [Measurement schemas, feature space, and dataset structure](lectures/09-observations-as-data-vectors/index.qmd) | [Typed observations and dataset layout](examples/09_observations_as_data_vectors.py) |
 | 10. Dataset vs feature space | [Why more observations do not add feature dimensions](lectures/10-dataset-and-feature-space/index.qmd) | [Typed counts and feature-wise means](examples/10_dataset_and_feature_space.py) |
+| 11. Why do we need a new reference point? | [The mean, deviations, and a change of reference](lectures/11-mean-as-reference/index.qmd) | [Typed centering and reconstruction](examples/11_mean_as_reference.py) |
 
 The [reading-order and conceptual-gap document](docs/stage-1-gap-map.md) explains the prerequisites and where recurring learning questions are addressed. Coverage identifies available explanations; it does not establish demonstrated mastery.
 
@@ -36,6 +37,8 @@ Lecture 8 develops matrix–vector multiplication from a weighted combination of
 Lecture 9 constructs length–width observation records before arranging them into a dataset matrix. It distinguishes physical components from feature-space representations, observation positions from signed differences, and observation rows from feature columns. The companion reuses the existing length types and exports an explicitly ordered numerical matrix.
 
 Lecture 10 distinguishes dataset size from feature-space dimension and reproduces the feature-wise means while keeping observation and feature roles explicit. Its source text and notation are preserved with compact paragraph formatting.
+
+Lecture 11 begins Stage 4 by motivating a dataset-derived reference, constructing the mean, and interpreting centered values as signed deviations. The companion retains the reference and observation identifiers for reconstruction. The supplied text is preserved with compact formatting.
 
 PCA algorithms and benchmarks are not implemented yet. The Lecture 7 PCA preview introduces the roles of reference directions and observation-specific coefficients; learning those directions and performing dimensionality reduction remain later topics.
 

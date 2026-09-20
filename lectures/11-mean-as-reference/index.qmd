@@ -1,0 +1,435 @@
+---
+title: "Why Do We Need a New Reference Point?"
+subtitle: "Stage 4 — Lecture 11"
+number-sections: false
+jupyter: python3
+format:
+  html:
+    css: lecture.css
+---
+
+# Stage 4 — Part 1: Why Do We Need a New Reference Point?
+
+We have reached an important transition. Until now, our main question was:
+
+> **How do we represent one observation?**
+
+We constructed a feature space and represented each observation as a point:
+
+$$
+x_i= \begin{bmatrix} \text{length}_i\\ \text{width}_i \end{bmatrix}.
+$$
+
+Then we collected many observations into a dataset `X`. Now our scientific question changes. We are no longer primarily interested in the absolute feature values of one component. We want to understand **how the observations vary as a collection**. That change of question will force us to change the reference from which we describe the observations. Do not think about “subtracting the mean” yet. We first need to discover why anyone would want to do that.
+
+## 1. Our current coordinates answer a particular question
+
+Continue with:
+
+$$
+x_1= \begin{bmatrix} 10\\4 \end{bmatrix}, \quad x_2= \begin{bmatrix} 12\\5 \end{bmatrix}, \quad x_3= \begin{bmatrix} 9\\3 \end{bmatrix}, \quad x_4= \begin{bmatrix} 11\\5 \end{bmatrix}.
+$$
+
+The representation scheme is: $[\text{length in cm},\text{width in cm}].$ Take:
+
+$$
+x_2= \begin{bmatrix} 12\\5 \end{bmatrix}.
+$$
+
+What do `12` and `5` answer? They answer:
+
+> Where is observation `x_2` relative to the zero/reference of the original measurement system?
+
+For length: $12\text{ cm}$ means 12 cm from the measurement zero. For width: $5\text{ cm}$ means 5 cm from its measurement zero. Visually:
+
+```text
+width
+ ↑
+6|
+5|                         ● x₂=(12,5)
+4|                   ● x₁=(10,4)
+3|                ● x₃=(9,3)
+2|
+1|
+0+──────────────────────────────────→ length
+ O
+```
+
+The origin `O=(0,0)` is our current coordinate reference. So `x_2=(12,5)` describes the position of `x_2` relative to `O`. That representation is perfectly valid. There is no problem with it. The problem appears only when **our question changes**.
+
+## 2. Suppose I ask a different question
+
+Instead of asking:
+
+> What is the length of component 2?
+
+suppose I ask:
+
+> Is component 2 unusually long compared with the components we manufactured?
+
+Now consider the number: $12.$ Does `12` directly answer that question? No. Knowing that something is 12 cm long tells us its absolute measured length. It does not by itself tell us whether 12 cm is:
+
+- unusually small,
+- typical,
+- unusually large.
+
+Why? Because **“unusual” is a relationship to other observations**. Suppose Factory A usually makes components around 10 cm long. Then: $12\text{ cm}$ might be relatively large. But suppose Factory B usually makes components around 100 cm long. Then: $12\text{ cm}$ would be extremely small. The absolute coordinate stayed: $12.$ But its relationship to the population changed. So our current representation answers:
+
+$$
+\boxed{\text{Where is the observation relative to measurement zero?}}
+$$
+
+while our new scientific question asks:
+
+$$
+\boxed{\text{Where is the observation relative to the dataset?}}
+$$
+
+Those are not the same question. This is the need from which centering will eventually emerge.
+
+## 3. We need some representative location of the dataset
+
+Look only at the length measurements: $10,\quad12,\quad9,\quad11.$ Imagine them on a number line:
+
+```text
+length (cm)
+
+0────────────────────9────10────11────12────────→
+                     ●     ●     ●     ●
+                    x₃    x₁    x₄    x₂
+```
+
+The measurement origin `0` is far away from the region we actually care about. Our observations live around: $9\text{ to }12.$ If our question is about **variation among these observations**, repeatedly describing them relative to `0` carries a large amount of information that is irrelevant to that particular question. For example: $x_1=10,\qquad x_2=12.$ Their absolute positions contain the large shared amount: $\text{roughly 10 cm}.$ But their difference is only: $12-10=2.$ So there are really two kinds of information present:
+
+$$
+\boxed{\text{common location of the collection}}
+$$
+
+and
+
+$$
+\boxed{\text{differences of observations around that location}}.
+$$
+
+Our next task is to separate those.
+
+## 4. Why not simply choose one observation as the new reference?
+
+This is worth asking before inventing the mean. We could say:
+
+> Use `x_1=10` as the reference.
+
+Then: $x_1-10=0,$ $x_2-10=2,$ $x_3-10=-1,$ $x_4-10=1.$ This does describe the other observations relative to `x_1`. So subtraction is already doing something useful. But we have introduced an arbitrary privilege:
+
+> Why should component 1 become the reference for everybody else?
+
+Nothing about the dataset tells us that component 1 is special. If we instead choose `x_2=12`: $10-12=-2, \quad 12-12=0, \quad 9-12=-3, \quad 11-12=-1.$ The relative descriptions change because the reference changed. Neither choice is mathematically illegal. But if we want to understand the **dataset as a whole**, we would prefer a reference derived from the whole dataset rather than arbitrarily selecting one observation. So a new need emerges:
+
+$$
+\boxed{ \text{Find one location representing the collective location of the observations.} }
+$$
+
+We have not yet said “mean.” First we have established the job that such a quantity must perform.
+
+## 5. What should this dataset reference accomplish?
+
+For our four length measurements: $10,\quad12,\quad9,\quad11,$ we want some number `m` that acts as a collective reference. Then each observation can be decomposed as: $x_i=m+(x_i-m).$ This equation deserves careful attention. It says:
+
+$$
+\boxed{ \text{absolute position} = \text{common reference} + \text{individual displacement from that reference}. }
+$$
+
+For example, suppose somehow we choose: $m=10.5.$ Then: $10=10.5+(-0.5),$ $12=10.5+(1.5),$ $9=10.5+(-1.5),$ $11=10.5+(0.5).$ Now compare the two descriptions. Original: $10,\quad12,\quad9,\quad11.$ Relative to `10.5`: $-0.5,\quad1.5,\quad-1.5,\quad0.5.$ The objects did not move. The measurements did not change. We changed **what location we are describing them relative to**. This is exactly the reference-change idea from Stage 2.
+
+## 6. Look at the geometry of what just happened
+
+Originally:
+
+```text
+original reference
+
+O=0────────────────────9──10──10.5──11──12────→
+                       ●   ●    ↑     ●   ●
+                              new
+                            reference
+```
+
+If we decide that `10.5` is our new zero for the question of dataset-relative position, then:
+
+```text
+relative-to-dataset reference
+
+             -1.5   -0.5    0    +0.5   +1.5
+──────────────●──────●───────|─────●──────●────→
+             x₃     x₁      10.5   x₄     x₂
+```
+
+Notice: $x_2=12$ has become: $x_2-10.5=1.5.$ But the physical component did not shrink from `12` cm to `1.5` cm. The meaning of the number changed. Before: $12=\text{absolute length relative to measurement zero}.$ After: $1.5=\text{signed displacement of this length from the chosen dataset reference}.$ That semantic transition is essential:
+
+$$
+\boxed{ \text{absolute feature value} \xrightarrow{\text{subtract reference}} \text{relative deviation} }
+$$
+
+The result is not another absolute length measurement. It answers a different question.
+
+## 7. Why subtraction appears
+
+This connects directly to our earlier study of subtraction. Suppose two positions on the same number line are: $a=10.5,\qquad b=12.$ We want:
+
+> What directed change takes me from `a` to `b`?
+
+We know: $a+d=b.$ We want to isolate `d`. Therefore: $d=b-a.$ So: $12-10.5=1.5.$ The `1.5` means:
+
+> Starting at the reference `10.5`, move `1.5` units in the positive direction to reach `12`.
+
+Likewise: $9-10.5=-1.5$ means:
+
+> Starting at `10.5`, move `1.5` units in the negative direction to reach `9`.
+
+Thus subtraction was not chosen because “centering uses subtraction.” Subtraction naturally appears because our new question is about **directed displacement from a reference**.
+
+## 8. But where did `10.5` come from?
+
+Now we have finally reached the right question. We need a reference derived from all four observations: $10,\quad12,\quad9,\quad11.$ We chose `10.5` above without justification merely to expose what such a reference would do. Now we must construct why: $10.5$ is a particularly natural choice. Start by adding all observed amounts: $10+12+9+11=42.$ What does `42` mean? It is the total length if we conceptually pool the four measured lengths: $42\text{ cm}.$ But `42` is not the location of a typical individual observation. It contains the amounts contributed by four observations. We want:
+
+> If this total amount were distributed equally across the four observations, how much would correspond to each observation?
+
+That is division:
+
+$$
+\frac{42}{4}=10.5.
+$$
+
+So: $\bar{x}=10.5.$ This gives one constructive interpretation of the arithmetic mean:
+
+$$
+\boxed{ \text{mean} = \text{equal-share value of the total measured amount across observations}. }
+$$
+
+This connects directly to your earlier understanding of division as asking how much corresponds to one unit/group when a total and number of groups are known. But there is another interpretation that will matter even more for PCA.
+
+## 9. The mean has a remarkable balance property
+
+Using: $\bar{x}=10.5,$ calculate the deviations: $10-10.5=-0.5,$ $12-10.5=1.5,$ $9-10.5=-1.5,$ $11-10.5=0.5.$ Now add them: $-0.5+1.5-1.5+0.5=0.$ So:
+
+$$
+\boxed{ \sum_i(x_i-\bar{x})=0. }
+$$
+
+Why? Expand: $\sum_i(x_i-\bar{x}) = \sum_i x_i-\sum_i\bar{x}.$ There are `n` copies of `\bar{x}`, so: $\sum_i\bar{x}=n\bar{x}.$ But by definition:
+
+$$
+\bar{x}=\frac{1}{n}\sum_i x_i.
+$$
+
+Therefore: $n\bar{x}=\sum_i x_i.$ Hence: $\sum_i(x_i-\bar{x}) = \sum_i x_i-\sum_i x_i = 0.$ But don't reduce this to algebra. Semantically:
+
+> The total signed displacement of all observations from the mean balances to zero.
+
+Positive deviations and negative deviations cancel. That gives the mean the role of a **balance point** of the observations. For equal-weight observations, it is analogous to the balancing location of equal masses on a line. So the mean is not merely “add and divide.” It provides a dataset-derived location around which signed deviations balance.
+
+## 10. Now return to two features
+
+Our actual dataset was:
+
+$$
+X= \begin{bmatrix} 10&4\\ 12&5\\ 9&3\\ 11&5 \end{bmatrix}.
+$$
+
+We need a reference location in the **two-dimensional feature space**. So we perform the same reasoning separately for each feature. Length:
+
+$$
+\mu_1=\frac{10+12+9+11}{4}=10.5.
+$$
+
+Width:
+
+$$
+\mu_2=\frac{4+5+3+5}{4}=4.25.
+$$
+
+Therefore:
+
+$$
+\mu= \begin{bmatrix} 10.5\\ 4.25 \end{bmatrix}.
+$$
+
+What kind of object is `\mu`? This matters. It is not one of our physical components. It is not necessarily an observed data point. It is a **dataset-derived point in feature space**. Its coordinates contain the mean value of each feature. So:
+
+$$
+\boxed{ \mu=\text{dataset center under coordinate-wise arithmetic averaging}. }
+$$
+
+Visually:
+
+```text
+width
+ ↑
+6|
+5|                         ● x₂
+ |                    ● x₄
+4|                  ● x₁
+ |                    × μ=(10.5,4.25)
+3|                ● x₃
+2|
+ +────────────────────────────────→ length
+```
+
+The `\times` represents our new dataset-derived reference.
+
+## 11. Now subtracting vectors has a precise meaning
+
+Take:
+
+$$
+x_2= \begin{bmatrix} 12\\5 \end{bmatrix}
+$$
+
+and:
+
+$$
+\mu= \begin{bmatrix} 10.5\\4.25 \end{bmatrix}.
+$$
+
+Then:
+
+$$
+x_2-\mu = \begin{bmatrix} 12-10.5\\ 5-4.25 \end{bmatrix} = \begin{bmatrix} 1.5\\ 0.75 \end{bmatrix}.
+$$
+
+What kind of object was `x_2`? A **point/location** in feature space. What kind of object was `\mu`? Another **point/location** in the same feature space. What does point minus point produce? A **displacement vector**. Therefore:
+
+$$
+\boxed{ x_2-\mu = \text{displacement from the dataset center }\mu\text{ to observation }x_2. }
+$$
+
+This is exactly the point-versus-displacement distinction we established earlier. The result:
+
+$$
+\begin{bmatrix} 1.5\\0.75 \end{bmatrix}
+$$
+
+does not mean:
+
+> “the component has length `1.5` cm and width `0.75` cm.”
+
+It means:
+
+> “relative to the dataset center, this component is `1.5` cm above the mean length and `0.75` cm above the mean width.”
+
+Same numerical container. Different semantic type. Programming-style:
+
+```text
+x₂:
+    type = FeatureSpacePoint
+    meaning = absolute feature location
+
+μ:
+    type = FeatureSpacePoint
+    meaning = dataset center
+
+x₂ - μ:
+    type = FeatureDisplacement
+    meaning = deviation of observation from dataset center
+```
+
+That distinction will protect us from enormous confusion later.
+
+## 12. Centering means changing what zero represents
+
+For every observation, define: $\tilde{x}_i=x_i-\mu.$ The tilde simply tells us that this is the centered representation. Originally: $0$ meant the zero of the original feature measurement system. After centering: $0$ means:
+
+> exactly at the dataset mean.
+
+So centering effectively changes the reference:
+
+$$
+\boxed{ \text{original zero} \longrightarrow \text{dataset center as new zero}. }
+$$
+
+For our dataset:
+
+$$
+\tilde{x}_1= \begin{bmatrix} -0.5\\ -0.25 \end{bmatrix},
+$$
+
+$$
+\tilde{x}_2= \begin{bmatrix} 1.5\\ 0.75 \end{bmatrix},
+$$
+
+$$
+\tilde{x}_3= \begin{bmatrix} -1.5\\ -1.25 \end{bmatrix},
+$$
+
+$$
+\tilde{x}_4= \begin{bmatrix} 0.5\\ 0.75 \end{bmatrix}.
+$$
+
+Notice how their meaning has changed. Before: $x_i=\text{where observation }i\text{ lies relative to original feature zero}.$ After: $\tilde{x}_i=\text{where observation }i\text{ lies relative to dataset center}.$ This is much more than “subtracting the mean.” It is a **change of reference for the question we are now asking**.
+
+## 13. Did centering destroy the original information?
+
+Not if we retain `\mu`. We have: $\tilde{x}_i=x_i-\mu.$ Therefore: $x_i=\mu+\tilde{x}_i.$ So the original observation can be reconstructed exactly. This gives us a decomposition:
+
+$$
+\boxed{ x_i = \underbrace{\mu}_{\text{dataset-wide common location}} + \underbrace{\tilde{x}_i}_{\text{observation-specific deviation}} }
+$$
+
+This is a very important structural pattern. The observation has been decomposed into:
+
+$$
+\boxed{ \text{common reference} + \text{individual difference from reference}. }
+$$
+
+We have not yet reduced dimensions. We have not yet thrown away information. We have reorganized the information according to a new question.
+
+## 14. Why this prepares us for variation
+
+Suppose all our measurements were around 1,000: $1000,\quad1002,\quad999,\quad1001.$ If we stare at the absolute coordinates, the dominant visible fact is: $\text{everything is around }1000.$ But suppose our scientific question is:
+
+> How do the observations differ from one another?
+
+Then that common `1000`-ish location is not the interesting part. The deviations are: $-0.5,\quad1.5,\quad-1.5,\quad0.5.$ Those expose the actual variation. So centering separates:
+
+$$
+\boxed{ \text{where the cloud is located} }
+$$
+
+from:
+
+$$
+\boxed{ \text{how points are arranged around that location}. }
+$$
+
+PCA will eventually care primarily about the second question. But we should not jump there.
+
+## 15. Stage 4 checkpoint
+
+We can now reconstruct the intellectual path: $\text{observations represented as points}$ led to: $\text{a dataset of many points}$ which created a new question: $\text{how do these points differ as a collection?}$ The original measurement origin was not designed to answer that question, so we needed: $\text{a dataset-derived reference point}.$ The arithmetic mean emerged as a natural collective location and balance point:
+
+$$
+\mu=\frac1n\sum_i x_i.
+$$
+
+Then subtraction emerged because we wanted **directed displacement from that reference**: $\tilde{x}_i=x_i-\mu.$ And the semantic transformation is:
+
+$$
+\boxed{ \underbrace{x_i}_{\text{point relative to original feature reference}} \quad\longrightarrow\quad \underbrace{x_i-\mu}_{\text{displacement relative to dataset center}}. }
+$$
+
+This is exactly the kind of silent type change that conventional notation often hides. The next part of Stage 4 should remain here rather than immediately jumping to variance. We need to investigate **centering as a full reference transformation**: what physically/mathematically changed, what did not change, which relationships between observations are preserved, why the centered observations sum to the zero vector, and what `X_centered = X - mean` will eventually mean row-by-row in Python. Only after that will we have earned the transition from **deviation** to **variation**.
+
+## Python companion
+
+The following executable companion supplements the supplied lecture text. It reuses the existing observation, mean, and difference types to reproduce the supplied mean and all four deviations. The mean is retained separately so that the measured observations can be reconstructed. Static annotations distinguish roles; runtime checks enforce the explicitly coded numerical restrictions. Floating-point reconstruction is checked with tolerances; the exact algebraic identities in the lecture do not guarantee bit-for-bit recovery for every numerical input. No variance or PCA algorithm is introduced.
+
+```{python}
+#| echo: false
+from pathlib import Path
+import runpy
+
+_ = runpy.run_path(
+    str(Path("examples/11_mean_as_reference.py")),
+    run_name="__main__",
+)
+```
