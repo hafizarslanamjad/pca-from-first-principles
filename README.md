@@ -22,6 +22,7 @@ Lectures 1–6 establish Stage 1 foundations. Lectures 7–8 develop Stage 2: co
 | 10. Dataset vs feature space | [Why more observations do not add feature dimensions](lectures/10-dataset-and-feature-space/index.qmd) | [Typed counts and feature-wise means](examples/10_dataset_and_feature_space.py) |
 | 11. Why do we need a new reference point? | [The mean, deviations, and a change of reference](lectures/11-mean-as-reference/index.qmd) | [Typed centering and reconstruction](examples/11_mean_as_reference.py) |
 | 12. What centering changes and preserves | [Reference changes, retained relationships, and broadcasting](lectures/12-centering-reference-change/index.qmd) | [Typed broadcasting and reference checks](examples/12_centering_reference_change.py) |
+| 13. Why average deviation fails | [From signed cancellation to population variance](lectures/13-average-deviation-and-variance/index.qmd) | [Typed one-feature spread summaries](examples/13_average_deviation_and_variance.py) |
 
 The [reading-order and conceptual-gap document](docs/stage-1-gap-map.md) explains the prerequisites and where recurring learning questions are addressed. Coverage identifies available explanations; it does not establish demonstrated mastery.
 
@@ -42,6 +43,8 @@ Lecture 10 distinguishes dataset size from feature-space dimension and reproduce
 Lecture 11 begins Stage 4 by motivating a dataset-derived reference, constructing the mean, and interpreting centered values as signed deviations. The companion retains the reference and observation identifiers for reconstruction. The supplied text is preserved with compact formatting.
 
 Lecture 12 examines centering as a common reference change, verifies preserved pairwise displacements, and connects the operation to row-wise broadcasting. Its coordinate figures are generated with Matplotlib from the numerical examples, and the lecture links directly to both companion and plotting source.
+
+Lecture 13 begins Stage 5 with signed cancellation, mean absolute deviation, and population variance. Its companion preserves the distinction between per-observation deviations and a dataset-level spread summary.
 
 PCA algorithms and benchmarks are not implemented yet. The Lecture 7 PCA preview introduces the roles of reference directions and observation-specific coefficients; learning those directions and performing dimensionality reduction remain later topics.
 

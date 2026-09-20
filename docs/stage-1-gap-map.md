@@ -62,6 +62,10 @@ The four supplied observations become rows of a dataset matrix through explicit 
 
 [Lecture 12 — What Centering Changes and What It Preserves](../lectures/12-centering-reference-change/index.qmd) distinguishes measured observations from mean-relative descriptions, shows that common shifts preserve pairwise displacements, and explains what is lost if the mean is discarded. It connects the row-by-row relationship to NumPy broadcasting and ends with the inability of signed averages to distinguish spread. The next stage develops a measure of variation.
 
+## Lecture 13: Why Average Deviation Fails
+
+[Lecture 13](../lectures/13-average-deviation-and-variance/index.qmd) develops a spread measure from the failure of signed averages, compares absolute and squared deviations, and constructs population variance. Its next step examines why squaring interacts with geometry and later covariance. Coverage does not imply demonstrated mastery.
+
 ## Conceptual Gap Map
 
 The entries below identify where explanations are provided. They are a reading guide, not a record of demonstrated mastery.
@@ -122,6 +126,15 @@ The entries below identify where explanations are provided. They are a reading g
 | What is lost if the mean is discarded? | Lecture 12: the original absolute location |
 | What does X minus mean mean row by row? | Lecture 12: apply the same feature-wise reference change to every observation |
 | Why does mean signed deviation fail to measure spread? | Lecture 12: different spreads all balance to zero |
+
+## Stage 5 questions
+
+| Question | Where it is addressed |
+| --- | --- |
+| Why does averaging signed deviations fail? | Lecture 13: cancellation hides spread |
+| Is absolute deviation a valid alternative? | Lecture 13: mean absolute deviation |
+| What does squaring retain and discard? | Lecture 13: size information and loss of sign |
+| Why are variance units squared? | Lecture 13: averaging squared deviations |
 
 ## Assumptions to Carry Forward
 
