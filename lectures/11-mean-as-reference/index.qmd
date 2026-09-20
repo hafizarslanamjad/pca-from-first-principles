@@ -20,7 +20,7 @@ $$
 x_i= \begin{bmatrix} \text{length}_i\\ \text{width}_i \end{bmatrix}.
 $$
 
-Then we collected many observations into a dataset `X`. Now our scientific question changes. We are no longer primarily interested in the absolute feature values of one component. We want to understand **how the observations vary as a collection**. That change of question will force us to change the reference from which we describe the observations. Do not think about “subtracting the mean” yet. We first need to discover why anyone would want to do that.
+Then we collected many observations into a dataset $`X`$. Now our scientific question changes. We are no longer primarily interested in the absolute feature values of one component. We want to understand **how the observations vary as a collection**. That change of question will force us to change the reference from which we describe the observations. Do not think about “subtracting the mean” yet. We first need to discover why anyone would want to do that.
 
 ## 1. Our current coordinates answer a particular question
 
@@ -36,9 +36,9 @@ $$
 x_2= \begin{bmatrix} 12\\5 \end{bmatrix}.
 $$
 
-What do `12` and `5` answer? They answer:
+What do $`12`$ and $`5`$ answer? They answer:
 
-> Where is observation `x_2` relative to the zero/reference of the original measurement system?
+> Where is observation $`x_2`$ relative to the zero/reference of the original measurement system?
 
 For length: $12\text{ cm}$ means 12 cm from the measurement zero. For width: $5\text{ cm}$ means 5 cm from its measurement zero. Visually:
 
@@ -55,7 +55,7 @@ width
  O
 ```
 
-The origin `O=(0,0)` is our current coordinate reference. So `x_2=(12,5)` describes the position of `x_2` relative to `O`. That representation is perfectly valid. There is no problem with it. The problem appears only when **our question changes**.
+The origin $`O=(0,0)`$ is our current coordinate reference. So $`x_2=(12,5)`$ describes the position of $`x_2`$ relative to $`O`$. That representation is perfectly valid. There is no problem with it. The problem appears only when **our question changes**.
 
 ## 2. Suppose I ask a different question
 
@@ -67,7 +67,7 @@ suppose I ask:
 
 > Is component 2 unusually long compared with the components we manufactured?
 
-Now consider the number: $12.$ Does `12` directly answer that question? No. Knowing that something is 12 cm long tells us its absolute measured length. It does not by itself tell us whether 12 cm is:
+Now consider the number: $12.$ Does $`12`$ directly answer that question? No. Knowing that something is 12 cm long tells us its absolute measured length. It does not by itself tell us whether 12 cm is:
 
 - unusually small,
 - typical,
@@ -117,13 +117,13 @@ Our next task is to separate those.
 
 This is worth asking before inventing the mean. We could say:
 
-> Use `x_1=10` as the reference.
+> Use $`x_1=10`$ as the reference.
 
-Then: $x_1-10=0,$ $x_2-10=2,$ $x_3-10=-1,$ $x_4-10=1.$ This does describe the other observations relative to `x_1`. So subtraction is already doing something useful. But we have introduced an arbitrary privilege:
+Then: $x_1-10=0,$ $x_2-10=2,$ $x_3-10=-1,$ $x_4-10=1.$ This does describe the other observations relative to $`x_1`$. So subtraction is already doing something useful. But we have introduced an arbitrary privilege:
 
 > Why should component 1 become the reference for everybody else?
 
-Nothing about the dataset tells us that component 1 is special. If we instead choose `x_2=12`: $10-12=-2, \quad 12-12=0, \quad 9-12=-3, \quad 11-12=-1.$ The relative descriptions change because the reference changed. Neither choice is mathematically illegal. But if we want to understand the **dataset as a whole**, we would prefer a reference derived from the whole dataset rather than arbitrarily selecting one observation. So a new need emerges:
+Nothing about the dataset tells us that component 1 is special. If we instead choose $`x_2=12`: 10-12=-2, \quad 12-12=0, \quad 9-12=-3, \quad 11-12=-1.$ The relative descriptions change because the reference changed. Neither choice is mathematically illegal. But if we want to understand the **dataset as a whole**, we would prefer a reference derived from the whole dataset rather than arbitrarily selecting one observation. So a new need emerges:
 
 $$
 \boxed{ \text{Find one location representing the collective location of the observations.} }
@@ -133,7 +133,7 @@ We have not yet said “mean.” First we have established the job that such a q
 
 ## 5. What should this dataset reference accomplish?
 
-For our four length measurements: $10,\quad12,\quad9,\quad11,$ we want some number `m` that acts as a collective reference. Then each observation can be decomposed as: $x_i=m+(x_i-m).$ This equation deserves careful attention. It says:
+For our four length measurements: $10,\quad12,\quad9,\quad11,$ we want some number $`m`$ that acts as a collective reference. Then each observation can be decomposed as: $x_i=m+(x_i-m).$ This equation deserves careful attention. It says:
 
 $$
 \boxed{ \text{absolute position} = \text{common reference} + \text{individual displacement from that reference}. }
@@ -254,7 +254,7 @@ $$
 \mu= \begin{bmatrix} 10.5\\ 4.25 \end{bmatrix}.
 $$
 
-What kind of object is `\mu`? This matters. It is not one of our physical components. It is not necessarily an observed data point. It is a **dataset-derived point in feature space**. Its coordinates contain the mean value of each feature. So:
+What kind of object is $`\mu`$? This matters. It is not one of our physical components. It is not necessarily an observed data point. It is a **dataset-derived point in feature space**. Its coordinates contain the mean value of each feature. So:
 
 $$
 \boxed{ \mu=\text{dataset center under coordinate-wise arithmetic averaging}. }
@@ -275,7 +275,7 @@ width
  +────────────────────────────────→ length
 ```
 
-The `\times` represents our new dataset-derived reference.
+The $`\times`$ represents our new dataset-derived reference.
 
 ## 11. Now subtracting vectors has a precise meaning
 
@@ -297,7 +297,7 @@ $$
 x_2-\mu = \begin{bmatrix} 12-10.5\\ 5-4.25 \end{bmatrix} = \begin{bmatrix} 1.5\\ 0.75 \end{bmatrix}.
 $$
 
-What kind of object was `x_2`? A **point/location** in feature space. What kind of object was `\mu`? Another **point/location** in the same feature space. What does point minus point produce? A **displacement vector**. Therefore:
+What kind of object was $`x_2`$? A **point/location** in feature space. What kind of object was $`\mu`$? Another **point/location** in the same feature space. What does point minus point produce? A **displacement vector**. Therefore:
 
 $$
 \boxed{ x_2-\mu = \text{displacement from the dataset center }\mu\text{ to observation }x_2. }

@@ -38,7 +38,7 @@ $$
 
 The columns merely store those two quantities. So: $x_1\in\mathbb R^2.$ Read this semantically as:
 
-> `x_1` is represented using two real-valued feature coordinates.
+> $`x_1`$ is represented using two real-valued feature coordinates.
 
 ## 2. Now add another observation
 
@@ -108,7 +108,7 @@ $$
 \boxed{ \text{more observations} \Rightarrow \text{more dimensions} }
 $$
 
-## 5. Where does `n\times d` come from?
+## 5. Where does $`n\times d`$ come from?
 
 Now suppose we use conventional notation: $X\in\mathbb R^{n\times d}.$ Do not read this yet as matrix dimensions only. Read the symbols by role: $n=\text{number of observations}$ $d=\text{number of features used to represent one observation}.$ So: $X\in\mathbb R^{n\times d}$ means:
 
@@ -143,7 +143,7 @@ $$
 
 has four rows. Purely syntactically, we can say: $\text{shape}(X)=(4,2).$ But syntax does not tell us ontology. The first axis means: $\text{which observation?}$ The second axis means: $\text{which feature?}$ So the indices in $X_{ij}$ have different semantic types: $i:\text{observation index}$ $j:\text{feature index}.$ Then: $X_{ij}$ means:
 
-> the value of feature `j` measured for observation `i`.
+> the value of feature $`j`$ measured for observation $`i`$.
 
 This is extremely important for mathematical programming. The two indices are both integers computationally. But semantically: $i\neq j$ in role. They index different kinds of things. That is analogous to programming where two values may both be `int` but one is a `user_id` and one is a `product_id`. Same low-level type. Different semantic role.
 
@@ -255,7 +255,7 @@ $$
 
 So the **representation has three feature coordinates**. But the observed data may occupy only a lower-dimensional structure inside that three-dimensional feature space. This is the distinction we glimpsed at the end of Stage 2. Example: $X\in\mathbb R^{1000\times3}$ does not guarantee the dataset genuinely varies in three independent ways. That later becomes a central PCA question:
 
-> How many independently important directions of variation are actually present in these `d` measured coordinates?
+> How many independently important directions of variation are actually present in these $`d`$ measured coordinates?
 
 But we are not solving that yet. For now distinguish:
 
@@ -307,7 +307,7 @@ Feature space is closer to the allowed state space. Dataset is the collection of
 
 Once we have many points in a shared feature space, we can stop asking only:
 
-> What is observation `i`?
+> What is observation $`i`$?
 
 and begin asking:
 
@@ -326,7 +326,7 @@ For the dataset, we can ask:
 - are there recurring directions?
 - does the dataset occupy all of feature space or mostly a smaller structure?
 
-These are not properties of one `x_i`. They are **dataset-level properties**. This distinction will later separate:
+These are not properties of one $`x_i`$. They are **dataset-level properties**. This distinction will later separate:
 
 $$
 \boxed{ \text{observation-specific coordinate} }
