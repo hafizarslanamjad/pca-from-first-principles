@@ -36,9 +36,11 @@ Python examples will make the reasoning executable and inspectable.
 
 11. [Why Do We Need a New Reference Point?](lectures/11-mean-as-reference/index.qmd) — The mean as a collective reference, signed deviations, and reconstruction.
 
+12. [What Centering Changes and What It Preserves](lectures/12-centering-reference-change/index.qmd) — Reference changes, preserved displacements, broadcasting, and the limits of signed averages.
+
 ## Project status
 
-The first 11 conceptual lectures include executable Python companions. Automated checks validate Python formatting, semantic types, package imports, feature-space and spatial-vector relationships, and website rendering. PCA algorithms and their tests will follow as the lectures develop.
+The first 12 conceptual lectures include executable Python companions. Automated checks validate Python formatting, semantic types, package imports, feature-space and spatial-vector relationships, and website rendering. PCA algorithms and their tests will follow as the lectures develop.
 
 ## Source code
 
