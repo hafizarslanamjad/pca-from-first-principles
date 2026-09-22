@@ -74,6 +74,10 @@ The four supplied observations become rows of a dataset matrix through explicit 
 
 [Lecture 15](../lectures/15-relationships-between-features/index.qmd) develops population covariance from coordinated deviations, explains positive, negative, and near-zero results, and shows why separate variances cannot determine the relationship. The next lecture develops the covariance matrix. Coverage remains distinct from demonstrated mastery.
 
+## Lecture 16: Why the Covariance Matrix Exists
+
+[Lecture 16](../lectures/16-why-covariance-matrix-exists/index.qmd) organizes covariance by feature identity, derives symmetry and the centered matrix product, and distinguishes dataset rows from covariance-table rows. Directions and projections come next before interpreting covariance acting on a direction. Coverage is not demonstrated mastery.
+
 ## Conceptual Gap Map
 
 The entries below identify where explanations are provided. They are a reading guide, not a record of demonstrated mastery.
@@ -161,6 +165,15 @@ The entries below identify where explanations are provided. They are a reading g
 | Why center before multiplying? | Lecture 15: remove absolute baselines |
 | Can zero covariance hide a relationship? | Lecture 15: nonlinear structure can remain |
 | Why are separate variances insufficient? | Lecture 15: equal marginal magnitudes, opposite joint behavior |
+
+## Covariance-matrix questions
+
+| Question | Where it is addressed |
+| --- | --- |
+| Why is covariance a feature-by-feature table? | Lecture 16: ordered pairs of feature roles |
+| Why transpose the centered dataset? | Lecture 16: pair feature columns across observations |
+| What does aggregation discard? | Lecture 16: individual observation identity |
+| Why is the table symmetric? | Lecture 16: commutativity of scalar products |
 
 ## Assumptions to Carry Forward
 

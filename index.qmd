@@ -44,9 +44,11 @@ Python examples will make the reasoning executable and inspectable.
 
 15. [Relationships Between Features](lectures/15-relationships-between-features/index.qmd) — Constructing covariance from coordinated deviations.
 
+16. [Why the Covariance Matrix Exists](lectures/16-why-covariance-matrix-exists/index.qmd) — Feature-pair identities, symmetry, and the centered matrix product.
+
 ## Project status
 
-The first 15 conceptual lectures include executable Python companions. Automated checks validate Python formatting, semantic types, package imports, feature-space and spatial-vector relationships, and website rendering. PCA algorithms and their tests will follow as the lectures develop.
+The first 16 conceptual lectures include executable Python companions. Automated checks validate Python formatting, semantic types, package imports, feature-space and spatial-vector relationships, and website rendering. PCA algorithms and their tests will follow as the lectures develop.
 
 ## Source code
 

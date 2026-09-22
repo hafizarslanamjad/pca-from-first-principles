@@ -1,0 +1,423 @@
+---
+title: "Why the Covariance Matrix Exists"
+subtitle: "Stage 6 — Lecture 16"
+number-sections: false
+jupyter: python3
+format:
+  html:
+    css: lecture.css
+---
+
+# Stage 6 — Part 2: Why the Covariance Matrix Exists
+
+We have reached a new scaling problem. With two features, keeping track of one covariance is easy. But suppose every observation has many features:
+
+$$
+x_i= \begin{bmatrix} x_{i1}\\ x_{i2}\\ \vdots\\ x_{id} \end{bmatrix}.
+$$
+
+For every pair of features $j,k$, we can ask: $\operatorname{Cov}(x_j,x_k).$ So we now have many relationships, not one. We need a representation capable of preserving the identity of **which feature was compared with which feature**. That need—not a desire to use matrices—is what creates the covariance matrix.
+
+## 1. Start with three features
+
+Suppose our manufactured component is represented using: $[\text{length},\text{width},\text{thickness}].$ Call these feature roles: $f_1=\text{length},\qquad f_2=\text{width},\qquad f_3=\text{thickness}.$ We can ask how each feature varies with every feature: $\operatorname{Cov}(f_1,f_1), \quad \operatorname{Cov}(f_1,f_2), \quad \operatorname{Cov}(f_1,f_3),$ then: $\operatorname{Cov}(f_2,f_1), \quad \operatorname{Cov}(f_2,f_2), \quad \operatorname{Cov}(f_2,f_3),$ and similarly for $f_3$. Notice the structure. For each first feature, there is one relationship with every possible second feature. That is naturally a two-index object: $\Sigma_{jk}.$ The first index answers:
+
+> Which first feature?
+
+The second answers:
+
+> Which second feature?
+
+And the value answers:
+
+> What is their covariance?
+
+So:
+
+$$
+\boxed{ \Sigma_{jk}=\operatorname{Cov}(f_j,f_k). }
+$$
+
+The matrix is therefore functioning as a **relationship table**.
+
+## 2. The covariance matrix is a feature-by-feature table
+
+For three features:
+
+$$
+\Sigma= \begin{bmatrix} \operatorname{Cov}(f_1,f_1)& \operatorname{Cov}(f_1,f_2)& \operatorname{Cov}(f_1,f_3) \\ \operatorname{Cov}(f_2,f_1)& \operatorname{Cov}(f_2,f_2)& \operatorname{Cov}(f_2,f_3) \\ \operatorname{Cov}(f_3,f_1)& \operatorname{Cov}(f_3,f_2)& \operatorname{Cov}(f_3,f_3) \end{bmatrix}.
+$$
+
+Read it as:
+
+| First feature / second feature | $f_1$ | $f_2$ | $f_3$ |
+| --- | --- | --- | --- |
+| $f_1$ | $\operatorname{Var}(f_1)$ | $\operatorname{Cov}(1,2)$ | $\operatorname{Cov}(1,3)$ |
+| $f_2$ | $\operatorname{Cov}(2,1)$ | $\operatorname{Var}(f_2)$ | $\operatorname{Cov}(2,3)$ |
+| $f_3$ | $\operatorname{Cov}(3,1)$ | $\operatorname{Cov}(3,2)$ | $\operatorname{Var}(f_3)$ |
+
+So if there are $d$ features:
+
+$$
+\boxed{\Sigma\in\mathbb R^{d\times d}.}
+$$
+
+Why $d\times d$? Not merely because a textbook says so. Because there are: $d\text{ choices for the first feature}$ and $d\text{ choices for the second feature}.$ Therefore: $d\times d$ possible ordered feature-pair positions.
+
+## 3. The diagonal has a special meaning
+
+Look at: $\Sigma_{11}.$ By definition: $\Sigma_{11} = \operatorname{Cov}(f_1,f_1).$ But we established: $\operatorname{Cov}(f_1,f_1) = \operatorname{Var}(f_1).$ Therefore: $\Sigma_{11}=\operatorname{Var}(f_1).$ Similarly: $\Sigma_{22}=\operatorname{Var}(f_2),$ $\Sigma_{33}=\operatorname{Var}(f_3).$ Thus the diagonal:
+
+$$
+\boxed{ \Sigma_{jj} = \text{variation of feature }j\text{ with itself} }
+$$
+
+while off-diagonal entries:
+
+$$
+\boxed{ \Sigma_{jk} = \text{co-variation between different features }j,k. }
+$$
+
+This means one matrix stores both:
+
+$$
+\boxed{\text{individual feature variation}}
+$$
+
+and
+
+$$
+\boxed{\text{relationships between feature variations}}.
+$$
+
+That is why $\Sigma$ will eventually become such an important object for PCA.
+
+## 4. Why is the covariance matrix symmetric?
+
+Consider:
+
+$$
+\operatorname{Cov}(f_1,f_2) = \frac1n\sum_i \tilde x_{i1}\tilde x_{i2}.
+$$
+
+Reverse the order:
+
+$$
+\operatorname{Cov}(f_2,f_1) = \frac1n\sum_i \tilde x_{i2}\tilde x_{i1}.
+$$
+
+But ordinary scalar multiplication commutes: $\tilde x_{i1}\tilde x_{i2} = \tilde x_{i2}\tilde x_{i1}.$ Therefore: $\operatorname{Cov}(f_1,f_2) = \operatorname{Cov}(f_2,f_1).$ Hence:
+
+$$
+\boxed{\Sigma_{jk}=\Sigma_{kj}.}
+$$
+
+So:
+
+$$
+\boxed{\Sigma=\Sigma^T.}
+$$
+
+Again, symmetry is not an arbitrary property imposed on the covariance matrix. It emerges because “joint deviation of $j$ with $k$” produces the same scalar product as “joint deviation of $k$ with $j$.”
+
+## 5. Now return to our centered data matrix
+
+We previously had:
+
+$$
+\tilde X= \begin{bmatrix} -0.5&-0.25\\ 1.5&0.75\\ -1.5&-1.25\\ 0.5&0.75 \end{bmatrix}.
+$$
+
+Its shape is: $4\times2.$ Semantically:
+
+$$
+\boxed{\text{rows}=\text{observations}}
+$$
+
+$$
+\boxed{\text{columns}=\text{features}}
+$$
+
+and now every entry is a **deviation from that feature's mean**. Let us give the columns names:
+
+$$
+a= \begin{bmatrix} -0.5\\ 1.5\\ -1.5\\ 0.5 \end{bmatrix}
+$$
+
+for length deviations, and
+
+$$
+b= \begin{bmatrix} -0.25\\ 0.75\\ -1.25\\ 0.75 \end{bmatrix}
+$$
+
+for width deviations. Therefore: $\tilde X=[\,a\quad b\,].$ This representation is extremely useful. The entire centered dataset is now being viewed as a collection of **feature-deviation columns**.
+
+## 6. What calculations do we actually want?
+
+We want:
+
+$$
+\operatorname{Var}(a) = \frac1n a^Ta,
+$$
+
+because: $a^Ta = (-0.5)^2+(1.5)^2+(-1.5)^2+(0.5)^2.$ We also want:
+
+$$
+\operatorname{Cov}(a,b) = \frac1n a^Tb,
+$$
+
+because: $a^Tb = (-0.5)(-0.25) + (1.5)(0.75) + (-1.5)(-1.25) + (0.5)(0.75).$ Likewise:
+
+$$
+\operatorname{Cov}(b,a) = \frac1n b^Ta,
+$$
+
+and:
+
+$$
+\operatorname{Var}(b) = \frac1n b^Tb.
+$$
+
+So the complete relationship table we want is:
+
+$$
+\frac1n \begin{bmatrix} a^Ta&a^Tb\\ b^Ta&b^Tb \end{bmatrix}.
+$$
+
+Pause here. We have not used a matrix formula yet. We simply listed the four questions we need answered.
+
+## 7. Now ask whether one matrix operation can construct exactly that table
+
+Recall: $\tilde X=[\,a\quad b\,].$ Its transpose is:
+
+$$
+\tilde X^T= \begin{bmatrix} a^T\\ b^T \end{bmatrix}.
+$$
+
+Now multiply: $\tilde X^T\tilde X.$ Structurally:
+
+$$
+\begin{bmatrix} a^T\\ b^T \end{bmatrix} [\,a\quad b\,].
+$$
+
+Matrix multiplication produces:
+
+$$
+\begin{bmatrix} a^Ta&a^Tb\\ b^Ta&b^Tb \end{bmatrix}.
+$$
+
+This is **exactly the table we wanted**. Therefore:
+
+$$
+\boxed{ \Sigma = \frac1n\tilde X^T\tilde X }
+$$
+
+for the population covariance convention. The matrix formula was not invented first. The desired relationship table came first. Matrix multiplication turned out to package all those pairwise calculations simultaneously.
+
+## 8. This is an important new meaning of matrix multiplication
+
+Earlier in Stage 2, we learned: $Pz$ as:
+
+> scale the columns of $P$ by the corresponding amounts in $z$, then combine them.
+
+That interpretation remains valid. But matrix multiplication can also be understood through another compatible perspective: **pairing rows of the left matrix with columns of the right matrix**. Here: $\tilde X^T$ has feature-deviation patterns as rows. And: $\tilde X$ has those same feature-deviation patterns as columns. So each output entry compares:
+
+$$
+\boxed{ \text{one feature-deviation pattern} }
+$$
+
+with:
+
+$$
+\boxed{ \text{another feature-deviation pattern}. }
+$$
+
+The result is:
+
+$$
+\boxed{ \text{feature-by-feature relationship table}. }
+$$
+
+This is a very different semantic use of matrix multiplication from simply “multiplying matrices.”
+
+## 9. Why did we transpose $X$?
+
+This is one of those places where students are often told the formula: $X^TX$ without understanding why the transpose is there. Our centered data has shape: $\tilde X: \quad n\times d.$ Its axes mean:
+
+```text
+rows     → observations
+columns  → features
+```
+
+But the table we want should be:
+
+```text
+rows     → features
+columns  → features
+```
+
+because we want every feature compared with every feature. So we need: $d\times d.$ Transpose changes: $\tilde X: n\times d$ into: $\tilde X^T: d\times n.$ Then: $(d\times n)(n\times d) \rightarrow d\times d.$ But shape compatibility is only the computational surface. The deeper reason is:
+
+> Transposing places a feature's values-across-observations in the position needed to interact with another feature's values-across-observations.
+
+The shared $n$ dimension represents the observations over which the products are accumulated. So even the dimensions have semantic roles:
+
+$$
+\boxed{ (d\times\underbrace{n}_{\text{observations}}) (\underbrace{n}_{\text{observations}}\times d) \rightarrow d\times d }
+$$
+
+The observation dimension is consumed by aggregation. The feature identities remain as the two output dimensions. This is a powerful way to read matrix multiplication.
+
+## 10. Something is being retained and something is being collapsed
+
+Start with: $\tilde X\in\mathbb R^{n\times d}.$ After: $\tilde X^T\tilde X,$ we obtain: $d\times d.$ Where did $n$ go? It was aggregated. For each feature pair $j,k$:
+
+$$
+(\tilde X^T\tilde X)_{jk} = \sum_{i=1}^n \tilde X_{ij}\tilde X_{ik}.
+$$
+
+Notice the indices. The output still contains: $j,\quad k.$ Those are feature identities. But $i$, the observation identity, is summed over:
+
+$$
+\sum_i.
+$$
+
+So:
+
+$$
+\boxed{ \text{individual observation identity is discarded} }
+$$
+
+while:
+
+$$
+\boxed{ \text{aggregate feature-to-feature relationship is retained}. }
+$$
+
+This is exactly what we wanted. Covariance is a compression of the dataset.
+
+## 11. Let's calculate our actual covariance matrix
+
+For length: $a^Ta = 0.25+2.25+2.25+0.25 = 5.$ For width: $b^Tb = 0.0625+0.5625+1.5625+0.5625 = 2.75.$ Cross-product: $a^Tb = 0.125+1.125+1.875+0.375 = 3.5.$ Therefore:
+
+$$
+\tilde X^T\tilde X = \begin{bmatrix} 5&3.5\\ 3.5&2.75 \end{bmatrix}.
+$$
+
+Using $n=4$:
+
+$$
+\Sigma = \frac14 \begin{bmatrix} 5&3.5\\ 3.5&2.75 \end{bmatrix}.
+$$
+
+Thus:
+
+$$
+\boxed{ \Sigma= \begin{bmatrix} 1.25&0.875\\ 0.875&0.6875 \end{bmatrix}. }
+$$
+
+Now we can read this matrix semantically.
+
+## 12. Read every entry as a sentence
+
+$\Sigma_{11}=1.25$ means:
+
+> The average squared deviation of length from its mean is $1.25$.
+
+That is length variance. $\Sigma_{22}=0.6875$ means:
+
+> The average squared deviation of width from its mean is $0.6875$.
+
+That is width variance. $\Sigma_{12}=0.875$ means:
+
+> Across observations, length and width deviations have positive average product $0.875$.
+
+So above-mean length tends to accompany above-mean width, and below-mean length tends to accompany below-mean width. And: $\Sigma_{21}=0.875$ describes the same relationship in reversed feature order. Thus:
+
+$$
+\boxed{ \Sigma= \begin{bmatrix} \text{length self-variation}&\text{length-width co-variation}\\ \text{width-length co-variation}&\text{width self-variation} \end{bmatrix}. }
+$$
+
+That is a far better mental representation than “covariance matrix.”
+
+## 13. Dataset $X$ and covariance matrix $\Sigma$ are very different objects
+
+This distinction is essential. The centered dataset: $\tilde X\in\mathbb R^{n\times d}$ has:
+
+```text
+rows    = observations
+columns = features
+```
+
+The covariance matrix: $\Sigma\in\mathbb R^{d\times d}$ has:
+
+```text
+rows    = features
+columns = features
+entries = relationships between feature variations
+```
+
+So although both are matrices, their ontological roles are completely different. Programming analogy:
+
+```text
+X_centered:
+    type = ObservationByFeatureTable
+
+Sigma:
+    type = FeatureByFeatureRelationshipTable
+```
+
+Calling both `ndarray` tells us almost nothing about their mathematical meaning.
+
+## 14. A particularly important conceptual transition has occurred
+
+Originally, our data consisted of points: $x_1,x_2,\ldots,x_n.$ After centering, we described their deviations: $\tilde x_1,\tilde x_2,\ldots,\tilde x_n.$ Now covariance has compressed those individual observations into a description of **how the feature dimensions behave together across the dataset**:
+
+$$
+\boxed{ \{\tilde x_i\}_{i=1}^n \longrightarrow \Sigma. }
+$$
+
+So $\Sigma$ is not another observation. It is a **dataset-wide structural summary**. This distinction will later become extremely important:
+
+$$
+\boxed{ x_i=\text{observation-specific information} }
+$$
+
+versus
+
+$$
+\boxed{ \Sigma=\text{dataset-wide learned/estimated structure}. }
+$$
+
+PCA directions will belong to the second category. They will be learned from the dataset as a whole, not separately invented for each observation.
+
+## 15. But what does the whole covariance matrix mean geometrically?
+
+We understand individual entries now. But we have not yet understood $\Sigma$ as **one mathematical object**. That is the remaining important question in Stage 6. Consider:
+
+$$
+\Sigma= \begin{bmatrix} 1.25&0.875\\ 0.875&0.6875 \end{bmatrix}.
+$$
+
+We can read its four entries. But PCA will soon do something much stranger: $\Sigma p.$ That means we will treat the covariance matrix not merely as a passive table but as something that **acts on a direction vector** $p$. At that point, knowing only that “the diagonal contains variances and off-diagonal entries contain covariances” will no longer be enough. We will need to understand why a feature-by-feature relationship table can act on a direction, what information that action produces, and eventually why certain directions satisfy: $\Sigma p=\lambda p.$ We should not jump to eigenvectors yet. There is one stage deliberately placed before that: **directions and projections**. We need to understand what it means to choose a direction $p$ through feature space and ask:
+
+> **How much of each observation lies along this chosen direction?**
+
+That will lead us from a $d$-dimensional deviation vector $\tilde x_i$ to a single coordinate $z_i.$ Only after we understand that extraction operation will the expression $p^T\Sigma p$ have something concrete to mean.
+
+## Python companion
+
+[Open the companion Python file](https://github.com/hafizarslanamjad/pca-from-first-principles/blob/main/examples/16_why_covariance_matrix_exists.py)
+
+The companion reuses the existing centimeter-valued observations and centered deviations. It constructs the feature-by-feature table from Lecture 14's pairwise calculations, then independently compares the result with $\tilde X^T\tilde X/n$. Both exported axes are ordered length, width, and entries have units cm². The three-feature table in the source motivates the general structure; the executable example retains the supplied two-feature dataset. The code distinguishes a typed covariance table from a numerical array and selects entries by feature identity. Annotations document roles rather than enforce physical units. Runtime checks validate finite entries and nonnegative variances; arbitrary manual construction is not a proof that a table is a valid covariance matrix. Population averages use $n$, and numerical comparisons allow floating-point rounding.
+
+```{python}
+#| echo: false
+from pathlib import Path
+import runpy
+
+_ = runpy.run_path(
+    str(Path("examples/16_why_covariance_matrix_exists.py")),
+    run_name="__main__",
+)
+```
