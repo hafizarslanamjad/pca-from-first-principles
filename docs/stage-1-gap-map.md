@@ -70,6 +70,10 @@ The four supplied observations become rows of a dataset matrix through explicit 
 
 [Lecture 14](../lectures/14-why-squaring-becomes-powerful/index.qmd) connects squared deviations to Euclidean decomposition, scaling, and self-dot-products. It distinguishes observation-level squared magnitude from feature-level variance, then uses signed products to introduce coordinated variation. Stage 6 next develops covariance. Coverage does not imply demonstrated mastery.
 
+## Lecture 15: Relationships Between Features
+
+[Lecture 15](../lectures/15-relationships-between-features/index.qmd) develops population covariance from coordinated deviations, explains positive, negative, and near-zero results, and shows why separate variances cannot determine the relationship. The next lecture develops the covariance matrix. Coverage remains distinct from demonstrated mastery.
+
 ## Conceptual Gap Map
 
 The entries below identify where explanations are provided. They are a reading guide, not a record of demonstrated mastery.
@@ -148,6 +152,15 @@ The entries below identify where explanations are provided. They are a reading g
 | How does a self-dot-product encode squared magnitude? | Lecture 14: matching coordinate products |
 | How do row and column aggregations differ? | Lecture 14: observation magnitude versus feature variance |
 | What do cross-feature product signs retain? | Lecture 14: coordinated deviation relative to feature means |
+
+## Stage 6 questions
+
+| Question | Where it is addressed |
+| --- | --- |
+| Why do deviation products detect coordinated signs? | Lecture 15: same-sided and opposite-sided contributions |
+| Why center before multiplying? | Lecture 15: remove absolute baselines |
+| Can zero covariance hide a relationship? | Lecture 15: nonlinear structure can remain |
+| Why are separate variances insufficient? | Lecture 15: equal marginal magnitudes, opposite joint behavior |
 
 ## Assumptions to Carry Forward
 
