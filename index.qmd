@@ -40,9 +40,11 @@ Python examples will make the reasoning executable and inspectable.
 
 13. [Why Average Deviation Fails](lectures/13-average-deviation-and-variance/index.qmd) — Signed cancellation, absolute deviations, and population variance.
 
+14. [Why Squaring Becomes So Powerful](lectures/14-why-squaring-becomes-powerful/index.qmd) — Squared magnitude, dot products, and the bridge to covariance.
+
 ## Project status
 
-The first 13 conceptual lectures include executable Python companions. Automated checks validate Python formatting, semantic types, package imports, feature-space and spatial-vector relationships, and website rendering. PCA algorithms and their tests will follow as the lectures develop.
+The first 14 conceptual lectures include executable Python companions. Automated checks validate Python formatting, semantic types, package imports, feature-space and spatial-vector relationships, and website rendering. PCA algorithms and their tests will follow as the lectures develop.
 
 ## Source code
 

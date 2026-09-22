@@ -66,6 +66,10 @@ The four supplied observations become rows of a dataset matrix through explicit 
 
 [Lecture 13](../lectures/13-average-deviation-and-variance/index.qmd) develops a spread measure from the failure of signed averages, compares absolute and squared deviations, and constructs population variance. Its next step examines why squaring interacts with geometry and later covariance. Coverage does not imply demonstrated mastery.
 
+## Lecture 14: Why Squaring Becomes So Powerful
+
+[Lecture 14](../lectures/14-why-squaring-becomes-powerful/index.qmd) connects squared deviations to Euclidean decomposition, scaling, and self-dot-products. It distinguishes observation-level squared magnitude from feature-level variance, then uses signed products to introduce coordinated variation. Stage 6 next develops covariance. Coverage does not imply demonstrated mastery.
+
 ## Conceptual Gap Map
 
 The entries below identify where explanations are provided. They are a reading guide, not a record of demonstrated mastery.
@@ -135,6 +139,15 @@ The entries below identify where explanations are provided. They are a reading g
 | Is absolute deviation a valid alternative? | Lecture 13: mean absolute deviation |
 | What does squaring retain and discard? | Lecture 13: size information and loss of sign |
 | Why are variance units squared? | Lecture 13: averaging squared deviations |
+
+## Further Stage 5 questions
+
+| Question | Where it is addressed |
+| --- | --- |
+| Why do squared perpendicular contributions add? | Lecture 14: Euclidean decomposition |
+| How does a self-dot-product encode squared magnitude? | Lecture 14: matching coordinate products |
+| How do row and column aggregations differ? | Lecture 14: observation magnitude versus feature variance |
+| What do cross-feature product signs retain? | Lecture 14: coordinated deviation relative to feature means |
 
 ## Assumptions to Carry Forward
 
